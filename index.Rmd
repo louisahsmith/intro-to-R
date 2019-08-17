@@ -14,4 +14,4 @@ To launch an R Studio session for the course:
 ## Schedule:
 
 ### Day 1: 
-[slides](r-materials-F19/slides/Day1-slides.html)
+[slides](slides/Day1-slides.html)
