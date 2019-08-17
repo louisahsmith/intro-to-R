@@ -1,0 +1,15 @@
+Type: Compendium
+Package: R-materials-F19
+Title: Introduction to R Materials
+Version: 0.0.1
+Authors@R: 
+    person(given = "Louisa",
+           family = "Smith",
+           role = c("aut", "cre"),
+           email = "louisa_h_smith@g.harvard.edu")
+Description: R course materials for HSPH class in Fall 2019
+License: MIT + file LICENSE
+Depends: 
+    tidyverse
+Encoding: UTF-8
+LazyData: true
