@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <title>Day 1</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Louisa H. Smith" />
+    <meta name="date" content="2019-08-17" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Day 1
+## Intro to R and making figures
+### Louisa H. Smith
+### 2019-08-17
+
+---
+
+class: middle
+
+&lt;style type="text/css"&gt;
+/* custom.css */
+.left-code {
+  color: #777;
+  width: 43%;
+  height: 92%;
+  float: left;
+  font-size: 0.8em;
+  position: absolute;
+}
+.right-plot {
+  width: 55%;
+  float: right;
+  padding-left: 1%;
+  position: absolute;
+}
+.plot-callout {
+  height: 225px;
+  width: 450px;
+  bottom: 5%;
+  right: 5%;
+  position: absolute;
+  padding: 0px;
+  z-index: 100;
+}
+.plot-callout img {
+  width: 100%;
+  border: 4px solid #23373B;
+}
+
+.inverse h1, .inverse h2, .inverse h3 {
+  color: #1F4257;
+}
+.remark-slide thead, .remark-slide tr:nth-child(2n) {
+  background-color: white;
+}
+&lt;/style&gt;
+
+# RStudio
+
+### An IDE for R
+
+An *integrated development environment* is software that makes coding easier
+
+- see objects you've imported and created
+- autocomplete
+- syntax highlighting
+- run part or all of your code
+
+---
+class:middle inverse
+background-image: url("rstudio.png")
+background-size: contain
+
+---
+## R uses `&lt;-` for assignment
+
+Create an object `vals` that contains and sequence of numbers:
+
+
+```r
+# create values
+vals &lt;- c(1, 645, 329)
+```
+
+Put your cursor at the end of the line and hit ctrl/cmd + enter.
+
+Now `vals` holds those values.
+
+We can see them again by running just the name (put your cursor after the name and press ctrl/cmd + enter again).
+
+
+```r
+vals
+```
+
+```
+## [1]   1 645 329
+```
+### No assignment arrow means that the object will be printed to the console.
+
+---
+# Types of data (*classes*)
+
+We could also create a character *vector*:
+
+
+```r
+chars &lt;- c("dog", "cat", "rhino")
+chars
+```
+
+```
+## [1] "dog"   "cat"   "rhino"
+```
+
+Or a *logical* vetor:
+
+
+```r
+logs &lt;- c(TRUE, FALSE, FALSE)
+logs
+```
+
+```
+## [1]  TRUE FALSE FALSE
+```
+
+### We'll see more options as we go along!
+---
+
+# Types of objects
+
+We created *vectors* with the `c()` function (`c` stands for concatenate)
+
+We could also create a *matrix* of values with the `matrix()` function:
+
+```r
+# turn the vector of numbers into a 2-row matrix
+mat &lt;- matrix(c(234, 7456, 12, 654, 183, 753), nrow = 2)
+mat
+```
+
+```
+##      [,1] [,2] [,3]
+## [1,]  234   12  183
+## [2,] 7456  654  753
+```
+
+The numbers in square brackets are *indices*, which we can use to pull out values:
+
+
+```r
+# extract second row
+mat[2, ]
+```
+
+```
+## [1] 7456  654  753
+```
+
+---
+class: inverse
+# Exercises 1
+.center[
+&lt;iframe src="https://giphy.com/embed/l0HlQ7mVw7pPtItEc" width="312" height="280" frameBorder="0" class="giphy-embed" allowFullScreen&gt;&lt;/iframe&gt;&lt;p&gt;&lt;a href="https://giphy.com/gifs/gifitup-halloween-hypnosis-l0HlQ7mVw7pPtItEc"&gt;&lt;/a&gt;&lt;/p&gt;
+]
+1. Extract `645` from `vals` using square brackets
+2. Extract `"rhino"` from `chars` using square brackets
+3. Extract `183` from `mat` using square brackets
+4. Figure out how to get the following errors: 
+
+
+```
+## [1] "incorrect number of dimensions"
+```
+
+```
+## [1] "subscript out of bounds"
+```
+
+---
+# Dataframes
+
+We usually do analysis in R with dataframes (or some variant).
+
+Dataframes are basically like spreadsheets: columns are variables, and rows are observations.
+
+```r
+gss_cat
+```
+
+```
+## # A tibble: 21,483 x 9
+##     year marital       age race  rincome      partyid       relig        denom        tvhours
+##    &lt;int&gt; &lt;fct&gt;       &lt;int&gt; &lt;fct&gt; &lt;fct&gt;        &lt;fct&gt;         &lt;fct&gt;        &lt;fct&gt;          &lt;int&gt;
+##  1  2000 Never marr…    26 White $8000 to 99… Ind,near rep  Protestant   Southern ba…      12
+##  2  2000 Divorced       48 White $8000 to 99… Not str repu… Protestant   Baptist-dk …      NA
+##  3  2000 Widowed        67 White Not applica… Independent   Protestant   No denomina…       2
+##  4  2000 Never marr…    39 White Not applica… Ind,near rep  Orthodox-ch… Not applica…       4
+##  5  2000 Divorced       25 White Not applica… Not str demo… None         Not applica…       1
+##  6  2000 Married        25 White $20000 - 24… Strong democ… Protestant   Southern ba…      NA
+##  7  2000 Never marr…    36 White $25000 or m… Not str repu… Christian    Not applica…       3
+##  8  2000 Divorced       44 White $7000 to 79… Ind,near dem  Protestant   Lutheran-mo…      NA
+##  9  2000 Married        44 White $25000 or m… Not str demo… Protestant   Other              0
+## 10  2000 Married        47 White $25000 or m… Strong repub… Protestant   Southern ba…       3
+## # … with 21,473 more rows
+```
+
+---
+background-image: url(https://ih1.redbubble.net/image.543363717.2207/pp,840x830-pad,1000x1000,f8f8f8.jpg)
+background-size:contain
+# *tibble*???
+---
+# tidyverse
+.left-column[
+![](https://ih1.redbubble.net/image.543366382.2273/flat,1000x1000,075,f.jpg)
+]
+.right-column[
+The tidyverse is a collection of packages for R that are designed to make working with data easy and intuitive.
+
+You might hear it contrasted with "base R" or the package `data.table`. You can (and should!) learn as many coding techniques and strategies as possible, then choose the best option (in terms of speed, readability, etc.) for you.
+
+I find tidyverse the quickest and most intuitive way to get up and running with R.
+
+
+```r
+install.packages("tidyverse")
+library(tidyverse)
+# installs and loads ggplot2, dplyr, tidyr, readr,
+# purrr, tibble, stringr, forcats
+```
+]
+
+---
+## and tibbles are the quickest and most intuitive way to make and read a dataset
+.pull-left[
+
+```r
+dat1 &lt;- tibble(
+  age = c(24, 76, 38),
+  height_in = c(70, 64, 68),
+  height_cm = height_in * 2.54
+)
+dat1
+```
+
+```
+## # A tibble: 3 x 3
+##     age height_in height_cm
+##   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+## 1    24        70      178.
+## 2    76        64      163.
+## 3    38        68      173.
+```
+]
+.pull-right[
+
+```r
+dat2 &lt;- tribble(
+  ~n, ~food, ~animal,
+  39, "banana", "monkey",
+  21, "milk", "cat",
+  18, "bone", "dog"
+)
+dat2
+```
+
+```
+## # A tibble: 3 x 3
+##       n food   animal
+##   &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt; 
+## 1    39 banana monkey
+## 2    21 milk   cat   
+## 3    18 bone   dog
+```
+]
+
+---
+## tibbles are basically just pretty dataframes
+.pull-left[
+
+```r
+as_tibble(gss_cat)[, 1:5]
+```
+
+```
+# A tibble: 21,483 x 5
+    year marital         age race  rincome       
+   &lt;int&gt; &lt;fct&gt;         &lt;int&gt; &lt;fct&gt; &lt;fct&gt;         
+ 1  2000 Never married    26 White $8000 to 9999 
+ 2  2000 Divorced         48 White $8000 to 9999 
+ 3  2000 Widowed          67 White Not applicable
+ 4  2000 Never married    39 White Not applicable
+ 5  2000 Divorced         25 White Not applicable
+ 6  2000 Married          25 White $20000 - 24999
+ 7  2000 Never married    36 White $25000 or more
+ 8  2000 Divorced         44 White $7000 to 7999 
+ 9  2000 Married          44 White $25000 or more
+10  2000 Married          47 White $25000 or more
+# … with 21,473 more rows
+```
+]
+.pull-right[
+
+```r
+as.data.frame(gss_cat)[, 1:5]
+```
+
+```
+   year       marital age  race        rincome
+1  2000 Never married  26 White  $8000 to 9999
+2  2000      Divorced  48 White  $8000 to 9999
+3  2000       Widowed  67 White Not applicable
+4  2000 Never married  39 White Not applicable
+5  2000      Divorced  25 White Not applicable
+6  2000       Married  25 White $20000 - 24999
+7  2000 Never married  36 White $25000 or more
+8  2000      Divorced  44 White  $7000 to 7999
+9  2000       Married  44 White $25000 or more
+10 2000       Married  47 White $25000 or more
+11 2000       Married  53 White $25000 or more
+12 2000       Married  52 White $25000 or more
+13 2000       Married  52 White $25000 or more
+14 2000       Married  51 White $25000 or more
+15 2000      Divorced  52 White $25000 or more
+16 2000       Married  40 Black $25000 or more
+17 2000       Widowed  77 White Not applicable
+18 2000 Never married  44 White $25000 or more
+19 2000       Married  40 White $10000 - 14999
+20 2000       Married  45 Black Not applicable
+```
+]
+
+---
+class: middle center
+![](https://www.nlsinfo.org/sites/nlsinfo.org/files/images/NLSY79_0.png)
+
+We'll use some data from the [National Longitudinal Survey of Youth 1979](https://www.nlsinfo.org/content/cohorts/nlsy79), a cohort of American young adults aged 14-22 at enrollment in 1979. They continue to be followed to this day, and there is a wealth of publicly available data [online](https://www.nlsinfo.org/investigator/pages/login.jsp). I've downloaded the answers to a survey question about whether respondents wear glasses, a scale about their eyesight with glasses, whether they are black or white/hispanic, their sex, their family's income in 1979, and their age at the birth of their first child.
+---
+# Read in data
+
+```r
+nlsy &lt;- read_csv("nlsy.csv")
+nlsy
+```
+
+```
+## # A tibble: 12,686 x 8
+##   R0000100 R0173600 R0214800 H0012400 H0012500 R0214700 R0217900 T4120500
+##      &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+## 1        1        5        2       NA       NA        0    30000       NA
+## 2        2        5        2        0        1        0    20000       34
+## # … with 1.268e+04 more rows
+```
+### Ugh...
+
+```r
+colnames(nlsy)
+```
+
+```
+## [1] "R0000100" "R0173600" "R0214800" "H0012400" "H0012500" "R0214700" "R0217900" "T4120500"
+```
+
+```r
+# "write over" the variable names with new names
+colnames(nlsy) &lt;- c("id", "samp", "sex", "black", "eyesight", "glasses", "income", "age_bir")
+```
+
+---
+class: inverse
+# Exercises 2
+.center[
+&lt;iframe src="https://giphy.com/embed/TvVck7lO4LDJS" width="480" height="360" frameBorder="0" class="giphy-embed" allowFullScreen&gt;&lt;/iframe&gt;&lt;p&gt;&lt;a href="https://giphy.com/gifs/TvVck7lO4LDJS"&gt;&lt;/a&gt;&lt;/p&gt;
+]
+
+1. Read in the NLSY data and change the variable names as in the slides.
+2. How many people are in the NLSY? How many variables are in this dataset? What are two ways you can answer these questions?
+3. Can you find an R function(s) we haven't discussed that answers question 2? (Hint: Google)
+
+---
+# #goals
+.pull-left[
+&lt;img src="Day1-slides_files/figure-html/goals-plot-1-1.png" width="500px" height="500px" style="display: block; margin: auto;" /&gt;
+]
+.pull-right[
+&lt;img src="Day1-slides_files/figure-html/goals-plot-2-1.png" width="500px" height="500px" style="display: block; margin: auto;" /&gt;
+]
+
+---
+# #goals
+
+
+
+```r
+run_analysis(group = "main")
+run_analysis(group = "supplementary")
+run_analysis(group = "military")
+```
+### Ta da!
+.center[
+![:scale 40%](../folder.png)
+]
+
+---
+class: middle
+.pull-left[
+&lt;img src="Day1-slides_files/figure-html/unnamed-chunk-21-1.png" width="100%" /&gt;
+]
+.pull-right[.middle[
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Eyesight &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; OR (95% CI) &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; P-value &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Excellent &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1 (ref) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; NA &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Very Good &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1.30 (1.05, 1.61) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.016 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Good &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1.91 (1.52, 2.40) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &amp;lt;0.001 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Fair &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2.82 (2.08, 3.80) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &amp;lt;0.001 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Poor &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2.52 (1.29, 4.58) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.004 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]]
+
+---
+# Basic structure of a ggplot
+
+```r
+ggplot(data = {data}) +
+      &lt;geom&gt;(aes(x = {xvar}, y = {yvar}, &lt;characteristic&gt; = {othvar}, ...),
+             &lt;characteristic&gt; = "value", ...) +
+      ...
+```
+- `{data}`: must be a dataframe (or tibble!)
+- `{xvar}` and `{yvar}` are the column names (unquoted) of the variables on the x- and y-axes
+- `{othvar}` is some other unquoted variable name that defines a grouping or other characteristic you want to map to an aesthetic
+
+
+- `&lt;geom&gt;`: the geometric feature you want to use; e.g., point (scatterplot), line, histogram, bar, etc.
+- `&lt;characteristic&gt;`: you can map `{othvar}` or a fixed `"value"` to any of a number of aesthetic features of the figure; e.g., color, shape, size, linetype, etc.
+
+
+- `"value"`: a fixed value that defines some characteristic of the figure; e.g., "red", 10, "dashed"
+
+
+- ... : there are numerous other options to discover!
+
+---
+# Examples
+
+```r
+ggplot(data = nlsy) +
+  geom_point(
+    aes(
+      x = income,
+      y = age_bir,
+      col = sex
+    ),
+    shape = "triangle"
+  )
+```
+
+&lt;img src="Day1-slides_files/figure-html/unnamed-chunk-23-1.png" width="100%" /&gt;
+
+---
+count: false
+.left-code[
+
+```r
+*ggplot(nlsy)
+```
+]
+.right-plot[
+![](Day1-slides_files/figure-html/goals-plot-1a-1.png)
+]
+
+---
+count: false
+
+.left-code[
+
+```r
+ggplot(nlsy) +
+* geom_bar(aes(
+*   x = eyesight,
+*   fill = factor(eyesight))
+*   )
+```
+]
+.right-plot[
+![](Day1-slides_files/figure-html/goals-plot-1b-1.png)
+]
+
+---
+count: false
+
+.left-code[
+
+```r
+ggplot(nlsy) +
+  geom_bar(aes(
+    x = eyesight, 
+    fill = factor(eyesight))
+    ) +
+* facet_grid(
+*   cols = vars(glasses),
+*   labeller = labeller(glasses = c(
+*     `0` = "Doesn't wear glasses",
+*     `1` = "Wears glasses/contacts"
+*   ))
+* )
+```
+]
+.right-plot[
+![](Day1-slides_files/figure-html/goals-plot-1c-1.png)
+]
+
+---
+count: false
+
+.left-code[
+
+```r
+ggplot(nlsy) +
+  geom_bar(aes(
+    x = eyesight, 
+    fill = factor(eyesight))
+    ) +
+  facet_grid(
+    cols = vars(glasses),
+    labeller = labeller(glasses = c(
+      `0` = "Doesn't wear glasses",
+      `1` = "Wears glasses/contacts"
+    ))
+  ) +
+* scale_fill_brewer(palette = "Spectral",
+*                   direction = -1)
+```
+]
+.right-plot[
+![](Day1-slides_files/figure-html/goals-plot-1d-1.png)
+]
+
+---
+count: false
+
+.left-code[
+
+```r
+ggplot(nlsy) +
+  geom_bar(aes(
+    x = eyesight, 
+    fill = factor(eyesight))
+    ) +
+  facet_grid(
+    cols = vars(glasses),
+    labeller = labeller(glasses = c(
+      `0` = "Doesn't wear glasses",
+      `1` = "Wears glasses/contacts"
+    ))
+  ) +
+  scale_fill_brewer(palette = "Spectral", 
+                    direction = -1) +
+* scale_x_continuous(
+*   labels = c("Excellent", "Very Good",
+*              "Good", "Fair", "Poor"),
+*   breaks = c(1, 2, 3, 4, 5)
+* )
+```
+]
+.right-plot[
+![](Day1-slides_files/figure-html/goals-plot-1e-1.png)
+]
+
+---
+count: false
+
+.left-code[
+
+```r
+ggplot(nlsy) +
+  geom_bar(aes(
+    x = eyesight, 
+    fill = factor(eyesight))
+    ) +
+  facet_grid(
+    cols = vars(glasses),
+    labeller = labeller(glasses = c(
+      `0` = "Doesn't wear glasses",
+      `1` = "Wears glasses/contacts"
+    ))
+  ) +
+  scale_fill_brewer(palette = "Spectral", 
+                    direction = -1) +
+  scale_x_continuous(
+    labels = c("Excellent", "Very Good", 
+               "Good", "Fair", "Poor"),
+    breaks = c(1, 2, 3, 4, 5)
+  ) +
+* theme_minimal()
+```
+]
+.right-plot[
+![](Day1-slides_files/figure-html/goals-plot-1f-1.png)
+]
+
+---
+count: false
+
+.left-code[
+
+```r
+ggplot(nlsy) +
+  geom_bar(aes(
+    x = eyesight, 
+    fill = factor(eyesight))
+    ) +
+  facet_grid(
+    cols = vars(glasses),
+    labeller = labeller(glasses = c(
+      `0` = "Doesn't wear glasses",
+      `1` = "Wears glasses/contacts"
+    ))
+  ) +
+  scale_fill_brewer(palette = "Spectral", 
+                    direction = -1) +
+  scale_x_continuous(
+    labels = c("Excellent", "Very Good", 
+               "Good", "Fair", "Poor"),
+    breaks = c(1, 2, 3, 4, 5)
+  ) +
+  theme_minimal() +
+* theme(
+*   legend.position = "none",
+*   axis.text.x = element_text(angle = 45,
+*                              vjust = 1,
+*                              hjust = 1)
+* )
+```
+]
+.right-plot[
+![](Day1-slides_files/figure-html/goals-plot-1g-1.png)
+]
+
+---
+count: false
+
+.left-code[
+
+```r
+ggplot(nlsy) +
+  geom_bar(aes(
+    x = eyesight, 
+    fill = factor(eyesight))
+    ) +
+  facet_grid(
+    cols = vars(glasses),
+    labeller = labeller(glasses = c(
+      `0` = "Doesn't wear glasses",
+      `1` = "Wears glasses/contacts"
+    ))
+  ) +
+  scale_fill_brewer(palette = "Spectral", 
+                    direction = -1) +
+  scale_x_continuous(
+    labels = c("Excellent", "Very Good", 
+               "Good", "Fair", "Poor"),
+    breaks = c(1, 2, 3, 4, 5)
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "none",
+    axis.text.x = element_text(angle = 45, 
+                               vjust = 1, 
+                               hjust = 1)
+  ) +
+* labs(
+*   title = "Quality of eyesight in NLSY",
+*   x = "Eyesight quality",
+*   y = NULL
+* )
+```
+]
+.right-plot[
+![](Day1-slides_files/figure-html/goals-plot-1h-1.png)
+]
+
+---
+count: false
+
+.left-code[
+
+```r
+ggplot(nlsy) +
+  geom_bar(aes(
+    x = eyesight, 
+    fill = factor(eyesight))
+    ) +
+  facet_grid(
+    cols = vars(glasses),
+    labeller = labeller(glasses = c(
+      `0` = "Doesn't wear glasses",
+      `1` = "Wears glasses/contacts"
+    ))
+  ) +
+  scale_fill_brewer(palette = "Spectral", 
+                    direction = -1) +
+  scale_x_continuous(
+    labels = c("Excellent", "Very Good", 
+               "Good", "Fair", "Poor"),
+    breaks = c(1, 2, 3, 4, 5)
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "none",
+    axis.text.x = element_text(angle = 45, 
+                               vjust = 1, 
+                               hjust = 1)
+  ) +
+  labs(
+    title = "Quality of eyesight in NLSY",
+    x = "Eyesight quality",
+    y = NULL
+  ) +
+* coord_cartesian(expand = c(0, 0))
+```
+]
+.right-plot[
+![](Day1-slides_files/figure-html/goals-plot-1i-1.png)
+]
+
+---
+count: false
+.left-code[
+
+```r
+*ggplot(
+* filter(nlsy, age_bir &gt; 0, !is.na(black)),
+* aes(income, age_bir, col = factor(sex))
+*) 
+```
+]
+.right-plot[
+![](Day1-slides_files/figure-html/goals-plot-2a-1.png)
+]
+
+---
+count: false
+
+.left-code[
+
+```r
+ggplot(
+  filter(nlsy, age_bir &gt; 0, !is.na(black)),
+  aes(income, age_bir, col = factor(sex))
+) +
+* geom_point(alpha = 0.1)
+```
+]
+.right-plot[
+![](Day1-slides_files/figure-html/goals-plot-2b-1.png)
+]
+
+---
+count: false
+
+.left-code[
+
+```r
+ggplot(
+  filter(nlsy, age_bir &gt; 0, !is.na(black)),
+  aes(income, age_bir, col = factor(sex))
+) +
+  geom_point(alpha = 0.1) +
+* scale_color_brewer(
+*   palette = "Set1",
+*   name = "Sex",
+*   labels = c("Male", "Female")
+* )
+```
+]
+.right-plot[
+![](Day1-slides_files/figure-html/goals-plot-2c-1.png)
+]
+
+---
+count: false
+
+.left-code[
+
+```r
+ggplot(
+  filter(nlsy, age_bir &gt; 0, !is.na(black)),
+  aes(income, age_bir, col = factor(sex))
+) +
+  geom_point(alpha = 0.1) +
+  scale_color_brewer(
+    palette = "Set1",
+    name = "Sex",
+    labels = c("Male", "Female")
+  ) +
+* scale_x_log10(labels = scales::dollar)
+```
+]
+.right-plot[
+![](Day1-slides_files/figure-html/goals-plot-2d-1.png)
+]
+
+---
+count: false
+
+.left-code[
+
+```r
+ggplot(
+  filter(nlsy, age_bir &gt; 0, !is.na(black)),
+  aes(income, age_bir, col = factor(sex))
+) +
+  geom_point(alpha = 0.1) +
+  scale_color_brewer(
+    palette = "Set1",
+    name = "Sex",
+    labels = c("Male", "Female")
+  ) +
+  scale_x_log10(labels = scales::dollar) +
+* geom_smooth(aes(
+*   group = factor(sex)),
+*   method = "lm"
+*   )
+```
+]
+.right-plot[
+![](Day1-slides_files/figure-html/goals-plot-2e-1.png)
+]
+
+---
+count: false
+
+.left-code[
+
+```r
+ggplot(
+  filter(nlsy, age_bir &gt; 0, !is.na(black)),
+  aes(income, age_bir, col = factor(sex))
+) +
+  geom_point(alpha = 0.1) +
+  scale_color_brewer(
+    palette = "Set1",
+    name = "Sex",
+    labels = c("Male", "Female")
+  ) +
+  scale_x_log10(labels = scales::dollar) +
+  geom_smooth(aes(
+    group = factor(sex)), 
+    method = "lm"
+    ) +
+* facet_grid(
+*   rows = vars(black),
+*   labeller = labeller(black = c(
+*     `0` = "Non-Black",
+*     `1` = "Black",
+*     "(all)" = "(all)"
+*   )),
+*   margins = TRUE
+* )
+```
+]
+.right-plot[
+![](Day1-slides_files/figure-html/goals-plot-2f-1.png)
+]
+
+---
+count: false
+
+.left-code[
+
+```r
+ggplot(
+  filter(nlsy, age_bir &gt; 0, !is.na(black)),
+  aes(income, age_bir, col = factor(sex))
+) +
+  geom_point(alpha = 0.1) +
+  scale_color_brewer(
+    palette = "Set1",
+    name = "Sex",
+    labels = c("Male", "Female")
+  ) +
+  scale_x_log10(labels = scales::dollar) +
+  geom_smooth(aes(
+    group = factor(sex)), 
+    method = "lm"
+    ) +
+  facet_grid(
+    rows = vars(black),
+    labeller = labeller(black = c(
+      `0` = "Non-Black",
+      `1` = "Black",
+      "(all)" = "(all)"
+    )),
+    margins = TRUE
+  ) +
+* theme_minimal()
+```
+]
+.right-plot[
+![](Day1-slides_files/figure-html/goals-plot-2g-1.png)
+]
+
+---
+count: false
+
+.left-code[
+
+```r
+ggplot(
+  filter(nlsy, age_bir &gt; 0, !is.na(black)),
+  aes(income, age_bir, col = factor(sex))
+) +
+  geom_point(alpha = 0.1) +
+  scale_color_brewer(
+    palette = "Set1",
+    name = "Sex",
+    labels = c("Male", "Female")
+  ) +
+  scale_x_log10(labels = scales::dollar) +
+  geom_smooth(aes(
+    group = factor(sex)), 
+    method = "lm"
+    ) +
+  facet_grid(
+    rows = vars(black),
+    labeller = labeller(black = c(
+      `0` = "Non-Black",
+      `1` = "Black",
+      "(all)" = "(all)"
+    )),
+    margins = TRUE
+  ) +
+  theme_minimal() +
+* theme(legend.position = "top")
+```
+]
+.right-plot[
+![](Day1-slides_files/figure-html/goals-plot-2h-1.png)
+]
+
+---
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="../macros.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
