@@ -1,0 +1,166 @@
+---
+title: "Day 1: Making figures"
+date: ""
+output:
+  tufte::tufte_html:
+    tufte_variant: "envisioned"
+    css: "../setup/lab.css"
+link-citations: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+```{r}
+library(tidyverse)
+names(nlsy) <- c("id", "sample_type", "sex",  "black", "glasses", "eyesight", "income", "age_1birth")
+```
+
+
+
+
+
+
+# General recommendations
+I recommend you create a folder for R office hours and in it an .R file called "OH-01-notes.R" or something similar. Rewrite all the code you run in there, and add comments (using `#`) with things you want to remember when you look back at the file. (You can of course copy and paste some from the OH document, but rewriting will help you remember it better because you'll make and have to fix your mistakes.) Keep all your code in order so the whole document can be run at once, and make sure to include any necessary package loading at the top. Comment out things that don't work, hopefully with a note about why. This should be a reference for you to return to.
+
+# Motivation and goals
+
+Today's office hours will focus on using the `ggplot2` package to visualize data. While `ggplot2` is very flexible, allowing you to make just about any type of figure you will every need, we'll stick with the basics today.
+
+```{marginfigure}
+This is a great resource if you want to learn more. It introduces the `tidyverse`, a family of related packages that all aim to make data management and analysis simple and intuitive (and tidy!). We'll try to work through some of the most important functions in these office hours.
+```
+Hadley Wickham, an R superstar, starts his book [*R for Data Science*](http://r4ds.had.co.nz) by teaching `ggplot2`. Because creating plots can get very complex, it may seem a weird place to start, but his reasoning is that it can be immediately gratifying -- unlike most other things in statistical programming. It's also a great way to get an early feel for your data before you do any analysis, as well as see if there are any potential problems (miscoding, outliers, impossible values, etc.).
+
+The `ggplot()` function is the workhorse of this package. All you really need to give it is your data (which needs to be a dataframe), and then you add pieces to specify what type of graph you'd like, and how you'd like it to look. And when I say "add", I mean that literally: you use `+` to layer all the pieces. The basic format of a `ggplot()` call is:
+
+```{r, eval = F}
+ggplot(data = <data>, aes(x = <xvar>, y = <yvar>, col = <colvar>, ...)) +
+  <geom>(size = <size>, ...)
+```
+
+```{marginfigure}
+I included `col` and `size` to show you a couple of ways you can customize your plot, but you certainly don't always need to use them, and there are plenty of others. Some "geoms", like the one to create a histogram, don't need a variable for the y-axis either. You can always find out more in the documentation.
+```
+
+The 'geoms' we'll introduce today are `geom_point()` and `geom_histogram()`. These create scatterplots, line graphs, and histograms, respectively. Each of them requires 'aesthetics', which are basically the variables used to format the graphs. We'll also look at some basic ways to customize these graphs. Let's start with some data we want to look at.
+
+# Read in data
+
+Even though we won't be using much of its functionality yet, we'll start by installing the `tidyverse` package. Recall that you'll only need to do this once. The next time you need any of its functions, you can just use the `library(tidyverse)` line.
+
+```{r, eval = F}
+install.packages("tidyverse")
+library(tidyverse)
+```
+```{marginfigure}
+Namely, `read_csv()` can be much faster and is better at reading in different types of variables (e.g., dates). It also doesn't automatically change character variables to factors, and tells you what kind of variable it assumes each column is.
+```
+This will allow us to use the `read_csv()` function. This works mostly like the `read.csv()` function you're already familiar with, but is just a little bit better 😂.
+
+You can either download the data directly [here](https://louisahsmith.github.io/R-office-hours/data/OH-01-data.csv) (right-click, download linked file  save to your working directory) or use the `read_csv()` function to read it directly from the internet.
+```{r, message = TRUE}
+# if you downloaded it
+# nlsy <- read_csv("OH-01-data.csv")
+
+# if not
+nlsy <- read_csv("https://louisahsmith.github.io/R-office-hours/data/OH-01-data.csv")
+
+# change the variable names
+names(nlsy) <- c("glasses", "eyesight", "id", "sample_type", "black",
+                 "sex", "income", "age_1birth")
+```
+
+We're using a few variables from the [National Longitudinal Survey of Youth 1979](https://www.nlsinfo.org/content/cohorts/nlsy79), a cohort of American young adults aged 14-22 at enrollment in 1979. They continue to be followed to this day, and there is a wealth of publicly available data [online](https://www.nlsinfo.org/investigator/pages/login.jsp). I've downloaded the answers to a survey question about whether respondents wear glasses, a scale about their eyesight with glasses, whether they are black or white/hispanic, their sex, their family's income in 1979, and their age at the birth of their first child.
+
+# Look at the data
+
+## New geom: `geom_histogram()`
+
+```{marginfigure}
+R will tell you `"stat_bin()" using "bins = 30". Pick better value with "binwidth".` You can specify the width of the bins with `binwidth = ` or the number of bins with `bins = `. Each of them goes inside the `geom_histogram()` function, not the `aes()` function, because you give them a number, not a variable name.
+```
+Let's use `geom_histogram()` to see at what ages cohort participants had their first child. The `ggplot2` package was loaded with the `library(tidyverse)` line, but you could also load it on its own with `library(ggplot2)` if you hadn't already done that.
+```{r}
+ggplot(data = nlsy, aes(age_1birth)) + geom_histogram()
+```
+
+That histogram is a disaster! Here's a great example where plotting your data can tell you you did something wrong. **How could you fix this?**
+
+```{marginfigure}
+The code below is saying that the variable `age_1birth` will take on a new value: **if** it's currently equal to -998, replace with NA, or **else** just replace it with its current value (`nlsy$age_1birth`).
+```
+From the codebook I can see that a value of -998 means that the respondent has not had a first birth. Let's replace these with `NA`. Imagine what would have happened if we had tried to run a regression with that variable!
+```{r}
+nlsy$age_1birth <- ifelse(nlsy$age_1birth == -998, NA, nlsy$age_1birth)
+```
+
+Now re-make the histogram. **Does it look as it should?**
+
+It turns out -3 and -5 should also be coded as `NA` values. Fix those, then make another histogram to see if you finally get what you expect. You might want to try `binwidth = 1`, so that each year gets its own "column" in the histogram.
+
+## New geom: `geom_point()`
+Let's see if family income is correlated with age at birth of first child. (I've cleaned up the other variables so they have the correct `NA` values; `ggplot` will tell you there are missing values with a warning.)
+```{r, echo = FALSE}
+nlsy$age_1birth <- ifelse(nlsy$age_1birth %in% c(-3, -5), NA, nlsy$age_1birth)
+```
+Before creating a scatterplot of the two variables, make a histogram for income. **Does it look like there are any implausible income values? Can you infer anything about how it was coded?**
+
+It may not be easy to tell with the default bins, but the income variable has been truncated (to preserve the privacy of the very rich). **What's the value of the largest assigned value of income? How many families made at least that much? How many families made $1 less?**
+
+Now that we have a handle on the data, let's graph the two variables. Let's make the points blue, just for fun.
+```{r}
+ggplot(nlsy, aes(x = income, y = age_1birth)) + geom_point(col = "blue")
+```
+
+```{marginfigure}
+If you read the help file for `geom_jitter()`, you will see that you can achieve the same effect with `geom_point(aes(x = income, y = age_1birth), position = "jitter")`
+```
+We can see some patterns in the data. It looks like a lot of families have incomes (or report they have incomes) ending in increments of \$5000, though that mostly occurs in the higher income brackets. And all the age values are whole years. When bunching of the data like this occurs, it can often be hard to see how many points there really are, because they lie on top of each other. In that case, we can use `geom_jitter()`, which "jitters" the points a little bit (shifts them slightly off their true values) so that we can see them better.
+```{r}
+ggplot(nlsy, aes(x = income, y = age_1birth)) + geom_jitter(col = "blue")
+```
+
+While we can see that there's definitely some correlation here, we may wonder if it differs by race. We can change the color of the points accordingly. Here's where it can get confusing. Run and compare the following two lines of code:
+```{r, eval = FALSE}
+ggplot(nlsy, aes(x = income, y = age_1birth)) + geom_jitter(col = "black")
+ggplot(nlsy, aes(x = income, y = age_1birth, col = black)) + geom_jitter()
+```
+**What do you think the difference is?**
+
+When we customize a plot with something like colors, we have a choice: we can make it correspond to a variable in the dataset, or we can just give it a fixed value. To do the former, we included it in the `aes()` function; for the latter, we leave it outside. So the first line of code was literally just telling all the points to be black, while the second line told them to be colored according to their value of the `black` variable in the dataset.
+
+The second line is clearly what we were looking to do. But look at the legend. **Do we need a value for fractions of `black` (given what we have in the data)? How could we change this?**
+
+```{marginfigure}
+Using factor variables is generally preferable in R. You rarely have to worry about creating indicator variables yourself, or keeping them in that format, because most regression functions will do it automatically.
+```
+We can see that it might be useful to have that variable be a factor variable instead of an indicator. We can do that with the following code.
+```{r}
+nlsy$black <- factor(nlsy$black, labels = c("non-black", "black"))
+```
+Now let's look at the graph.
+```{r}
+ggplot(nlsy, aes(x = income, y = age_1birth, col = black)) + geom_jitter()
+```
+Obviously this isn't publication quality, and there are ways to change and move the labels and legend and colors and everything we could possibly want, but it's a good way to start to understand your data so that you can do any necessary cleaning or management.
+
+# Extra: `geom_smooth()`
+What if we wanted to really see whether the two variables are associated, or whether that association differs by race? We could of course fit a regression model. But we could also use `ggplot()` to fit that model for us and print the regression line directly on the graph!
+
+To add a linear regression line, simply add `+ geom_smooth(method = "lm")` to your scatterplot. Look at the help file for `geom_smooth()` to read more about the function.
+
+**What if you are looking at the linear relationship between two variables but want to account for confounding? Would the regression line from `ggplot()` match that from the output of the multivariable linear regression? Is it a good idea to use this plotting method to assess a relationship if there are confounders?**
+
+## Super extra credit
+Make a scatterplot with a regression line as above. However, color the points according to race, but calculate one overall regression line for the two groups combined, and color it black.
+
+Hint: you can have more than one `aes()` function, and you can put them inside the geoms.
+
+```{r, echo = FALSE}
+ggplot(nlsy, aes(x = income, y = age_1birth)) +
+  geom_jitter(aes(col = black)) +
+  geom_smooth(col = "black", method = "lm")
+```

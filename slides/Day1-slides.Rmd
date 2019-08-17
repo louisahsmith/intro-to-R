@@ -1,0 +1,728 @@
+---
+title: "Day 1"
+subtitle: "Intro to R and making figures"  
+author: "Louisa H. Smith"
+date: '`r Sys.Date()`'
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: xaringan-themer.css
+    nature:
+      beforeInit: "macros.js"
+      ratio: 16:9
+      highlightLines: true
+      countIncrementalSlides: false
+---
+class: middle
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE, width = 93)
+knitr::opts_chunk$set(fig.dim = c(4.8, 4.5), fig.retina = 2, out.width = "100%", message = FALSE, warning = FALSE)
+knitr::opts_hooks$set(fig.callout = function(options) {
+  if (options$fig.callout) {
+    options$echo <- FALSE
+    options$out.height <- "99%"
+    options$fig.width <- 16
+    options$fig.height <- 8
+  }
+  options
+})
+library(tidyverse)
+reveal <- function(name, num) {
+  content <- knitr:::knit_code$get(name)
+  last_line <- which(str_detect(content, "\\+"))[num]
+  if (is.na(last_line)) last_line <- length(content)
+  if (num == 1) {
+    first_line <- 1
+    } else {
+    first_line <- which(str_detect(content, "\\+"))[num - 1] + 1
+    }
+  content[last_line] <- str_remove(content[last_line], "\\+")
+  new_lines <- paste0(content[first_line:last_line], " #<<")
+  orig_lines <- if (num == 1) 0 else 1:(first_line-1)
+  c(content[orig_lines], new_lines)
+}
+```
+```{css, echo=FALSE}
+/* custom.css */
+.left-code {
+  color: #777;
+  width: 43%;
+  height: 92%;
+  float: left;
+  font-size: 0.8em;
+  position: absolute;
+}
+.right-plot {
+  width: 55%;
+  float: right;
+  padding-left: 1%;
+  position: absolute;
+}
+.plot-callout {
+  height: 225px;
+  width: 450px;
+  bottom: 5%;
+  right: 5%;
+  position: absolute;
+  padding: 0px;
+  z-index: 100;
+}
+.plot-callout img {
+  width: 100%;
+  border: 4px solid #23373B;
+}
+
+.inverse h1, .inverse h2, .inverse h3 {
+  color: #1F4257;
+}
+.remark-slide thead, .remark-slide tr:nth-child(2n) {
+  background-color: white;
+}
+```
+```{r xaringan-themer, include=FALSE}
+library(xaringanthemer)
+duo_accent(
+  primary_color = "#1F4257",
+  secondary_color = "#F97B64",
+  header_font_google = google_font("Lexend Deca"),
+  text_font_google = google_font("Noto Sans")
+)
+```
+# RStudio
+
+### An IDE for R
+
+An *integrated development environment* is software that makes coding easier
+
+- see objects you've imported and created
+- autocomplete
+- syntax highlighting
+- run part or all of your code
+
+---
+class:middle inverse
+background-image: url("img/rstudio.png")
+background-size: contain
+
+---
+## R uses `<-` for assignment
+
+Create an object `vals` that contains and sequence of numbers:
+
+```{r}
+# create values
+vals <- c(1, 645, 329)
+```
+
+Put your cursor at the end of the line and hit ctrl/cmd + enter.
+
+Now `vals` holds those values.
+
+We can see them again by running just the name (put your cursor after the name and press ctrl/cmd + enter again).
+
+```{r}
+vals
+```
+### No assignment arrow means that the object will be printed to the console.
+
+---
+# Types of data (*classes*)
+
+We could also create a character *vector*:
+
+```{r}
+chars <- c("dog", "cat", "rhino")
+chars
+```
+
+Or a *logical* vetor:
+
+```{r}
+logs <- c(TRUE, FALSE, FALSE)
+logs
+```
+
+### We'll see more options as we go along!
+---
+
+# Types of objects
+
+We created *vectors* with the `c()` function (`c` stands for concatenate)
+
+We could also create a *matrix* of values with the `matrix()` function:
+```{r}
+# turn the vector of numbers into a 2-row matrix
+mat <- matrix(c(234, 7456, 12, 654, 183, 753), nrow = 2)
+mat
+```
+
+The numbers in square brackets are *indices*, which we can use to pull out values:
+
+```{r}
+# extract second row
+mat[2, ]
+```
+
+---
+class: inverse
+# Exercises 1
+.center[
+<iframe src="https://giphy.com/embed/l0HlQ7mVw7pPtItEc" width="312" height="280" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/gifitup-halloween-hypnosis-l0HlQ7mVw7pPtItEc"></a></p>
+]
+1. Extract `645` from `vals` using square brackets
+2. Extract `"rhino"` from `chars` using square brackets
+3. Extract `183` from `mat` using square brackets
+4. Figure out how to get the following errors: 
+
+```{r, echo = FALSE}
+print("incorrect number of dimensions")
+print("subscript out of bounds")
+```
+
+---
+# Dataframes
+
+We usually do analysis in R with dataframes (or some variant).
+
+Dataframes are basically like spreadsheets: columns are variables, and rows are observations.
+```{r}
+gss_cat
+```
+
+---
+background-image: url(https://ih1.redbubble.net/image.543363717.2207/pp,840x830-pad,1000x1000,f8f8f8.jpg)
+background-size:contain
+# *tibble*???
+---
+# tidyverse
+.left-column[
+![](https://ih1.redbubble.net/image.543366382.2273/flat,1000x1000,075,f.jpg)
+]
+.right-column[
+The tidyverse is a collection of packages for R that are designed to make working with data easy and intuitive.
+
+You might hear it contrasted with "base R" or the package `data.table`. You can (and should!) learn as many coding techniques and strategies as possible, then choose the best option (in terms of speed, readability, etc.) for you.
+
+I find tidyverse the quickest and most intuitive way to get up and running with R.
+
+```{r, eval = FALSE}
+install.packages("tidyverse")
+library(tidyverse)
+# installs and loads ggplot2, dplyr, tidyr, readr,
+# purrr, tibble, stringr, forcats
+```
+]
+
+---
+## and tibbles are the quickest and most intuitive way to make and read a dataset
+.pull-left[
+```{r}
+dat1 <- tibble(
+  age = c(24, 76, 38),
+  height_in = c(70, 64, 68),
+  height_cm = height_in * 2.54
+)
+dat1
+```
+]
+.pull-right[
+```{r}
+dat2 <- tribble(
+  ~n, ~food, ~animal,
+  39, "banana", "monkey",
+  21, "milk", "cat",
+  18, "bone", "dog"
+)
+dat2
+```
+]
+
+---
+## tibbles are basically just pretty dataframes
+.pull-left[
+```{r, comment = NA}
+as_tibble(gss_cat)[, 1:5]
+```
+]
+.pull-right[
+```{r, comment = NA, eval = FALSE}
+as.data.frame(gss_cat)[, 1:5]
+```
+```{r, comment = NA, echo = FALSE}
+as.data.frame(gss_cat)[1:20, 1:5]
+```
+]
+
+---
+class: middle center
+![](https://www.nlsinfo.org/sites/nlsinfo.org/files/images/NLSY79_0.png)
+
+We'll use some data from the [National Longitudinal Survey of Youth 1979](https://www.nlsinfo.org/content/cohorts/nlsy79), a cohort of American young adults aged 14-22 at enrollment in 1979. They continue to be followed to this day, and there is a wealth of publicly available data [online](https://www.nlsinfo.org/investigator/pages/login.jsp). I've downloaded the answers to a survey question about whether respondents wear glasses, a scale about their eyesight with glasses, whether they are black or white/hispanic, their sex, their family's income in 1979, and their age at the birth of their first child.
+---
+# Read in data
+```{r, eval = FALSE}
+nlsy <- read_csv("data/nlsy.csv")
+nlsy
+```
+```{r, echo = FALSE, message = FALSE}
+nlsy <- read_csv("../data/nlsy.csv")
+print(nlsy, n = 2)
+```
+### Ugh...
+```{r}
+colnames(nlsy)
+# "write over" the variable names with new names
+colnames(nlsy) <- c("id", "samp", "sex", "black", "eyesight", "glasses", "income", "age_bir")
+```
+
+---
+class: inverse
+# Exercises 2
+.center[
+<iframe src="https://giphy.com/embed/TvVck7lO4LDJS" width="480" height="360" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/TvVck7lO4LDJS"></a></p>
+]
+
+1. Read in the NLSY data and change the variable names as in the slides.
+2. How many people are in the NLSY? How many variables are in this dataset? What are two ways you can answer these questions?
+3. Can you find an R function(s) we haven't discussed that answers question 2? (Hint: Google)
+
+---
+# #goals
+.pull-left[
+```{r goals-plot-1, echo = FALSE, warning = FALSE, out.width="500px", out.height = "500px", fig.align = "center"}
+ggplot(nlsy) +
+  geom_bar(aes(
+    x = eyesight, 
+    fill = factor(eyesight))
+    ) +
+  facet_grid(
+    cols = vars(glasses),
+    labeller = labeller(glasses = c(
+      `0` = "Doesn't wear glasses",
+      `1` = "Wears glasses/contacts"
+    ))
+  ) +
+  scale_fill_brewer(palette = "Spectral", 
+                    direction = -1) +
+  scale_x_continuous(
+    labels = c("Excellent", "Very Good", 
+               "Good", "Fair", "Poor"),
+    breaks = c(1, 2, 3, 4, 5)
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "none",
+    axis.text.x = element_text(angle = 45, 
+                               vjust = 1, 
+                               hjust = 1)
+  ) +
+  labs(
+    title = "Quality of eyesight in NLSY",
+    x = "Eyesight quality",
+    y = NULL
+  ) +
+  coord_cartesian(expand = c(0, 0))
+```
+]
+.pull-right[
+```{r goals-plot-2, echo = FALSE, warning = FALSE, out.width="500px", out.height = "500px", fig.align = "center"}
+ggplot(
+  filter(nlsy, age_bir > 0, !is.na(black)),
+  aes(income, age_bir, col = factor(sex))
+) +
+  geom_point(alpha = 0.1) +
+  scale_color_brewer(
+    palette = "Set1",
+    name = "Sex",
+    labels = c("Male", "Female")
+  ) +
+  scale_x_log10(labels = scales::dollar) +
+  geom_smooth(aes(
+    group = factor(sex)), 
+    method = "lm"
+    ) +
+  facet_grid(
+    rows = vars(black),
+    labeller = labeller(black = c(
+      `0` = "Non-Black",
+      `1` = "Black",
+      "(all)" = "(all)"
+    )),
+    margins = TRUE
+  ) +
+  theme_minimal() +
+  theme(legend.position = "top") +
+  labs(
+    title = "Relationship between income and age at first birth",
+    subtitle = "by sex and race",
+    x = "Income",
+    y = "Age at first birth"
+  )
+```
+]
+
+---
+# #goals
+
+```{r, echo = FALSE}
+run_analysis <- function(group) {
+  dat <- nlsy %>%
+    mutate(
+      eyes = factor(eyesight, labels = c("Excellent", "Very Good", "Good", "Fair", "Poor")),
+      sample = case_when(
+        samp %in% 1:8 ~ "main",
+        samp %in% 9:14 ~ "supplementary",
+        samp %in% 15:20 ~ "military"
+      )
+    ) %>%
+    filter(sample == group)
+
+  fit <- glm(glasses ~ eyes, family = binomial, data = dat)
+  ors <- exp(coef(fit)[-1])
+  cis <- exp(confint(fit)[-1, ])
+  pvals <- summary(fit)$coefficients[-1, 4]
+  coefs <- levels(dat$eyes)[-1]
+
+  res <- tibble(
+    coef = coefs,
+    OR = ors,
+    lCI = cis[, 1],
+    uCI = cis[, 2],
+    p = pvals
+  ) %>%
+    mutate(
+      coef = fct_relevel(coef, c("Very Good", "Good", "Fair", "Poor")),
+      p_round = scales::pvalue(p),
+      OR_round = prettyNum(OR, digits = 2, nsmall = 2),
+      lCI_round = prettyNum(lCI, digits = 2, nsmall = 2),
+      uCI_round = prettyNum(uCI, digits = 2, nsmall = 2),
+      CI = str_glue("{OR_round} ({lCI_round}, {uCI_round})")
+    )
+
+  ref <- tibble(coef = "Excellent", CI = "1 (ref)", p_round = NA)
+
+  tab <- res %>%
+    select(coef, CI, p_round)
+  tab <- bind_rows(ref, tab)
+  colnames(tab) <- c("Eyesight", "OR (95% CI)", "P-value")
+
+  write_csv(tab, path = str_glue("results/table_{group}.csv"))
+
+  p <- ggplot(res) +
+    geom_point(aes(x = coef, y = OR)) +
+    geom_errorbar(aes(x = coef, ymin = lCI, ymax = uCI)) +
+    geom_hline(yintercept = 1, linetype = "dashed") +
+    scale_y_log10(
+      breaks = 0:100,
+      limits = c(min(c(1, res$lCI), na.rm = TRUE), min(c(10, max(res$uCI, na.rm = TRUE))))
+    ) +
+    labs(
+      title = "How is the quality of eyesight \nrelated to wearing glasses?",
+      subtitle = str_glue("{group} group"),
+      x = "Eyesight quality"
+    ) +
+    theme_minimal()
+
+  ggsave(p, filename = str_glue("results/figure_{group}.pdf"))
+}
+```
+```{r, message = FALSE, warning = FALSE, eval = FALSE}
+run_analysis(group = "main")
+run_analysis(group = "supplementary")
+run_analysis(group = "military")
+```
+### Ta da!
+.center[
+![:scale 40%](../folder.png)
+]
+
+---
+class: middle
+.pull-left[
+```{r, echo = FALSE, warning = FALSE, message = FALSE}
+group <- "main"
+dat <- nlsy %>%
+  mutate(
+    eyes = factor(eyesight, labels = c("Excellent", "Very Good", "Good", "Fair", "Poor")),
+    sample = case_when(
+      samp %in% 1:8 ~ "main",
+      samp %in% 9:14 ~ "supplementary",
+      samp %in% 15:20 ~ "military"
+    )
+  ) %>%
+  filter(sample == group)
+
+fit <- glm(glasses ~ eyes, family = binomial, data = dat)
+ors <- exp(coef(fit)[-1])
+cis <- exp(confint(fit)[-1, ])
+pvals <- summary(fit)$coefficients[-1, 4]
+coefs <- levels(dat$eyes)[-1]
+
+res <- tibble(
+  coef = coefs,
+  OR = ors,
+  lCI = cis[, 1],
+  uCI = cis[, 2],
+  p = pvals
+) %>%
+  mutate(
+    coef = fct_relevel(coef, c("Very Good", "Good", "Fair", "Poor")),
+    p_round = scales::pvalue(p),
+    OR_round = prettyNum(OR, digits = 2, nsmall = 2),
+    lCI_round = prettyNum(lCI, digits = 2, nsmall = 2),
+    uCI_round = prettyNum(uCI, digits = 2, nsmall = 2),
+    CI = str_glue("{OR_round} ({lCI_round}, {uCI_round})")
+  )
+
+ref <- tibble(coef = "Excellent", CI = "1 (ref)", p_round = NA)
+
+tab <- res %>%
+  select(coef, CI, p_round)
+tab <- bind_rows(ref, tab)
+colnames(tab) <- c("Eyesight", "OR (95% CI)", "P-value")
+
+ggplot(res) +
+  geom_point(aes(x = coef, y = OR)) +
+  geom_errorbar(aes(x = coef, ymin = lCI, ymax = uCI)) +
+  geom_hline(yintercept = 1, linetype = "dashed") +
+  scale_y_log10(
+    breaks = 0:100,
+    limits = c(min(c(1, res$lCI), na.rm = TRUE), min(c(10, max(res$uCI, na.rm = TRUE))))
+  ) +
+  labs(
+    title = "How is the quality of eyesight \nrelated to wearing glasses?",
+    subtitle = str_glue("{group} group"),
+    x = "Eyesight quality"
+  ) +
+  theme_minimal()
+```
+]
+.pull-right[.middle[
+```{r, echo = FALSE}
+knitr::kable(tab, format = "html")
+```
+]]
+
+---
+# Basic structure of a ggplot
+
+```r
+ggplot(data = {data}) +
+      <geom>(aes(x = {xvar}, y = {yvar}, <characteristic> = {othvar}, ...),
+             <characteristic> = "value", ...) +
+      ...
+```
+- `{data}`: must be a dataframe (or tibble!)
+- `{xvar}` and `{yvar}` are the column names (unquoted) of the variables on the x- and y-axes
+- `{othvar}` is some other unquoted variable name that defines a grouping or other characteristic you want to map to an aesthetic
+
+
+- `<geom>`: the geometric feature you want to use; e.g., point (scatterplot), line, histogram, bar, etc.
+- `<characteristic>`: you can map `{othvar}` or a fixed `"value"` to any of a number of aesthetic features of the figure; e.g., color, shape, size, linetype, etc.
+
+
+- `"value"`: a fixed value that defines some characteristic of the figure; e.g., "red", 10, "dashed"
+
+
+- ... : there are numerous other options to discover!
+
+---
+# Examples
+```{r}
+ggplot(data = nlsy) +
+  geom_point(
+    aes(
+      x = income,
+      y = age_bir,
+      col = sex
+    ),
+    shape = "triangle"
+  )
+```
+
+---
+count: false
+.left-code[
+```{r goals-plot-1a, fig.show="hide", code=reveal("goals-plot-1", 1)}
+```
+]
+.right-plot[
+![](`r knitr::fig_chunk("goals-plot-1a", "png")`)
+]
+
+---
+count: false
+
+.left-code[
+```{r goals-plot-1b, fig.show="hide", code=reveal("goals-plot-1", 2)}
+```
+]
+.right-plot[
+![](`r knitr::fig_chunk("goals-plot-1b", "png")`)
+]
+
+---
+count: false
+
+.left-code[
+```{r goals-plot-1c, fig.show="hide", code=reveal("goals-plot-1", 3)}
+```
+]
+.right-plot[
+![](`r knitr::fig_chunk("goals-plot-1c", "png")`)
+]
+
+---
+count: false
+
+.left-code[
+```{r goals-plot-1d, fig.show="hide", code=reveal("goals-plot-1", 4)}
+```
+]
+.right-plot[
+![](`r knitr::fig_chunk("goals-plot-1d", "png")`)
+]
+
+---
+count: false
+
+.left-code[
+```{r goals-plot-1e, fig.show="hide", code=reveal("goals-plot-1", 5)}
+```
+]
+.right-plot[
+![](`r knitr::fig_chunk("goals-plot-1e", "png")`)
+]
+
+---
+count: false
+
+.left-code[
+```{r goals-plot-1f, fig.show="hide", code=reveal("goals-plot-1", 6)}
+```
+]
+.right-plot[
+![](`r knitr::fig_chunk("goals-plot-1f", "png")`)
+]
+
+---
+count: false
+
+.left-code[
+```{r goals-plot-1g, fig.show="hide", code=reveal("goals-plot-1", 7)}
+```
+]
+.right-plot[
+![](`r knitr::fig_chunk("goals-plot-1g", "png")`)
+]
+
+---
+count: false
+
+.left-code[
+```{r goals-plot-1h, fig.show="hide", code=reveal("goals-plot-1", 8)}
+```
+]
+.right-plot[
+![](`r knitr::fig_chunk("goals-plot-1h", "png")`)
+]
+
+---
+count: false
+
+.left-code[
+```{r goals-plot-1i, fig.show="hide", code=reveal("goals-plot-1", 9)}
+```
+]
+.right-plot[
+![](`r knitr::fig_chunk("goals-plot-1i", "png")`)
+]
+
+---
+count: false
+.left-code[
+```{r goals-plot-2a, fig.show="hide", code=reveal("goals-plot-2", 1)}
+```
+]
+.right-plot[
+![](`r knitr::fig_chunk("goals-plot-2a", "png")`)
+]
+
+---
+count: false
+
+.left-code[
+```{r goals-plot-2b, fig.show="hide", code=reveal("goals-plot-2", 2)}
+```
+]
+.right-plot[
+![](`r knitr::fig_chunk("goals-plot-2b", "png")`)
+]
+
+---
+count: false
+
+.left-code[
+```{r goals-plot-2c, fig.show="hide", code=reveal("goals-plot-2", 3)}
+```
+]
+.right-plot[
+![](`r knitr::fig_chunk("goals-plot-2c", "png")`)
+]
+
+---
+count: false
+
+.left-code[
+```{r goals-plot-2d, fig.show="hide", code=reveal("goals-plot-2", 4)}
+```
+]
+.right-plot[
+![](`r knitr::fig_chunk("goals-plot-2d", "png")`)
+]
+
+---
+count: false
+
+.left-code[
+```{r goals-plot-2e, fig.show="hide", code=reveal("goals-plot-2", 5)}
+```
+]
+.right-plot[
+![](`r knitr::fig_chunk("goals-plot-2e", "png")`)
+]
+
+---
+count: false
+
+.left-code[
+```{r goals-plot-2f, fig.show="hide", code=reveal("goals-plot-2", 6)}
+```
+]
+.right-plot[
+![](`r knitr::fig_chunk("goals-plot-2f", "png")`)
+]
+
+---
+count: false
+
+.left-code[
+```{r goals-plot-2g, fig.show="hide", code=reveal("goals-plot-2", 7)}
+```
+]
+.right-plot[
+![](`r knitr::fig_chunk("goals-plot-2g", "png")`)
+]
+
+---
+count: false
+
+.left-code[
+```{r goals-plot-2h, fig.show="hide", code=reveal("goals-plot-2", 8)}
+```
+]
+.right-plot[
+![](`r knitr::fig_chunk("goals-plot-2h", "png")`)
+]
+
+---
