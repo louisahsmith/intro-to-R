@@ -1,17 +1,26 @@
 ---
-title: "R Course Materials"
-author: "Louisa Smith"
+title: "Introduction to R"
+author: "Louisa H. Smith"
 date: "8/17/2019"
 output: html_document
 ---
 
-To launch an R Studio session for the course:
+### [Syllabus](syllabus.html)
 
-<!-- badges: start -->
-[![Launch Rstudio Binder](http://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/louisahsmith/r-materials-F19/master?urlpath=rstudio)
-<!-- badges: end -->
+### Schedule:
 
-## Schedule:
+#### Day 1: Figures
 
-### Day 1: 
-[slides](slides/Day1-slides.html)
+View the slides [here](slides/Day1-slides.html).
+
+Download the scripts and data [here](https://github.com/louisahsmith/r-materials-F19/blob/master/day1.zip?raw=true).
+
+If you're having trouble with R on your own machine, click [this link](https://rstudio.cloud/project/4920660) and sign up for a free RStudio cloud account. You'll be able to access all the materials directly.
+
+#### Day 2: Selecting, filtering, and mutating
+
+#### Day 3: Grouping and tables
+
+#### Day 4: Functions
+
+#### Day 5: Analyze your data
