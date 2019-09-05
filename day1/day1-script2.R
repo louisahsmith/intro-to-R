@@ -48,6 +48,19 @@ colnames(nlsy) <- c("glasses", "eyesight", "sleep_wkdy", "sleep_wknd",
 colnames(nlsy)
 
 
+# explore the data
+glimpse(nlsy)
+summary(nlsy)
+
+# we can refer to specific variables with $ notation
+summary(nlsy$glasses)
+mean(nlsy$age_bir)
+?cor
+# what happens if you just run nlsy$eyesight?
+# what about table(nlsy$eyesight)
+
+
+
 #### Exercises 2 -----------------------------------------------------
 # Answer the questions below. Remember to include your answers in
 # this script so you can save and look back at it!
@@ -65,4 +78,8 @@ colnames(nlsy)
 # package (you already installed with with `tidyverse`, but it doesn't load
 # automatically). Figure out how to read in the data. This may help:
 # https://readxl.tidyverse.org.
+# Answer: 
+
+# 4. What's the Spearman correlation between hours of sleep on weekends and 
+# weekdays in this data?
 # Answer: 

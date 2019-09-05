@@ -20,16 +20,6 @@ colnames(nlsy) <- c("glasses", "eyesight", "sleep_wkdy", "sleep_wknd",
                     "id", "nsibs", "samp", "race_eth", "sex", "region", 
                     "income", "res_1980", "res_2002", "age_bir")
 
-# explore the data
-glimpse(nlsy)
-summary(nlsy)
-
-# we can refer to specific variables with $ notation
-summary(nlsy$glasses)
-mean(nlsy$age_bir)
-# what happens if you just run nlsy$eyesight?
-# what about table(nlsy$eyesight)
-
 # starting plot:
 ggplot(data = nlsy) +
   geom_point(aes(x = income, y = age_bir))

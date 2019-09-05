@@ -1,8 +1,7 @@
 ---
-title: "Day 1"
-subtitle: "Intro to R and making figures"  
-author: "Louisa H. Smith"
-date: '`r Sys.Date()`'
+title: "Introduction to R"
+subtitle: "Day 1: Intro and making figures"  
+author: "September 6, 2019"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -11,14 +10,13 @@ output:
       beforeInit: "macros.js"
       ratio: 16:9
       countIncrementalSlides: false
-      highlightStyle: github
+      highlightStyle: color-brewer
       highlightLines: true
       highlightSpans: true
 ---
-class: middle
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE, width = 93)
-knitr::opts_chunk$set(fig.dim = c(4.8, 4.5), fig.retina = 2, out.width = "100%", message = FALSE, warning = FALSE, cache = TRUE)
+knitr::opts_chunk$set(fig.dim = c(4.8, 4.5), fig.retina = 2, out.width = "100%", message = FALSE, warning = FALSE, cache = FALSE)
 knitr::opts_hooks$set(fig.callout = function(options) {
   if (options$fig.callout) {
     options$echo <- FALSE
@@ -123,7 +121,69 @@ duo_accent(
   text_font_google = google_font("Noto Sans")
 )
 ```
-# RStudio
+# About this class
+
+- Non-credit
+<br>
+
+- 5 sessions
+<br>
+
+- "Challenges" but no homework
+
+--
+<br>
+
+### Work hard with each other during class
+
+- Try to figure it out on your own before you ask for help
+
+--
+
+### Practice by yourself in between classes
+
+- You are not going to break anything!
+
+--
+.center[
+#### Anyone can learn to use R, it's just a matter of sitting down and doing it.  Now's your chance!
+]
+
+---
+# About me
+
+.pull-left[
+- 4th-year PhD candidate in Epidemiology
+<br>
+
+- Started using R during my masters (so 5 years of experience); learned mostly by doing
+<br>
+
+- Problem sets, manuscripts, slides, website all in R (www.louisahsmith.com)
+<br>
+
+- Almost 100 R projects on my computer, including over 1000 R scripts
+
+
+]
+.pull-right[
+![](img/apppic.png)
+]
+
+--
+.center[
+#### I have to Google things literally every time I use R!
+]
+
+---
+.pull-left[
+![](https://www.rstudio.com/wp-content/uploads/2019/02/rstudio-og.png)
+]
+.pull-right[.middle[
+<br>
+
+<br>
+
 
 ### An IDE for R
 
@@ -133,11 +193,22 @@ An *integrated development environment* is software that makes coding easier
 - autocomplete
 - syntax highlighting
 - run part or all of your code
+]]
 
 ---
-class:middle inverse
+class:middle inverse center
 background-image: url(img/rstudio.png)
 background-size: contain
+
+---
+count: false
+class:middle inverse center
+background-image: url(img/rstudio-markup.png)
+background-size: contain
+
+--
+<br>
+# RStudio demonstration
 
 ---
 # R uses `<-` for assignment
@@ -178,6 +249,7 @@ logs
 ```
 
 ### We'll see more options as we go along!
+
 ---
 
 # Types of objects
@@ -329,17 +401,6 @@ colnames(nlsy) <- c("glasses", "eyesight", "sleep_wkdy", "sleep_wknd",
 ```
 
 ---
-class: inverse
-# Exercises 2
-.center[
-<iframe src="https://giphy.com/embed/TvVck7lO4LDJS" width="320" height="240" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/TvVck7lO4LDJS"></a></p>
-]
-
-1. How many people are in the NLSY? How many variables are in this dataset? What are two ways you can answer these questions?
-2. Can you find an R function(s) we haven't discussed that answers question 2? (Hint: Google)
-3. I've also provided you with the same dataset as an Excel document, but it's not on the first sheet, and there's an annoying header. Load the `readxl` package (you already installed with with `tidyverse`, but it doesn't load automatically). Figure out how to read in the data. This may help: https://readxl.tidyverse.org.
-
----
 # Explore your data
 ```{r}
 glimpse(nlsy)
@@ -358,7 +419,34 @@ count:false
 ```{r}
 summary(nlsy$glasses)
 mean(nlsy$age_bir)
+?cor
 ```
+
+---
+# Get help!
+
+.pull-left[
+- `help(cor)`
+- https://www.rdocumentation.org
+- https://rdrr.io
+- https://www.r-project.org/help.html
+- SO. MUCH. MORE.
+]
+.pull-right[
+![](img/help.png)
+]
+
+---
+class: inverse
+# Exercises 2
+.center[
+<iframe src="https://giphy.com/embed/TvVck7lO4LDJS" width="320" height="240" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/TvVck7lO4LDJS"></a></p>
+]
+
+1. How many people are in the NLSY? How many variables are in this dataset? What are two ways you can answer these questions?
+2. Can you find an R function(s) we haven't discussed that answers question 2? (Hint: Google)
+3. I've also provided you with the same dataset as an Excel document, but it's not on the first sheet, and there's an annoying header. Load the `readxl` package (you already installed with with `tidyverse`, but it doesn't load automatically). Figure out how to read in the data. This may help: https://readxl.tidyverse.org.
+4. What's the Spearman correlation between hours of sleep on weekends and weekdays in this data?
 
 ---
 # #goals
@@ -483,6 +571,7 @@ run_analysis <- function(group) {
 }
 ```
 ```{r, message = FALSE, warning = FALSE, eval = FALSE}
+
 run_analysis(group = "main")
 run_analysis(group = "supplementary")
 run_analysis(group = "military")
@@ -494,6 +583,8 @@ run_analysis(group = "military")
 
 ---
 class: middle
+# #goals
+
 .pull-left[
 ```{r, echo = FALSE, warning = FALSE, message = FALSE}
 group <- "main"
@@ -1231,7 +1322,7 @@ We used discrete values with `geom_bar()`, but with `geom_histogram()` we're com
 
 This is one of the most common warning messages I get in R!
 
-```{r, out.width = "60%", echo = FALSE, fig.align = "center"}
+```{r, out.width = "50%", echo = FALSE, fig.align = "center"}
 knitr::include_graphics("https://www.washingtonpost.com/pbox.php?url=http://www.washingtonpost.com/news/volokh-conspiracy/wp-content/uploads/sites/14/2015/08/Warning-2.gif&w=1484&op=resize&opt=1&filter=antialias&t=20170517")
 ```
 
@@ -1475,12 +1566,37 @@ Here is a good list of themes and instructions to make your own: https://www.dat
 ]
 
 ---
-saving graphs
-show picture of ideal pipeline
+# Finally, save it!
+
+If your data changes, you can easily run the whole script again
+
+```{r, eval = FALSE}
+library(tidyverse)
+dataset <- read_csv("dataset.csv")
+ggplot(dataset) + 
+  geom_point(aes(x = xvar, y = yvar))
+ggsave(filename = "scatterplot.pdf")
+```
+
 ---
 class: inverse
 # Final challenge
-### Recreate these plots using the NLSY data!
+### Recreate this plot using the NLSY data!
 
----
-good resource: http://shiny.stat.ubc.ca/r-graph-catalog/
+```{r, echo = FALSE, out.width = "45%", fig.align = "center"}
+ggplot(nlsy, aes(nsibs, age_bir, col = factor(region))) +
+  geom_jitter(alpha = 0.3) +
+  geom_smooth(method = "loess", se = FALSE) +
+  labs(title = "Relationship between family size and age at first birth",
+       subtitle = "By U.S. Region, with Loess curves",
+       x = "Number of siblings",
+       y = "Age at first birth") +
+  scale_color_viridis_d(labels = c("Northeast", "North Central", "South", "West"),
+                        name = "Region") +
+  facet_grid(cols = vars(sex),
+             labeller = labeller(sex = c("1" = "Male", "2" = "Female"))) +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+```
+
+

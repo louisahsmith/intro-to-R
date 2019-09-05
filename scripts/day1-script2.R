@@ -33,7 +33,7 @@ dat2
 # read in data
 # there are different functions to read in data depending on what kind it is
 # you can use the haven package to read in SAS and Stata files
-nlsy <- read_csv("nlsy.csv") # assumes the file is in the same folder as this project
+nlsy <- read_csv("nlsy_cc.csv") # assumes the file is in the same folder as this project
 nlsy
 
 
@@ -46,6 +46,19 @@ colnames(nlsy) <- c("glasses", "eyesight", "sleep_wkdy", "sleep_wknd",
                     "income", "res_1980", "res_2002", "age_bir")
 # look at the column names again to confirm they changed
 colnames(nlsy)
+
+
+# explore the data
+glimpse(nlsy)
+summary(nlsy)
+
+# we can refer to specific variables with $ notation
+summary(nlsy$glasses)
+mean(nlsy$age_bir)
+?cor
+# what happens if you just run nlsy$eyesight?
+# what about table(nlsy$eyesight)
+
 
 
 #### Exercises 2 -----------------------------------------------------
@@ -65,4 +78,8 @@ colnames(nlsy)
 # package (you already installed with with `tidyverse`, but it doesn't load
 # automatically). Figure out how to read in the data. This may help:
 # https://readxl.tidyverse.org.
+# Answer: 
+
+# 4. What's the Spearman correlation between hours of sleep on weekends and 
+# weekdays in this data?
 # Answer: 

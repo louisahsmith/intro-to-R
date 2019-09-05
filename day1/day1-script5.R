@@ -9,6 +9,18 @@
 
 # Restart R again! Then write what you need at the start of this script
 
+# Here's a plot to start you off. Try to figure out what each line is doing.
+ggplot(data = nlsy) +
+  geom_boxplot(aes(x = factor(sleep_wknd), 
+                   y = sleep_wkdy,
+                   fill = factor(sleep_wknd))) +
+  scale_fill_discrete(guide = FALSE) +
+  labs(x = "hours slept on weekends",
+       y = "hours slept on weekends",
+       title = "The more people sleep on weekends, 
+the more they sleep on weekdays",
+       subtitle = "According to NLSY data") +
+  theme_classic()
 
 # Make a ggplot, any ggplot! Find out a theme you like and use it.
 # For inspiration with geoms that we didn't cover, you may want to check
@@ -29,3 +41,5 @@ new_plot <- ggplot(nlsy) +
   geom_bar(aes(x = age_bir))
 
 ggsave(plot = new_plot, filename = "another_plot.png")
+
+# Finally, try to recreate the plot from the slides!
