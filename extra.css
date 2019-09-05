@@ -1,0 +1,58 @@
+.left-code {
+  color: #777;
+  width: 43%;
+  height: 92%;
+  float: left;
+}
+.right-plot {
+  width: 55%;
+  float: right;
+  padding-left: 1%;
+}
+
+.plot-callout {
+  height: 225px;
+  width: 450px;
+  bottom: 5%;
+  right: 5%;
+  padding: 0px;
+  z-index: 100;
+}
+.plot-callout img {
+  width: 100%;
+  border: 4px solid #23373B;
+}
+.inverse {
+  text-shadow: none;
+}
+
+.inverse h1, .inverse h2, .inverse h3 {
+  color: #1F4257;
+}
+.remark-slide thead, .remark-slide tr:nth-child(2n) {
+  background-color: white;
+}
+
+title-slide {
+  color: #F97B64;
+}
+.title-slide h1{
+  color: #FFFFFF;
+}
+.title-slide h2{
+  color: #F97B64;
+}
+.title-slide h3 {
+  color: #FFFFFF; 
+}
+
+.title-slide .remark-slide-number {
+  display: none;
+}
+
+.footnote {
+  bottom: 5%;
+  left: 5%;
+  position: absolute;
+  color: #777; 
+}
