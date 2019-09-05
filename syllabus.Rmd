@@ -2,7 +2,10 @@
 title: "Syllabus"
 subtitle: "Introduction to R"
 author: "Louisa H. Smith"
-output: html_document
+output:
+  tufte::tufte_html:
+    tufte_variant: "envisioned"
+    css: "lab.css"
 ---
 # Course Description
 
