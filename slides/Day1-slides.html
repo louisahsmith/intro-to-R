@@ -64,10 +64,11 @@ class: center, middle, inverse, title-slide
 h4 {
   color: #F97B64;
   font-size: 22px;
+  text-align: center;
 }
 
 h1, h2, h3, h4 {
-  margin-top:0;
+  margin-top:3;
 }
 
 .inverse h1, .inverse h2, .inverse h3 {
@@ -96,17 +97,19 @@ color: #FFFFFF;
 
 ### Work hard with each other during class
 
-- Try to figure it out on your own before you ask for help
+Try to figure it out on your own before you ask for help
 
 --
 
 ### Practice by yourself in between classes
 
-- You are not going to break anything!
+You are not going to break anything!
 
 --
+
 .center[
-#### Anyone can learn to use R, it's just a matter of sitting down and doing it.  Now's your chance!
+#### Anyone can learn to use R, it's just a matter of sitting down and doing it. Now's your chance!
+
 ]
 
 ---
@@ -262,7 +265,7 @@ mat[2, ]
 class: inverse
 # Exercises 1
 .center[
-&lt;iframe src="https://giphy.com/embed/l0HlQ7mVw7pPtItEc" width="312" height="280" frameBorder="0" class="giphy-embed" allowFullScreen&gt;&lt;/iframe&gt;&lt;p&gt;&lt;a href="https://giphy.com/gifs/gifitup-halloween-hypnosis-l0HlQ7mVw7pPtItEc"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;iframe src="https://giphy.com/embed/l0HlQ7mVw7pPtItEc" width="265" height="238" frameBorder="0" class="giphy-embed" allowFullScreen&gt;&lt;/iframe&gt;&lt;p&gt;&lt;a href="https://giphy.com/gifs/gifitup-halloween-hypnosis-l0HlQ7mVw7pPtItEc"&gt;&lt;/a&gt;&lt;/p&gt;
 ]
 1. Extract `645` from `vals` using square brackets
 2. Extract `"rhino"` from `chars` using square brackets
@@ -481,7 +484,6 @@ colnames(nlsy)
 ```
 
 ```r
-# "write over" the variable names with new names
 colnames(nlsy) &lt;- c("glasses", "eyesight", "sleep_wkdy", "sleep_wknd",
                     "id", "nsibs", "samp", "race_eth", "sex", "region", 
                     "income", "res_1980", "res_2002", "age_bir")
@@ -1629,7 +1631,7 @@ There are a lot of `scale_x_()` and `scale_y_()` functions for you to explore!
 class: inverse
 # Exercises 4
 .center[
-&lt;iframe src="https://giphy.com/embed/xT9IgFQsNYi1zBUiyc" width="300" height="300" frameBorder="0" class="giphy-embed" allowFullScreen&gt;&lt;/iframe&gt;&lt;p&gt;&lt;a href="https://giphy.com/gifs/pixel-sweet-drink-xT9IgFQsNYi1zBUiyc"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;iframe src="https://giphy.com/embed/xT9IgFQsNYi1zBUiyc" width="250" height="250" frameBorder="0" class="giphy-embed" allowFullScreen&gt;&lt;/iframe&gt;&lt;p&gt;&lt;a href="https://giphy.com/gifs/pixel-sweet-drink-xT9IgFQsNYi1zBUiyc"&gt;&lt;/a&gt;&lt;/p&gt;
 ]
 1. When we're comparing distributions with very different numbers of observations, instead of scaling the y-axis like we did with the `facet_grid()` function, we might want to make density histograms. Use google to figure out how to make a density histogram of income. Facet it by region.
 2. Make each of the regions in your histogram from part 1 a different color. (Hint: compare what `col = ` and `fill = ` do to histograms).

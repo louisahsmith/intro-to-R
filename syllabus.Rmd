@@ -9,7 +9,7 @@ output:
 ---
 # Course Description
 
-This 5-session, non-credit course will provide an introduction to R to get you up and running with data management and analysis. Through short lectures, in-class exercises, and take-home challenges, you'll end up with skills that will make your data tasks easier. The goal is to gain comfort with R, learn some best practices with R, as well as take home code you can modify and re-use. We'll be covering some of the skills considered the most important by Harvard Chan students in a recent survey (Figure \@ref(fig:fig1)).
+This 5-session, non-credit course will provide an introduction to R to get you up and running with data management and analysis. Through short lectures, in-class exercises, and take-home challenges, you'll end up with skills that will make your data tasks easier. The goal is to gain comfort with R, learn some best practices with R, as well as take home code you can modify and re-use. We'll be covering some of the skills considered the most important by Harvard Chan students in a recent survey (see [Figure](#fig1)).
 
 
 ## Pre-requisites
@@ -96,6 +96,8 @@ Harvard University provides academic accommodations to students with disabilitie
 
 Religious Holidays, Absence Due to
 According to Chapter 151c, Section 2B, of the General Laws of Massachusetts, any student in an educational or vocational training institution, other than a religious or denominational training institution, who is unable, because of his or her religious beliefs, to attend classes or to participate in any examination, study, or work requirement on a particular day shall be excused from any such examination or requirement which he or she may have missed because of such absence on any particular day, provided that such makeup examination or work shall not create an unreasonable burden upon the School. See the [Student Handbook](https://www.hsph.harvard.edu/student-handbook/academic-support/academic-integrity/) for more information. 
+
+## Figure {#fig1}
 
 ```{r fig1, fig.cap = "Making figures was rated the most important skill to learn in a recent student survey (figure made with ggplot2 package).", echo = FALSE}
 

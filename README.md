@@ -2,4 +2,4 @@
 
 See class website at http://louisahsmith.github.io/intro-to-R
 
-To access the course materials on RStudio Cloud: https://rstudio.cloud/project/4920660
+To access the course materials on RStudio Cloud: https://rstudio.cloud/project/492066
