@@ -73,13 +73,14 @@ mean(nlsy$age_bir)
 # (Hint: Google) 
 # Answer:
 
-# 3. I've also provided you with the same dataset as an Excel document, but it's
+# 3. What's the Spearman correlation between hours of sleep on weekends and 
+# weekdays in this data?
+# Answer: 
+
+# 4. I've also provided you with the same dataset as an Excel document, but it's
 # not on the first sheet, and there's an annoying header. Load the `readxl`
 # package (you already installed with with `tidyverse`, but it doesn't load
 # automatically). Figure out how to read in the data. This may help:
 # https://readxl.tidyverse.org.
 # Answer: 
 
-# 4. What's the Spearman correlation between hours of sleep on weekends and 
-# weekdays in this data?
-# Answer: 

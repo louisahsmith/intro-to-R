@@ -1,7 +1,8 @@
 ---
-title: "Introduction to R"
-subtitle: "Day 1: Intro and making figures"  
+title: "<br>Introduction to R"
+subtitle: "Day 1: Intro & making figures"  
 author: "September 6, 2019"
+date: ""
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -16,7 +17,7 @@ output:
 ---
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE, width = 93)
-knitr::opts_chunk$set(fig.dim = c(4.8, 4.5), fig.retina = 2, out.width = "100%", message = FALSE, warning = FALSE, cache = FALSE)
+knitr::opts_chunk$set(fig.dim = c(4.8, 4.5), fig.retina = 2, out.width = "100%", message = FALSE, warning = FALSE, cache = TRUE)
 knitr::opts_hooks$set(fig.callout = function(options) {
   if (options$fig.callout) {
     options$echo <- FALSE
@@ -110,8 +111,13 @@ h1, h2, h3, h4 {
   background-color: white;
 }
 .title-slide, .title-slide h1, .title-slide h2, .title-slide h3 {
-color: #FFFFFF;
+color: #1F4257;
 }
+.title-slide {
+  background-image: url("img/paper.jpg");
+  background-size: cover;
+}
+
 ```
 ```{r xaringan-themer, include=FALSE}
 library(xaringanthemer)
@@ -122,6 +128,7 @@ duo_accent(
   text_font_google = google_font("Noto Sans")
 )
 ```
+
 # About this class
 
 - Non-credit
@@ -447,8 +454,8 @@ class: inverse
 
 1. How many people are in the NLSY? How many variables are in this dataset? What are two ways you can answer these questions?
 2. Can you find an R function(s) we haven't discussed that answers question 2? (Hint: Google)
-3. I've also provided you with the same dataset as an Excel document, but it's not on the first sheet, and there's an annoying header. Load the `readxl` package (you already installed with with `tidyverse`, but it doesn't load automatically). Figure out how to read in the data. This may help: https://readxl.tidyverse.org.
-4. What's the Spearman correlation between hours of sleep on weekends and weekdays in this data?
+3. What's the Spearman correlation between hours of sleep on weekends and weekdays in this data?
+4. I've also provided you with the same dataset as an Excel document, but it's not on the first sheet, and there's an annoying header. Load the `readxl` package (you already installed with with `tidyverse`, but it doesn't load automatically). Figure out how to read in the data. This may help: https://readxl.tidyverse.org.
 
 ---
 # #goals
@@ -924,6 +931,7 @@ ggplot(data = nlsy) +
 
 Other geoms require other arguments
 - For example, `geom_histogram()` only requires an `x = ` variable
+
 ---
 count:false
 
@@ -1166,7 +1174,7 @@ ggplot(data = nlsy) +
   `geom_bar(aes`(x = nsibs)) +
   labs(x = "Number of siblings")
 ```
-### We'll introduce bar graphs at the same time!
+#### We'll introduce bar graphs at the same time!
 
 Notice how we only need an `x = `argument -- the y-axis is automatically the count with this geom.
 
@@ -1185,7 +1193,7 @@ ggplot(data = nlsy) +
   labs(x = "Number of siblings") +
   facet_grid(cols = vars(region)) #<<
 ```
-### The `facet_grid()` function splits up the data according to a variable(s)
+#### The `facet_grid()` function splits up the data according to a variable(s)
 
 Here we've split it by region into columns
 ]
@@ -1209,7 +1217,7 @@ ggplot(data = nlsy) +
   labs(x = "Number of siblings") +
   facet_grid(`rows` = vars(region))
 ```
-### Since this is hard to read, we'll probably want to split by rows instead
+#### Since this is hard to read, we'll probably want to split by rows instead
 
 ]
 .right-plot[
@@ -1234,7 +1242,7 @@ ggplot(data = nlsy) +
   facet_grid(rows = vars(region),
              `margins = TRUE`)
 ```
-### We can also add a row for all of the data together
+#### We can also add a row for all of the data together
 
 ]
 .right-plot[
@@ -1261,7 +1269,7 @@ ggplot(data = nlsy) +
              margins = TRUE,
              `scales = "free_y"`)
 ```
-### This squishes the other rows though! We can allow them all to have their own axis limits with the `scales = ` argument
+#### This squishes the other rows though! We can allow them all to have their own axis limits with the `scales = ` argument
 
 Other options are "free_x" if we want to allow the x-axis scale to vary, or just "free" to combine both.
 
@@ -1281,7 +1289,7 @@ ggplot(data = nlsy) +
   facet_wrap(vars(region)) #<<
 ```
 
-### We can use `facet_wrap()` instead, if we want to use both multiple rows and columns for all the values of a variable
+#### We can use `facet_wrap()` instead, if we want to use both multiple rows and columns for all the values of a variable
 
 ]
 .right-plot[
@@ -1300,7 +1308,7 @@ ggplot(data = nlsy) +
              ncol = 3) #<<
 ```
 
-### It tries to make a good decision, but you can override how many columns you want!
+#### It tries to make a good decision, but you can override how many columns you want!
 
 ]
 .right-plot[
@@ -1318,7 +1326,7 @@ ggplot(nlsy) +
 
 ---
 
-## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+### `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 
 We used discrete values with `geom_bar()`, but with `geom_histogram()` we're combining values: the default is into 30 bins.
 
@@ -1337,7 +1345,7 @@ ggplot(data = nlsy) +
                  bins = 10) #<<
 ```
 
-### We can actually use `bins = ` instead, if we want!
+#### We can actually use `bins = ` instead, if we want!
 
 ]
 .right-plot[
@@ -1354,7 +1362,7 @@ ggplot(data = nlsy) +
                  bins = 100) #<<
 ```
 
-### Be aware that you may interpret your data differently depending on how you bin it!
+#### Be aware that you may interpret your data differently depending on how you bin it!
 
 ]
 .right-plot[
@@ -1371,7 +1379,7 @@ ggplot(data = nlsy) +
                  binwidth = 1000) #<<
 ```
 
-### Sometimes the bin width actually has some meaning
+#### Sometimes the bin width actually has some meaning
 
 ]
 .right-plot[
@@ -1389,7 +1397,7 @@ ggplot(data = nlsy) +
   scale_x_log10() #<<
 ```
 
-### We can change the values of the axis just like we changed the values of the colors
+#### We can change the values of the axis just like we changed the values of the colors
 
 There are a lot of `scale_x_()` and `scale_y_()` functions for you to explore!
 
@@ -1447,7 +1455,7 @@ ggplot(data = nlsy) +
        title = "The more people sleep on weekends, the more they\n sleep on weekdays",
        subtitle = "According to NLSY data")
 ```
-### Can you figure out what each chunk of this code is doing to the figure?
+#### Can you figure out what each chunk of this code is doing to the figure?
 ]
 .right-plot[
 ![](`r knitr::fig_chunk("theme", "png")`)
@@ -1470,7 +1478,7 @@ the more they sleep on weekdays",
        subtitle = "According to NLSY data") +
   theme_minimal() #<<
 ```
-### We can change the overall theme
+#### We can change the overall theme
 ]
 .right-plot[
 ![](`r knitr::fig_chunk("theme2", "png")`)
