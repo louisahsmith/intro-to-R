@@ -1589,6 +1589,20 @@ ggsave(filename = "scatterplot.pdf")
 ```
 
 ---
+# More resources
+
+.left-col[
+- Cheat sheet: https://www.rstudio.com/resources/cheatsheets/#ggplot2
+- Catalog: http://shiny.stat.ubc.ca/r-graph-catalog/
+- Cookbook: http://www.cookbook-r.com/Graphs/
+- Official package reference: https://ggplot2.tidyverse.org/index.html
+]
+
+.right-col[
+![](img/ggplot2.jpg)
+]
+
+---
 class: inverse
 # Final challenge
 ### Recreate this plot using the NLSY data!

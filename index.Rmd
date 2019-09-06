@@ -21,6 +21,13 @@ Download the scripts and data [here](https://github.com/louisahsmith/r-materials
 
 If you're having trouble with R on your own machine, click [this link](https://rstudio.cloud/project/492066) and sign up for a free RStudio cloud account. You'll be able to access all the materials directly.
 
+Some `ggplot2` resources mentioned in the slides:
+
+- [Cheat sheet](https://www.rstudio.com/resources/cheatsheets/#ggplot2)
+- [Catalog](http://shiny.stat.ubc.ca/r-graph-catalog/)
+- [Cookbook](http://www.cookbook-r.com/Graphs/)
+- [Official package reference](https://ggplot2.tidyverse.org/index.html)
+
 ## Day 2 (9/13/19): Selecting, filtering, and mutating
 
 ## Day 3 (9/27/19): Grouping and tables
