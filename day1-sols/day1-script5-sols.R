@@ -8,6 +8,11 @@
 # the slides.
 
 # Restart R again! Then write what you need at the start of this script
+library(tidyverse)
+nlsy <- read_csv("nlsy_cc.csv")
+colnames(nlsy) <- c("glasses", "eyesight", "sleep_wkdy", "sleep_wknd",
+                    "id", "nsibs", "samp", "race_eth", "sex", "region", 
+                    "income", "res_1980", "res_2002", "age_bir")
 
 # Here's a plot to start you off. Try to figure out what each line is doing.
 ggplot(data = nlsy) +
@@ -43,3 +48,17 @@ new_plot <- ggplot(nlsy) +
 ggsave(plot = new_plot, filename = "another_plot.png")
 
 # Finally, try to recreate the plot from the slides!
+
+ggplot(nlsy, aes(nsibs, age_bir, col = factor(region))) +
+  geom_jitter(alpha = 0.3) +
+  geom_smooth(method = "loess", se = FALSE) +
+  labs(title = "Relationship between family size and age at first birth",
+       subtitle = "By U.S. Region, with Loess curves",
+       x = "Number of siblings",
+       y = "Age at first birth") +
+  scale_color_viridis_d(labels = c("Northeast", "North Central", "South", "West"),
+                        name = "Region") +
+  facet_grid(cols = vars(sex),
+             labeller = labeller(sex = c("1" = "Male", "2" = "Female"))) +
+  theme_minimal() +
+  theme(legend.position = "bottom")

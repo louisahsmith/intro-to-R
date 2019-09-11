@@ -46,15 +46,36 @@ ggplot(data = nlsy) +
 # of sleep on weekends and weekdays. Color it according to region (where 1 =
 # northeast, 2 = north central, 3 = south, and 4 = west).
 # Answer:
+ggplot(nlsy) +
+  geom_point(aes(x = sleep_wknd, y = sleep_wkdy, col = factor(region))) +
+  scale_color_discrete(labels = c("Northeast", "North Central", "South", "West"),
+                       name = "Region")
 
 # 2. Replace `geom_point()` with `geom_jitter()`. What does this do? Why might
 # this be a good choice for this graph? Play with the `width = ` and `height =
 # ` options. This site may help:
 # https://ggplot2.tidyverse.org/reference/geom_jitter.html
 # Answer:
+ggplot(nlsy) +
+  geom_jitter(aes(x = sleep_wknd, y = sleep_wkdy, col = factor(region)),
+              width = 2, height = 1) +
+  scale_color_discrete(labels = c("Northeast", "North Central", "South", "West"),
+                       name = "Region")
+# geom_jitter moves the points randomly off their actual locations
+# this is useful in a situation like this where a lot of people have the same values
+# so we can see how many there are
 
 # 3. Use the `shape = ` argument to map the sex variable to different shapes.
 # Change the shapes to squares and diamonds. (Hint: how did we manually change
 # colors to certain values? This page might also help:
 # https://ggplot2.tidyverse.org/articles/ggplot2-specs.html)
 # Answer:
+ggplot(nlsy) +
+  geom_jitter(aes(x = sleep_wknd, y = sleep_wkdy, col = factor(region),
+                  shape = factor(sex)),
+              width = 2, height = 1) +
+  scale_color_discrete(labels = c("Northeast", "North Central", "South", "West"),
+                       name = "Region") +
+  scale_shape_manual(values = c("square", "diamond"),
+                     labels = c("Male", "Female"),
+                     name = "Sex")

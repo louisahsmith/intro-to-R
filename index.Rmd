@@ -3,17 +3,19 @@ title: "Introduction to R"
 author: "Louisa H. Smith"
 date: "September-October 2019"
 output:
-  tufte::tufte_html:
-    tufte_variant: "envisioned"
+  html_document:
     css: "lab.css"
+    theme: spacelab
+    highlight: kate
 ---
 
-# [Syllabus](syllabus.html)
+## [Syllabus](syllabus.html)
 All sessions will take place in FXB G-12 from 2-3:30 pm.
 
-# Schedule:
+## Schedule: {.tabset .tabset-fade .tabset-pills}
 
-## Day 1 (9/6/19): Figures
+### Day 1 (9/6/19)
+#### Figures
 
 View the slides [here](slides/Day1-slides.html).
 
@@ -28,10 +30,25 @@ Some `ggplot2` resources mentioned in the slides:
 - [Cookbook](http://www.cookbook-r.com/Graphs/)
 - [Official package reference](https://ggplot2.tidyverse.org/index.html)
 
-## Day 2 (9/13/19): Selecting, filtering, and mutating
+You can watch a video of class [here](https://harvard.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=f46b735f-1b8f-4c22-a724-aabe00fd2998).
 
-## Day 3 (9/27/19): Grouping and tables
+Download the [solution scripts](https://github.com/louisahsmith/r-materials-F19/blob/master/day1-sols.zip?raw=true).
 
-## Day 4 (10/11/19): Functions
+### Day 2 (9/13/19)
+#### Selecting, filtering, and mutating
 
-## Day 5 (10/18/19): Analyze your data
+<!-- View the slides [here](slides/Day2-slides.html). -->
+
+<!-- Download the scripts and data [here](https://github.com/louisahsmith/r-materials-F19/blob/master/day2.zip?raw=true). -->
+
+<!-- Open the project in RStudio Cloud [here](https://rstudio.cloud/project/492066)  -->
+
+### Day 3 (9/27/19)
+
+#### Grouping and tables
+
+### Day 4 (10/11/19)
+#### Functions
+
+### Day 5 (10/18/19)
+#### nalyze your data

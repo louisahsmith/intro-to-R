@@ -68,14 +68,21 @@ mean(nlsy$age_bir)
 # 1. How many people are in the NLSY? How many variables are in this dataset?
 # What are two ways you can answer these questions? 
 # Answer:
+# look at the printout of nlsy in the console
+# look in the environment window
 
 # 2. Can you find an R function(s) we haven't discussed that answers question 2? 
 # (Hint: Google) 
 # Answer:
+dim(nlsy)
+nrow(nlsy)
+ncol(nlsy)
+str(nlsy)
 
 # 3. What's the Spearman correlation between hours of sleep on weekends and 
 # weekdays in this data?
 # Answer: 
+cor(nlsy$sleep_wkdy, nlsy$sleep_wknd, method = "spearman")
 
 # 4. I've also provided you with the same dataset as an Excel document, but it's
 # not on the first sheet, and there's an annoying header. Load the `readxl`
@@ -83,4 +90,5 @@ mean(nlsy$age_bir)
 # automatically). Figure out how to read in the data. This may help:
 # https://readxl.tidyverse.org.
 # Answer: 
-
+library(readxl)
+nlsy_xls <- read_excel("nlsy_cc.xlsx", sheet = 2, skip = 1)

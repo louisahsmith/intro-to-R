@@ -37,19 +37,23 @@ mat[2, ]
 
 # 1. Extract `645` from `vals` using square brackets
 # Answer:
+vals[2]
 
 # 2. Extract `"rhino"` from `chars` using square brackets
 # Answer:
+rhino[3]
 
 # 3. You saw how to extract the second row of `mat`. Figure out how to extract the second column.
 # Answer:
+mat[,2]
 
 # 4. Extract `183` from `mat` using square brackets
 # Answer:
+mat[1,3]
 
 # 5. Figure out how to get the following errors: 
 #      incorrect number of dimensions
 #      subscript out of bounds
 # Answer:
-
-
+mat[2,3,6]
+mat[3,2]

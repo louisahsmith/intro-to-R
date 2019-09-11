@@ -6,82 +6,69 @@
 /* https://www.colorhexa.com/5e6687 */
 
 /*.hljs-fun-param,*/
-.hljs-ggplot,
-.hljs-dplyr {
-  color: #868eab;
+
+.hljs-ggplot, .hljs-dplyr {
+	color: #868eab;
 }
 
 /* Make the pipe and assign operator bold */
+
 .hljs-pipe, .hljs-assign {
-  font-weight: bold;
-  color: #875e66;
+	font-weight: bold;
+	color: #875e66;
 }
 
 /* Atelier-Sulphurpool Comment */
-.hljs-comment,
-.hljs-quote {
-  color: #96989e;
+
+.hljs-comment, .hljs-quote {
+	color: #96989e;
 }
 
 /* Atelier-Sulphurpool Red */
-.hljs-variable,
-.hljs-template-variable,
-.hljs-attribute,
-.hljs-tag,
-.hljs-name,
-.hljs-regexp,
-.hljs-link,
-.hljs-name,
-.hljs-selector-id,
-.hljs-selector-class {
-  color: #c94922;
+
+.hljs-variable, .hljs-template-variable, .hljs-attribute, .hljs-tag, .hljs-name, .hljs-regexp, .hljs-link, .hljs-name, .hljs-selector-id, .hljs-selector-class {
+	color: #c94922;
 }
 
 /* Atelier-Sulphurpool Orange */
-.hljs-number,
-.hljs-meta,
-.hljs-built_in,
-.hljs-builtin-name,
-.hljs-literal,
-.hljs-type,
-.hljs-params {
-  color: #875e66;
+
+.hljs-number, .hljs-meta, .hljs-built_in, .hljs-builtin-name, .hljs-literal, .hljs-type, .hljs-params {
+	color: #875e66;
 }
 
 /* Atelier-Sulphurpool Green */
-.hljs-string,
-.hljs-symbol,
-.hljs-bullet {
-  color: #5e877f;
+
+.hljs-string, .hljs-symbol, .hljs-bullet {
+	color: #5e877f;
 }
 
 /* Atelier-Sulphurpool Blue */
-.hljs-title,
-.hljs-section {
-  color: #3f445a;
+
+.hljs-title, .hljs-section {
+	color: #3f445a;
 }
 
 /* Atelier-Sulphurpool Purple */
-.hljs-keyword,
-.hljs-selector-tag {
-  color: #868eab;
+
+.hljs-keyword, .hljs-selector-tag {
+	color: #868eab;
 }
 
 .hljs {
-  display: block;
-  overflow-x: auto;
-/*  background: #f5f7ff;*/ 
-  background: #f5f5f5;
-  color: #5e6687;
-  padding: 0.5em;
+	display: block;
+	overflow-x: auto;
+	/*  background: #f5f7ff;*/
+	background: #f5f5f5;
+	color: #5e6687;
+	padding: 0.5em;
 }
 
 .hljs-emphasis {
-  font-style: italic;
+	font-style: italic;
 }
 
 .hljs-strong {
-  font-weight: bold;
+	font-weight: bold;
 }
 
 
@@ -91,145 +78,146 @@
 
 
 /* Tufte CSS styles */
-  
-  html {
-    font-size: 12px;
-  }
+
+html {
+	font-size: 12px;
+}
 
 body {
-  font-family: 'Source Sans Pro', sans-serif;
-  font-weight: 300;
-    background-color: #fcfcfc;
-    color: #777;
-    counter-reset: li;
+	font-family: 'Source Sans Pro', sans-serif;
+	font-weight: 300;
+	background-color: #fcfcfc;
+	color: #777;
+	counter-reset: li;
 }
 
 h1.title {
-  font-weight: 700;
-  font-family: 'Source Sans Pro', sans-serif;
-  color: #5e6687;
+	font-weight: 700;
+	font-family: 'Source Sans Pro', sans-serif;
+	color: #5e6687;
 }
 
 h1 {
-  font-style: normal;
-  font-family: 'Source Sans Pro', sans-serif;
-  color: #5e6687;
+	font-style: normal;
+	font-family: 'Source Sans Pro', sans-serif;
+	color: #5e6687;
+	background-color: none !important;
 }
 
 h2 {
-  font-style: normal;
-  font-family: 'Source Sans Pro', sans-serif;
-  font-weight: 400;
-  color: #5e6687;
+	font-style: normal;
+	font-family: 'Source Sans Pro', sans-serif;
+	font-weight: 400;
+	color: #5e6687;
+	font-size: 25px;
+	background-color: none !important;
 }
 
-h3{
-  font-style: normal;
-  font-family: 'Source Sans Pro', sans-serif;
-  font-weight: 400;
-  color: #5e6687;
+h3 {
+	font-style: normal;
+	font-family: 'Source Sans Pro', sans-serif;
+	font-weight: 400;
+	color: #5e6687;
+	background-color: none !important;
 }
 
 h3.subtitle {
-  font-style: normal;
-  color: #5e6687;
+	font-style: normal;
+	color: #5e6687;
 }
 
 h4 {
-  font-style: normal;
-  font-weight: 400;
-  font-family: 'Source Sans Pro', sans-serif;
-  margin-top: 1.5rem;
-  margin-bottom: 0;
-  line-height: 1;
-  color: #5e6687;
+	font-style: normal;
+	font-weight: 400;
+	font-family: 'Source Sans Pro', sans-serif;
+	margin-top: 1.5rem;
+	margin-bottom: 1rem;
+	line-height: 1;
+	color: #5e6687;
 }
 
-h4.author,
-h4.date {
-  font-family: 'Source Sans Pro', sans-serif;
-  font-weight: 300;
+h4.author, h4.date {
+	font-family: 'Source Sans Pro', sans-serif;
+	font-weight: 300;
 }
 
 .numeral {
-  font-family: "Source Sans Pro";
-  font-weight: 300;
+	font-family: "Source Sans Pro";
+	font-weight: 300;
 }
 
 em {
-  font-style: italic;
-  font-weight: 300;
-  font-family: "Source Sans Pro";
+	font-style: italic;
+	font-weight: 300;
+	font-family: "Source Sans Pro";
 }
 
 strong {
-  font-style: oblique;
-  font-weight: 600;
-  font-family: "Source Sans Pro";
+	font-style: oblique;
+	font-weight: 600;
+	font-family: "Source Sans Pro";
 }
 
 /* Code formatting */
-  
-  @media screen and (max-width: 760px) {
-    pre {
-      width: 100%;
-      font-size: 16px;
-    }
-  }
+
+
 
 code {
-  font-family: 'Source Code Pro', Consolas, "Liberation Mono", Menlo, Courier, monospace;
-  font-size: 15px;
-  line-height: 1.6;
-  color: #c94922;
+	font-family: 'Source Code Pro', Consolas, "Liberation Mono", Menlo, Courier, monospace;
+	font-size: 14px;
+	line-height: 1.6;
+	color: #c94922 !important;
 }
 
 pre code {
-  font-size: 15px;
+	font-size: 15px;
+	font-family: 'Source Code Pro', Consolas, "Liberation Mono", Menlo, Courier, monospace;
+	font-size: 15px;
+	line-height: 1.6;
+	color: #c94922;
 }
 
-.marginnote code,
-.sidenote code {
-  font-size: 1rem;
+.marginnote code, .sidenote code {
+	font-size: 1rem;
 }
 
 pre {
-  width: 100%;
-  font-size: 16px;
-  overflow-x: auto;
+	width: 100%;
+	font-size: 16px;
+	overflow-x: auto;
 }
 
-
-
-a,
-a:visited,
-a:link,
-a:hover
-{
-    text-decoration:none !important;
-    color: #868eab;
-    box-shadow:none;
-
+a, a:visited, a:link, a:hover {
+	text-decoration: none !important;
+	color: #868eab;
+	box-shadow: none;
+	text-shadow: 0 0 1.5px #767e9a;
+	text-align: center;
 }
 
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus
 
 .showopt {
-  background-color: #5e6687;
-  color: #FFFFFF; 
-  width: 110px;
-  height: 20px;
-  text-align: center;
-  vertical-align: middle !important;
-  float: left;
-  font-family: sans-serif;
-  border-radius: 8px;
+	background-color: #fcfcfc;
+	color: #868eab;
+}
+
+.nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
+	background-color: #5e6687;
 }
 
 .showopt:hover {
-    background-color: #c94922;
-    color: #FFFFFF;
+	background-color: #c94922;
+	color: #FFFFFF;
 }
 
 pre.plot {
-  background-color: white !important;
+	background-color: white !important;
+}
+
+@media screen and (max-width: 760px) {
+	pre {
+		width: 100%;
+		font-size: 16px;
+	}
 }
