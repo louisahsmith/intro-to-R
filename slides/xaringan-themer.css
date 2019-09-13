@@ -33,17 +33,17 @@ h1, h2, h3 {
 }
 .remark-slide-content {
   background-color: #FFFFFF;
-  font-size: 20px;
+  font-size: 25;
   
   
   
   padding: 1em 4em 1em 4em;
 }
 .remark-slide-content h1 {
-    font-size: 55px;
+    font-size: 45;
 }
 .remark-slide-content h2 {
-    font-size: 45px;
+    font-size: 40;
 }
 .remark-slide-content h3 {
     font-size: 35px;
