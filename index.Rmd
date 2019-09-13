@@ -51,4 +51,4 @@ Open the project in RStudio Cloud [here](https://rstudio.cloud/project/520117)
 #### Functions
 
 ### Day 5 (10/18/19)
-#### nalyze your data
+#### Analyze your data
