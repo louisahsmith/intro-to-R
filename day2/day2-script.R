@@ -12,7 +12,7 @@
 # Before you do anything, make sure you're starting in a fresh session.
 # Restart R by going to Session -> Restart R
 # You can make it so that this also clears your workspace (highly recommended)
-# by going to Preferences -> General -> Basic -> Workspace
+# by going to Tools -> Global Options -> General -> Basic -> Workspace
 # and unclicking "restore .RData" and switching the other option to "never"
 
 # Then we need to reload packages and data (same as last week)
