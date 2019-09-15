@@ -17,7 +17,7 @@ All sessions will take place in FXB G-12 from 2-3:30 pm.
 ### Day 1 (9/6/19)
 #### Figures
 
-View the slides [here](slides/Day1-slides.html).
+View the slides [here](slides/Day1-slides.html) (or download as [pdf](slides/Day1-slides.pdf))
 
 Download the scripts and data [here](https://github.com/louisahsmith/r-materials-F19/blob/master/day1.zip?raw=true).
 
@@ -37,7 +37,7 @@ Download the [solution scripts](https://github.com/louisahsmith/r-materials-F19/
 ### Day 2 (9/13/19)
 #### Selecting, filtering, and mutating
 
-View the slides [here](slides/Day2-slides.html).
+View the slides [here](slides/Day2-slides.html) (or download as [pdf](slides/Day2-slides.pdf)).
 
 Download the scripts and data [here](https://github.com/louisahsmith/r-materials-F19/blob/master/day2.zip?raw=true).
 
@@ -50,7 +50,7 @@ Resources:
 
 You can watch a video of class [here](https://harvard.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=d77d2fa7-6418-44b2-a50b-aabe00fd29e8).
 
-Download the [solution script](https://github.com/louisahsmith/r-materials-F19/blob/master/day2/day2-sols.R?raw=true).
+Download the [solution script](https://raw.githubusercontent.com/louisahsmith/intro-to-R/master/day2/day2-script-sols.R).
 
 ### Day 3 (9/27/19)
 
