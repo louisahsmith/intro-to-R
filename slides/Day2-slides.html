@@ -140,13 +140,11 @@ ggplot(data = {data}) +
 
 ```r
 ggplot(data = nlsy) +
-  geom_histogram(aes(x = income, y = ..density.., 
-                     fill = factor(region)),
+  geom_histogram(aes(x = income, y = ..density.., fill = factor(region)),
                  bins = 40) +
   scale_x_sqrt(breaks = c(1000, 10000, 25000, 50000)) +
   scale_fill_discrete(name = "Region", 
-                      labels = c("Northeast", "North Central",
-                                 "South", "West")) +
+                      labels = c("Northeast", "North Central", "South", "West")) +
   facet_grid(rows = vars(region)) +
   labs(x = "Income", title = "NLSY 1979 income by US region") +
   theme_minimal()
@@ -221,8 +219,10 @@ ggplot(data = nlsy) +
 
 ```r
 ... scale_fill_discrete(name = "Region",
-                        labels = c("Northeast", "North Central",
-                                   "South", "West"))
+                        labels = c("Northeast", 
+                                   "North Central",
+                                   "South", 
+                                   "West"))
 ```
 
 ### Many of you asked: but how do we know what order they're in?
@@ -308,7 +308,8 @@ nlsy$dataset &lt;- "NLSY"
 nlsy &lt;- mutate(nlsy,
                region_factor = factor(region),
                age_bir_cent = age_bir - mean(age_bir),
-               dataset = "NLSY")
+               dataset = "NLSY"
+               )
 ```
 #### We can refer to variables within the same dataset without the $ notation
 
@@ -325,7 +326,8 @@ You still need to store your dataset somewhere, so make sure to include the assi
 ```r
 nlsy_new &lt;- mutate(nlsy,
                    `age_bir_cent` = age_bir - mean(age_bir),
-                   age_bir_stand = `age_bir_cent` / sd(`age_bir_cent`))
+                   age_bir_stand = `age_bir_cent` / sd(`age_bir_cent`)
+                   )
 ```
 
 
@@ -346,12 +348,13 @@ If A is TRUE, then B; if not, then if C is true, then D; if not, then if E is tr
 
 ```r
 nlsy &lt;- mutate(nlsy, slp_cat_wkdy = case_when(
-                        sleep_wkdy &lt; 5 ~ "little",
-                        sleep_wkdy &lt; 7 ~ "some",
-                        sleep_wkdy &lt; 9 ~ "ideal",
-                        sleep_wkdy &lt; 12 ~ "lots",
-                        TRUE ~ NA_character_
-))
+                                              sleep_wkdy &lt; 5 ~ "little",
+                                              sleep_wkdy &lt; 7 ~ "some",
+                                              sleep_wkdy &lt; 9 ~ "ideal",
+                                              sleep_wkdy &lt; 12 ~ "lots",
+                                              TRUE ~ NA_character_
+                                              )
+               )
 
 # note that table doesn't show NAs! can be dangerous!
 table(nlsy$slp_cat_wkdy, nlsy$sleep_wkdy)
@@ -384,16 +387,17 @@ table(nlsy$slp_cat_wkdy, nlsy$sleep_wkdy)
 
 ```r
 nlsy &lt;- mutate(nlsy, total_sleep = case_when(
-                       sleep_wknd &gt; 8 &amp; sleep_wkdy &gt; 8 ~ 1,
-                       sleep_wknd + sleep_wkdy &gt; 15 ~ 2,
-                       sleep_wknd - sleep_wkdy &gt; 3 ~ 3,
-                       TRUE ~ NA_real_
-))
+                                             sleep_wknd &gt; 8 &amp; sleep_wkdy &gt; 8 ~ 1,
+                                             sleep_wknd + sleep_wkdy &gt; 15 ~ 2,
+                                             sleep_wknd - sleep_wkdy &gt; 3 ~ 3,
+                                             TRUE ~ NA_real_
+                                             )
+               )
 ```
 
-- Which value would someone with `sleep_wknd = 8` and `sleep_wknd = 4` go? 
-- What about someone with  `sleep_wknd = 11` and `sleep_wknd = 4`? 
-- What about someone with `sleep_wknd = 7` and `sleep_wknd = 7`?
+- Which value would someone with `sleep_wknd = 8` and `sleep_wkdy = 4` go? 
+- What about someone with  `sleep_wknd = 11` and `sleep_wkdy = 4`? 
+- What about someone with `sleep_wknd = 7` and `sleep_wkdy = 7`?
 
 
 ---
@@ -418,12 +422,13 @@ Let's look at the variable we made describing someone's weekday sleeping habits:
 
 ```r
 nlsy &lt;- mutate(nlsy, slp_cat_wkdy = case_when(
-                       sleep_wkdy &lt; 5 ~ "little",
-                       sleep_wkdy &lt; 7 ~ "some",
-                       sleep_wkdy &lt; 9 ~ "ideal",
-                       sleep_wkdy &lt; 12 ~ "lots",
-                       TRUE ~ NA_character_
-))
+                                              sleep_wkdy &lt; 5 ~ "little",
+                                              sleep_wkdy &lt; 7 ~ "some",
+                                              sleep_wkdy &lt; 9 ~ "ideal",
+                                              sleep_wkdy &lt; 12 ~ "lots",
+                                              TRUE ~ NA_character_
+                                              )
+               )
 
 summary(nlsy$slp_cat_wkdy)
 ```
@@ -473,9 +478,12 @@ The `fct_relevel()` function allows us just to rewrite the names of the categori
 
 
 ```r
-nlsy &lt;- mutate(nlsy, slp_cat_wkdy_ord = `fct_relevel`(slp_cat_wkdy,
-                       "little", "some", "ideal", "lots"
-))
+nlsy &lt;- mutate(nlsy, slp_cat_wkdy_ord = `fct_relevel`(slp_cat_wkdy, "little", 
+                                                                    "some", 
+                                                                    "ideal", 
+                                                                    "lots"
+                                                    )
+               )
 ```
 
 
@@ -501,9 +509,12 @@ levels(nlsy$slp_cat_wkdy_ord)
 
 
 ```r
-nlsy &lt;- mutate(nlsy, slp_cat_wkdy_ord2 = fct_relevel(slp_cat_wkdy,
-                       "little", `"same"`, "ideal", "lots"
-))
+nlsy &lt;- mutate(nlsy, slp_cat_wkdy_ord2 = fct_relevel(slp_cat_wkdy, "little", 
+                                                                  `"same"`, 
+                                                                   "ideal", 
+                                                                   "lots"
+                                                     )
+               )
 ```
 
 ```
@@ -540,10 +551,12 @@ From the codebook, I know that:
 ```r
 nlsy &lt;- mutate(nlsy, region_fact = factor(region),
                      region_fact = `fct_recode`(region_fact,
-                                      "Northeast" = "1",
-                                      "North Central" = "2",
-                                      "South" = "3",
-                                      "West" = "4"))
+                                                 "Northeast" = "1",
+                                                 "North Central" = "2",
+                                                 "South" = "3",
+                                                 "West" = "4"
+                                                )
+               )
 table(nlsy$region)
 ```
 
@@ -595,8 +608,7 @@ Recall that we made it so that the sleep variable had missing values, perhaps be
 
 
 ```r
-nlsy &lt;- mutate(nlsy, slp_cat_wkdy_out = 
-                 `fct_explicit_na`(slp_cat_wkdy, na_level = "outlier"))
+nlsy &lt;- mutate(nlsy, slp_cat_wkdy_out = `fct_explicit_na`(slp_cat_wkdy, na_level = "outlier"))
 summary(nlsy$slp_cat_wkdy_out)
 ```
 
@@ -607,10 +619,11 @@ summary(nlsy$slp_cat_wkdy_out)
 Or maybe we want to combine some levels that don't have a lot of observations in them:
 
 ```r
-nlsy &lt;- mutate(nlsy, slp_cat_wkdy_comb = 
-                 `fct_collapse`(slp_cat_wkdy, 
-                              "less" = c("little", "some"),
-                              "more" = c("ideal", "lots")))
+nlsy &lt;- mutate(nlsy, slp_cat_wkdy_comb = `fct_collapse`(slp_cat_wkdy, 
+                                                         "less" = c("little", "some"),
+                                                         "more" = c("ideal", "lots")
+                                                       )
+              )
 summary(nlsy$slp_cat_wkdy_comb)
 ```
 
@@ -908,9 +921,7 @@ We could of course do the same thing with a factor variable:
 
 
 ```r
-some_regions &lt;- filter(nlsy,
-                       region_fact == "Northeast" |
-                         region_fact == "South")
+some_regions &lt;- filter(nlsy, region_fact == "Northeast" | region_fact == "South")
 table(some_regions$region_fact)
 ```
 
@@ -927,8 +938,7 @@ Often we have a number of options for one variable that would meet our eligibili
 
 
 ```r
-more_regions &lt;- filter(nlsy, region_fact %in% 
-                         c("South", "West", "Northeast"))
+more_regions &lt;- filter(nlsy, region_fact %in% c("South", "West", "Northeast"))
 table(more_regions$region_fact)
 ```
 
@@ -986,8 +996,7 @@ This is annoying. We can't say "not in" with the syntax `%!in%` or something lik
 
 
 ```r
-northcentralers &lt;- filter(nlsy, 
-                     !region_fact %in% c("South", "West", "Northeast"))
+northcentralers &lt;- filter(nlsy, !region_fact %in% c("South", "West", "Northeast"))
 table(northcentralers$region_fact)
 ```
 
@@ -1068,8 +1077,6 @@ class:inverse
 2. Create a dataset that consists *only* of the missing values in `slp_cat_wkdy`. Check how many rows it has (there should be 3!).
 3. Look up the `between()` function in help. Figure out how to use this to answer question 1, when choosing people whose income is between 20,000 and 50,000. Check to make sure you get the same number of rows.
 
-
-
 ---
 # Challenge
 
@@ -1128,7 +1135,7 @@ levels(nlsy_full$res_2002)
 ```
 
 ---
-
+.pull-left[
 ### `res_1980`
 
 
@@ -1149,8 +1156,8 @@ value | label
 17 | PARENTAL
 18 | HHI CONDUCTED WITH PARENT
 19 | R IN PARENTAL HOUSEHOLD
-
----
+]
+.pull-right[
 ### `res_2002`
 
 value | label
@@ -1167,7 +1174,7 @@ value | label
 15 | CONVENT, MONASTERY, OTHER RELIGIOUS INSTITUTE
 16 | OTHER INDIVIDUAL QUARTERS (SPECIFY)
 19 | RESPONDENT IN PARENT HOUSEHOLD
-
+]
 
 
 ---
@@ -1188,6 +1195,7 @@ Then make a dataset with only your two better versions of these variables. Only 
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script src="macros.js"></script>
 <script>var slideshow = remark.create({
+"ratio": "16:9",
 "countIncrementalSlides": false,
 "highlightStyle": "color-brewer",
 "highlightLines": true,

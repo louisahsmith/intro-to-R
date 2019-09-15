@@ -25,7 +25,7 @@ If you're having trouble with R on your own machine, click [this link](https://r
 
 Some `ggplot2` resources mentioned in the slides:
 
-- [Cheat sheet](https://www.rstudio.com/resources/cheatsheets/#ggplot2)
+- [Cheat sheet](https://content.cdntwrk.com/files/aT0xMTI0Mjk2JnY9MSZpc3N1ZU5hbWU9ZGF0YS12aXN1YWxpemF0aW9uLTItMSZjbWQ9ZCZzaWc9MWVkMDFhMDExMjA1OTlmZTQ0NWY0OWVmYmQwOWQ1NDA%253D)
 - [Catalog](http://shiny.stat.ubc.ca/r-graph-catalog/)
 - [Cookbook](http://www.cookbook-r.com/Graphs/)
 - [Official package reference](https://ggplot2.tidyverse.org/index.html)
@@ -41,7 +41,16 @@ View the slides [here](slides/Day2-slides.html).
 
 Download the scripts and data [here](https://github.com/louisahsmith/r-materials-F19/blob/master/day2.zip?raw=true).
 
-Open the project in RStudio Cloud [here](https://rstudio.cloud/project/520117)
+Open the project in RStudio Cloud [here](https://rstudio.cloud/project/520117).
+
+Resources:
+
+- Here's an [entire paper](https://peerj.com/preprints/3163/) about working with factors in R.
+- [`forcats` cheat sheet](https://content.cdntwrk.com/files/aT0xMTI0MjU3JnY9MSZpc3N1ZU5hbWU9ZmFjdG9ycyZjbWQ9ZCZzaWc9ZjhhOTkzMTNlZGIxYTQ1ZGM4NTM4OWZiOTVlNzE3YjI%253D)
+
+You can watch a video of class [here](https://harvard.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=d77d2fa7-6418-44b2-a50b-aabe00fd29e8).
+
+Download the [solution script](https://github.com/louisahsmith/r-materials-F19/blob/master/day2/day2-sols.R?raw=true).
 
 ### Day 3 (9/27/19)
 

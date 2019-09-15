@@ -9,6 +9,7 @@ output:
     css: xaringan-themer.css
     nature:
       beforeInit: "macros.js"
+      ratio: 16:9
       countIncrementalSlides: false
       highlightStyle: color-brewer
       highlightLines: true
@@ -185,13 +186,11 @@ colnames(nlsy) <- c("glasses", "eyesight", "sleep_wkdy", "sleep_wknd",
 ```
 ```{r fig-ex, fig.show = "hide", fig.dim = c(5.8, 3)}
 ggplot(data = nlsy) +
-  geom_histogram(aes(x = income, y = ..density.., 
-                     fill = factor(region)),
+  geom_histogram(aes(x = income, y = ..density.., fill = factor(region)),
                  bins = 40) +
   scale_x_sqrt(breaks = c(1000, 10000, 25000, 50000)) +
   scale_fill_discrete(name = "Region", 
-                      labels = c("Northeast", "North Central",
-                                 "South", "West")) +
+                      labels = c("Northeast", "North Central", "South", "West")) +
   facet_grid(rows = vars(region)) +
   labs(x = "Income", title = "NLSY 1979 income by US region") +
   theme_minimal()
@@ -266,8 +265,10 @@ ggplot(data = nlsy) +
 ```{r, eval = FALSE}
 
 ... scale_fill_discrete(name = "Region",
-                        labels = c("Northeast", "North Central",
-                                   "South", "West"))
+                        labels = c("Northeast", 
+                                   "North Central",
+                                   "South", 
+                                   "West"))
 ```
 
 ### Many of you asked: but how do we know what order they're in?
@@ -320,7 +321,8 @@ nlsy[,c("region", "region_factor", "age_bir", "age_bir_cent", "dataset")]
 nlsy <- mutate(nlsy,
                region_factor = factor(region),
                age_bir_cent = age_bir - mean(age_bir),
-               dataset = "NLSY")
+               dataset = "NLSY"
+               )
 ```
 #### We can refer to variables within the same dataset without the $ notation
 
@@ -336,7 +338,8 @@ You still need to store your dataset somewhere, so make sure to include the assi
 ```{r ref-mut, eval = FALSE}
 nlsy_new <- mutate(nlsy,
                    `age_bir_cent` = age_bir - mean(age_bir),
-                   age_bir_stand = `age_bir_cent` / sd(`age_bir_cent`))
+                   age_bir_stand = `age_bir_cent` / sd(`age_bir_cent`)
+                   )
 ```
 ```{r, code=repeat_code("ref-mut"), echo = FALSE}
 ```
@@ -357,12 +360,13 @@ If A is TRUE, then B; if not, then if C is true, then D; if not, then if E is tr
 
 ```{r}
 nlsy <- mutate(nlsy, slp_cat_wkdy = case_when(
-                        sleep_wkdy < 5 ~ "little",
-                        sleep_wkdy < 7 ~ "some",
-                        sleep_wkdy < 9 ~ "ideal",
-                        sleep_wkdy < 12 ~ "lots",
-                        TRUE ~ NA_character_
-))
+                                              sleep_wkdy < 5 ~ "little",
+                                              sleep_wkdy < 7 ~ "some",
+                                              sleep_wkdy < 9 ~ "ideal",
+                                              sleep_wkdy < 12 ~ "lots",
+                                              TRUE ~ NA_character_
+                                              )
+               )
 
 # note that table doesn't show NAs! can be dangerous!
 table(nlsy$slp_cat_wkdy, nlsy$sleep_wkdy)
@@ -385,16 +389,17 @@ table(nlsy$slp_cat_wkdy, nlsy$sleep_wkdy)
 ### Example:
 ```{r}
 nlsy <- mutate(nlsy, total_sleep = case_when(
-                       sleep_wknd > 8 & sleep_wkdy > 8 ~ 1,
-                       sleep_wknd + sleep_wkdy > 15 ~ 2,
-                       sleep_wknd - sleep_wkdy > 3 ~ 3,
-                       TRUE ~ NA_real_
-))
+                                             sleep_wknd > 8 & sleep_wkdy > 8 ~ 1,
+                                             sleep_wknd + sleep_wkdy > 15 ~ 2,
+                                             sleep_wknd - sleep_wkdy > 3 ~ 3,
+                                             TRUE ~ NA_real_
+                                             )
+               )
 ```
 
-- Which value would someone with `sleep_wknd = 8` and `sleep_wknd = 4` go? 
-- What about someone with  `sleep_wknd = 11` and `sleep_wknd = 4`? 
-- What about someone with `sleep_wknd = 7` and `sleep_wknd = 7`?
+- Which value would someone with `sleep_wknd = 8` and `sleep_wkdy = 4` go? 
+- What about someone with  `sleep_wknd = 11` and `sleep_wkdy = 4`? 
+- What about someone with `sleep_wknd = 7` and `sleep_wkdy = 7`?
 
 
 ---
@@ -435,12 +440,13 @@ Let's look at the variable we made describing someone's weekday sleeping habits:
 
 ```{r}
 nlsy <- mutate(nlsy, slp_cat_wkdy = case_when(
-                       sleep_wkdy < 5 ~ "little",
-                       sleep_wkdy < 7 ~ "some",
-                       sleep_wkdy < 9 ~ "ideal",
-                       sleep_wkdy < 12 ~ "lots",
-                       TRUE ~ NA_character_
-))
+                                              sleep_wkdy < 5 ~ "little",
+                                              sleep_wkdy < 7 ~ "some",
+                                              sleep_wkdy < 9 ~ "ideal",
+                                              sleep_wkdy < 12 ~ "lots",
+                                              TRUE ~ NA_character_
+                                              )
+               )
 
 summary(nlsy$slp_cat_wkdy)
 ```
@@ -480,9 +486,12 @@ summary(nlsy$slp_cat_wkdy)
 The `fct_relevel()` function allows us just to rewrite the names of the categories out in the order we want them (safely).
 
 ```{r fct-relevel, eval = FALSE}
-nlsy <- mutate(nlsy, slp_cat_wkdy_ord = `fct_relevel`(slp_cat_wkdy,
-                       "little", "some", "ideal", "lots"
-))
+nlsy <- mutate(nlsy, slp_cat_wkdy_ord = `fct_relevel`(slp_cat_wkdy, "little", 
+                                                                    "some", 
+                                                                    "ideal", 
+                                                                    "lots"
+                                                    )
+               )
 ```
 ```{r, code=repeat_code("fct-relevel"), echo = FALSE}
 ```
@@ -495,9 +504,12 @@ levels(nlsy$slp_cat_wkdy_ord)
 ### What if you misspell something?
 
 ```{r misspell, warning = TRUE, eval = FALSE}
-nlsy <- mutate(nlsy, slp_cat_wkdy_ord2 = fct_relevel(slp_cat_wkdy,
-                       "little", `"same"`, "ideal", "lots"
-))
+nlsy <- mutate(nlsy, slp_cat_wkdy_ord2 = fct_relevel(slp_cat_wkdy, "little", 
+                                                                  `"same"`, 
+                                                                   "ideal", 
+                                                                   "lots"
+                                                     )
+               )
 ```{r, code=repeat_code("misspell"), echo = FALSE, warning = TRUE}
 ```
 ```{r}
@@ -517,10 +529,12 @@ From the codebook, I know that:
 ```{r fct-recode, eval = FALSE}
 nlsy <- mutate(nlsy, region_fact = factor(region),
                      region_fact = `fct_recode`(region_fact,
-                                      "Northeast" = "1",
-                                      "North Central" = "2",
-                                      "South" = "3",
-                                      "West" = "4"))
+                                                 "Northeast" = "1",
+                                                 "North Central" = "2",
+                                                 "South" = "3",
+                                                 "West" = "4"
+                                                )
+               )
 table(nlsy$region)
 ```
 ```{r, code=repeat_code("fct-recode"), echo = FALSE}
@@ -553,18 +567,18 @@ summary(nlsy$region_fact)
 Recall that we made it so that the sleep variable had missing values, perhaps because we thought they were outliers:
 
 ```{r fct-na, eval = FALSE}
-nlsy <- mutate(nlsy, slp_cat_wkdy_out = 
-                 `fct_explicit_na`(slp_cat_wkdy, na_level = "outlier"))
+nlsy <- mutate(nlsy, slp_cat_wkdy_out = `fct_explicit_na`(slp_cat_wkdy, na_level = "outlier"))
 summary(nlsy$slp_cat_wkdy_out)
 ```
 ```{r, code=repeat_code("fct-na"), echo = FALSE}
 ```
 Or maybe we want to combine some levels that don't have a lot of observations in them:
 ```{r fct-collapse, eval = FALSE}
-nlsy <- mutate(nlsy, slp_cat_wkdy_comb = 
-                 `fct_collapse`(slp_cat_wkdy, 
-                              "less" = c("little", "some"),
-                              "more" = c("ideal", "lots")))
+nlsy <- mutate(nlsy, slp_cat_wkdy_comb = `fct_collapse`(slp_cat_wkdy, 
+                                                         "less" = c("little", "some"),
+                                                         "more" = c("ideal", "lots")
+                                                       )
+              )
 summary(nlsy$slp_cat_wkdy_comb)
 ```
 ```{r, code=repeat_code("fct-collapse"), echo = FALSE}
@@ -742,9 +756,7 @@ table(extreme_eyes$eyesight)
 We could of course do the same thing with a factor variable:
 
 ```{r}
-some_regions <- filter(nlsy,
-                       region_fact == "Northeast" |
-                         region_fact == "South")
+some_regions <- filter(nlsy, region_fact == "Northeast" | region_fact == "South")
 table(some_regions$region_fact)
 ```
 
@@ -754,8 +766,7 @@ table(some_regions$region_fact)
 Often we have a number of options for one variable that would meet our eligibility criteria. R's special `%in%` function comes in handy here:
 
 ```{r}
-more_regions <- filter(nlsy, region_fact %in% 
-                         c("South", "West", "Northeast"))
+more_regions <- filter(nlsy, region_fact %in% c("South", "West", "Northeast"))
 table(more_regions$region_fact)
 ```
 
@@ -782,8 +793,7 @@ This is annoying. We can't say "not in" with the syntax `%!in%` or something lik
 ```
 
 ```{r}
-northcentralers <- filter(nlsy, 
-                     !region_fact %in% c("South", "West", "Northeast"))
+northcentralers <- filter(nlsy, !region_fact %in% c("South", "West", "Northeast"))
 table(northcentralers$region_fact)
 ```
 
@@ -835,17 +845,6 @@ class:inverse
 1. Create a dataset with all the observations that get over 7 hours of sleep on both weekends and weekdays *or* who have an income greater than/equal to 20,000 and less than/equal to 50,000.
 2. Create a dataset that consists *only* of the missing values in `slp_cat_wkdy`. Check how many rows it has (there should be 3!).
 3. Look up the `between()` function in help. Figure out how to use this to answer question 1, when choosing people whose income is between 20,000 and 50,000. Check to make sure you get the same number of rows.
-
-```{r eval = FALSE, echo = FALSE}
-exer4.1 <- filter(nlsy, (sleep_wkdy > 7 & sleep_wknd > 7) |
-                    (income >= 20000 & income <= 50000))
-exer4.2 <- filter(nlsy, is.na(slp_cat_wkdy))
-nrow(exer4.2)
-exer4.3 <- filter(nlsy, (sleep_wkdy > 7 & sleep_wknd > 7) |
-                    between(income, 20000, 50000))
-nrow(exer4.1)
-nrow(exer4.3)
-```
 
 ---
 # Challenge
@@ -916,7 +915,7 @@ levels(nlsy_full$res_2002)
 ```
 
 ---
-
+.pull-left[
 ### `res_1980`
 
 
@@ -937,8 +936,8 @@ value | label
 17 | PARENTAL
 18 | HHI CONDUCTED WITH PARENT
 19 | R IN PARENTAL HOUSEHOLD
-
----
+]
+.pull-right[
 ### `res_2002`
 
 value | label
@@ -955,7 +954,7 @@ value | label
 15 | CONVENT, MONASTERY, OTHER RELIGIOUS INSTITUTE
 16 | OTHER INDIVIDUAL QUARTERS (SPECIFY)
 19 | RESPONDENT IN PARENT HOUSEHOLD
-
+]
 
 
 ---
