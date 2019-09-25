@@ -33,7 +33,7 @@ h1, h2, h3 {
 }
 .remark-slide-content {
   background-color: #FFFFFF;
-  font-size: 25;
+  font-size: 20px;
   
   
   
@@ -52,7 +52,7 @@ h1, h2, h3 {
   font-family: 'Source Code Pro', 'Lucida Console', Monaco, monospace;
 }
 .remark-code {
-  font-size: 0.9em;
+  font-size: 1.3rem;
 }
 .remark-inline-code {
   font-size: 1em;

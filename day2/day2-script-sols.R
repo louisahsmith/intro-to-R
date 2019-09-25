@@ -346,3 +346,20 @@ nlsy_res
 levels(nlsy_res$res_1980_new)
 levels(nlsy_res$res_2002_new)
 table(nlsy_res$res_1980_new, nlsy_res$res_2002_new)
+
+
+# Exercises 1
+
+# here's the code from the first part
+nlsy <- mutate(nlsy, slp_cat_wkdy = case_when(
+  sleep_wkdy < 5 ~ "little",
+  sleep_wkdy < 7 ~ "some",
+  sleep_wkdy < 9 ~ "ideal",
+  sleep_wkdy < 12 ~ "lots",
+  TRUE ~ NA_character_))
+missing_sleep <- filter(nlsy, is.na(slp_cat_wkdy))
+missing_sleep <- select(missing_sleep, starts_with("slp"), contains("sleep"))
+missing_sleep
+
+# 1. Rewrite the code above using pipes. Make sure you get the same dataset when your code runs!
+# 
