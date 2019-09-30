@@ -66,8 +66,7 @@ Resources:
 - [Here's](https://suzan.rbind.io/2018/04/dplyr-tutorial-4/) a great blog post on summarizing data that goes above and beyond what we do. Check out the other posts under the tutorial tag as well!
 - We've covered many of the highlights of the `dplyr` package. Read its vignette [here](https://cran.r-project.org/web/packages/dplyr/vignettes/dplyr.html).
 
-
-<!-- You can watch a video of class [here](). -->
+You can watch a video of class [here](https://harvard.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=316ff92a-d1d2-4544-92d8-aabe00fd2a4a).
 
 Download the [solution script](https://raw.githubusercontent.com/louisahsmith/intro-to-R/master/day3/day3-script-sols.R).
 
@@ -76,3 +75,14 @@ Download the [solution script](https://raw.githubusercontent.com/louisahsmith/in
 
 ### Day 5 (10/18/19)
 #### Analyze your data
+
+
+## RStudio tips and tricks
+
+The font you saw in my RStudio is Fira Code. Instructions to install can be found [here](https://github.com/tonsky/FiraCode/wiki/RStudio-instructions).
+
+Beyond the themes that come pre-installed with RStudio, there are a variety of others available with the `rsthemes` package [here](https://github.com/gadenbuie/rsthemes).
+
+You can also make your own theme! There's more information in [this article](https://support.rstudio.com/hc/en-us/articles/115011846747-Using-RStudio-Themes).
+
+If you use certain headers like `# ----` in your code, your code sections will be automatically labeled and you can use the outline viewer (the rightmost button direct above your script) or the section selector (bottom left of the script section). Read more [here](https://support.rstudio.com/hc/en-us/articles/200484568-Code-Folding-and-Sections).
