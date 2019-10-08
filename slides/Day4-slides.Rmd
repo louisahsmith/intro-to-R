@@ -1,0 +1,1018 @@
+---
+title: "Introduction to R"
+subtitle: "Day 4: Functions"  
+author: "October 10, 2019"
+date: ""
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: xaringan-themer.css
+    nature:
+      beforeInit: "macros.js"
+      ratio: 16:9
+      countIncrementalSlides: false
+      highlightStyle: color-brewer
+      highlightLines: true
+      highlightSpans: true
+---
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE, width = 93)
+knitr::opts_chunk$set(fig.dim = c(4.8, 4.5), 
+                      fig.align = "center", fig.retina = 2, out.width = "100%", message = FALSE, warning = FALSE, cache = TRUE)
+knitr::opts_hooks$set(fig.callout = function(options) {
+  if (options$fig.callout) {
+    options$echo <- FALSE
+    options$out.height <- "99%"
+    options$fig.width <- 16
+    options$fig.height <- 8
+  }
+  options
+})
+library(tidyverse)
+library(tableone)
+nlsy <- read_csv(here::here("data", "nlsy_cc.csv"))
+colnames(nlsy) <- c("glasses", "eyesight", "sleep_wkdy", "sleep_wknd",
+                    "id", "nsibs", "samp", "race_eth", "sex", "region", 
+                    "income", "res_1980", "res_2002", "age_bir")
+reveal <- function(name, num) {
+  content <- knitr:::knit_code$get(name)
+  last_line <- which(str_detect(content, "\\+"))[num]
+  if (is.na(last_line)) last_line <- length(content)
+  if (num == 1) {
+    first_line <- 1
+    } else {
+    first_line <- which(str_detect(content, "\\+"))[num - 1] + 1
+    }
+  content[last_line] <- str_remove(content[last_line], "\\+")
+  new_lines <- paste0(content[first_line:last_line], " #<<")
+  orig_lines <- if (num == 1) 0 else 1:(first_line-1)
+  c(content[orig_lines], new_lines)
+}
+repeat_code <- function(name) {
+  content <- knitr:::knit_code$get(name)
+  str_remove_all(content, "`")
+}
+```
+```{css, echo=FALSE}
+/* custom.css */
+
+.left-code {
+  #color: #777;
+  width: 43%;
+  height: 92%;
+  float: left;
+  #font-size: 0.8em;
+  position: absolute;
+}
+.right-plot {
+  width: 50%;
+  float: right;
+  padding-left: 5%;
+}
+.left-col {
+  width: 60%;
+  float: left;
+  position: absolute;
+}
+.right-col {
+  width: 30%;
+  float: right;
+  padding-left: 5%;
+}
+.plot-callout {
+  height: 225px;
+  width: 450px;
+  bottom: 5%;
+  right: 5%;
+  position: absolute;
+  padding: 0px;
+  z-index: 100;
+}
+.plot-callout img {
+  width: 100%;
+  border: 4px solid #23373B;
+}
+
+h4 {
+  color: #F97B64;
+  font-size: 26px;
+  text-align: center;
+}
+
+h1, h2, h3, h4 {
+  margin-top:2 !important;
+}
+
+h1 {
+  font-size:45px !important;
+}
+h2 {
+  font-size:40px !important;
+}
+
+.inverse h1, .inverse h2, .inverse h3 {
+  color: #1F4257;
+}
+.remark-slide thead, .remark-slide tr:nth-child(2n) {
+  background-color: white;
+}
+.title-slide, .title-slide h1, .title-slide h2, .title-slide h3 {
+  color: #1F4257;
+    background-color:rgba(236, 236, 236, .75)
+}
+    
+.title-slide {
+  background-image: url("img/assembly.jpg");
+  background-size: cover;
+}
+.remark-slide-content {
+  padding-top: 0;
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-bottom: 10px;
+  font-size: 26px;
+}
+th, td {
+ padding: 0;
+}
+
+pre, ol, p {
+  margin-bottom: .5rem;
+  margin-top: 0.5rem;
+}
+
+ul {
+  margin-bottom: .5rem;
+  margin-top: 0;
+}
+
+.big-code .remark-code {
+  font-size: 1.5em !important;
+  margin: 0;
+  width: 85%;
+}
+
+
+```
+```{r xaringan-themer, include=FALSE}
+library(xaringanthemer)
+duo_accent(code_font_size = "1.3rem",
+  primary_color = "#1F4257",
+  secondary_color = "#F97B64",
+  header_font_google = google_font("Lexend Deca"),
+  text_font_google = google_font("Noto Sans"),
+  header_h1_font_size = 45,
+  header_h2_font_size = 40
+)
+```
+
+# Agenda
+
+### Day 1: Figures
+
+### Day 2: Selecting, filtering, and mutating
+
+### Day 3: Grouping and tables
+
+### Day 4: Functions
+
+### Day 5: Analyze your data
+
+
+---
+count: false
+# Agenda
+
+### Day 1: Figures ✅
+
+### Day 2: Selecting, filtering, and mutating ✅
+
+### Day 3: Grouping and tables ✅
+.left-code[
+```{r, eval = FALSE}
+analysis_dat <- nlsy %>%
+  mutate(ineligible = case_when(
+    income > 50000 ~ 1,
+    age_bir > 35 ~ 1,
+    TRUE ~ 0
+  )) %>%
+  filter(ineligible == 0) %>%
+  select(id, sex, race_eth, 
+         glasses, eyesight)
+analysis_dat
+```
+]
+.right-plot[
+```{r, echo = FALSE}
+analysis_dat <- nlsy %>%
+  mutate(ineligible = case_when(
+    income > 50000 ~ 1,
+    age_bir > 35 ~ 1,
+    TRUE ~ 0
+  )) %>%
+  filter(ineligible == 0) %>%
+  select(id, sex, race_eth, 
+         glasses, eyesight)
+print(analysis_dat, n = 7)
+```
+]
+
+---
+count: false
+# Agenda
+
+### Day 1: Figures ✅
+
+### Day 2: Selecting, filtering, and mutating ✅
+
+### Day 3: Grouping and tables ✅
+.left-code[
+```{r, eval = FALSE}
+stats <- analysis_dat %>%
+  mutate(sex = factor(sex, labels = 
+              c("male", "female")),
+         race_eth = factor(race_eth, 
+              labels = c("Hispanic", 
+               "Black", "Other"))) %>%
+  group_by(race_eth, sex) %>%
+  summarise(prop_glass = mean(glasses),
+            sd_eyesight = sd(eyesight))
+stats
+```
+]
+.right-plot[
+```{r, echo = FALSE}
+stats <- analysis_dat %>%
+  mutate(sex = factor(sex, labels = 
+              c("male", "female")),
+         race_eth = factor(race_eth, 
+              labels = c("Hispanic", 
+               "Black", "Other"))) %>%
+  group_by(race_eth, sex) %>%
+  summarise(prop_glass = mean(glasses),
+            sd_eyesight = sd(eyesight))
+stats
+```
+]
+
+---
+count: false
+# Agenda
+
+### Day 1: Figures ✅
+
+### Day 2: Selecting, filtering, and mutating ✅
+
+### Day 3: Grouping and tables ✅
+.left-code[
+```{r agenda-plot, fig.show="hide", fig.dim = c(4,2)}
+ggplot(stats) +
+  geom_col(aes(x = sex, y = prop_glass,
+               fill = sex)) +
+  facet_grid(cols = vars(race_eth)) +
+  scale_fill_brewer(palette = "Set1",
+                    guide = "none") +
+  theme_minimal() +
+  labs(x = NULL, 
+    y = "proportion wearing glasses")
+```
+]
+.right-plot[
+![](`r knitr::fig_chunk("agenda-plot", "png")`)
+
+]
+---
+count: false
+# Agenda
+
+### Day 1: Figures ✅
+
+### Day 2: Selecting, filtering, and mutating ✅
+
+### Day 3: Grouping and tables ✅
+
+.left-code[
+```{r, eval = FALSE}
+tab1 <- CreateTableOne(
+  data = analysis_dat, strata = "sex",
+  vars = c("race_eth", "glasses", 
+           "eyesight"),
+  factorVars = c("race_eth", "glasses")
+)
+print(tab1, test = FALSE, 
+      catDigits = 0, contDigits = 0)
+```
+]
+.right-plot[
+```{r, echo = FALSE}
+tab1 <- CreateTableOne(
+  data = analysis_dat, strata = "sex",
+  vars = c("race_eth", "glasses", 
+           "eyesight"),
+  factorVars = c("race_eth", "glasses")
+)
+print(tab1, test = FALSE, 
+      catDigits = 0, contDigits = 0)
+```
+]
+
+---
+# Agenda
+
+### Day 1: Figures ✅
+
+### Day 2: Selecting, filtering, and mutating ✅
+
+### Day 3: Grouping and tables ✅
+
+### Day 4: Functions
+
+---
+# Functions in R
+
+I've been denoting functions with parentheses: `func()`
+
+We've seen functions such as:
+- `mean()`
+- `theme_minimal()`
+- `mutate()`
+- `case_when()`
+- `group_by()`
+- `CreateTableOne()`
+
+Functions take **arguments** and return **values**
+
+---
+# Looking inside a function
+
+If you want to see the code within a function, you can just type its name without the parentheses:
+```{r}
+CreateTableOne
+```
+
+---
+# Structure of a function
+
+.pull-left[
+```{r, eval = FALSE}
+func <- function()#<<
+```
+]
+.pull-right[
+#### You can name your function like you do any other object
+Just avoid names of existing functions
+]
+
+---
+# Structure of a function
+
+.pull-left[
+```{r, eval = FALSE}
+func <- function(`arg1`, 
+                 `arg2` = default_val)
+}
+```
+]
+.pull-right[
+#### What objects/values do you need to make your function work?
+You can give them default values to use if the user doesn't specify others
+]
+
+---
+count: false
+# Structure of a function
+.pull-left[
+```{r, eval = FALSE}
+func <- function(arg1, 
+                 arg2 = default_val) `{`
+
+} #<<
+```
+]
+.pull-right[
+#### Everything else goes within curly braces
+Code in here will essentially look like any other R code, using any inputs to your functions
+]
+
+---
+# Structure of a function
+.pull-left[
+```{r, eval = FALSE}
+func <- function(arg1, 
+                 arg2 = default_val) {
+  new_val <- # do something with the args #<<
+} 
+```
+]
+.pull-right[
+#### Make new objects
+One thing you'll likely want to do is make new objects along the way
+
+These aren't saved to your environment (i.e., you won't see them in the upper-right window) when you run the function
+
+You can think of them as being stored in a temporary environment within the function
+]
+
+---
+# Structure of a function
+.pull-left[
+```{r, eval = FALSE}
+func <- function(arg1, 
+                 arg2 = default_val) {
+  new_val <- # do something with the args
+  `return`(new_val)
+} 
+```
+]
+.pull-right[
+
+#### Return something new that the code has produced
+
+The `return()` statement is actually optional. If you don't put it, it will return the last object in the code. When you're starting out, it's safer to always explicitly write out what you want to return.
+]
+
+---
+# Example: a new function for the mean
+
+Let's say we are not satisfied with the `mean()` function and want to write our own.
+
+
+Here's the general structure we'll start with.
+.big-code[
+```{r}
+new_mean <- function() {
+
+}
+```
+]
+
+---
+# New mean: arguments
+
+We'll want to take the mean of a vector of numbers.
+
+It will help to make an example of such a vector to think about what the input might look like, and to test the function. We'll call it `x`:
+
+```{r}
+x <- c(1, 3, 5, 7, 9)
+```
+We can add `x` as an argument to our function:
+.big-code[
+```{r}
+new_mean <- function(`x`) {
+
+}
+```
+]
+
+---
+# New mean: function body
+
+Let's think about how we calculate a mean in math, and then translate it into code:
+
+$$\bar{x} = \frac{1}{n}\sum_{i = 1}^n x_i$$
+
+So we need to sum the elements of `x` together, and then divide by the number of elements.
+
+--
+
+We can use the functions `sum()` and `length()` to help us.
+
+We'll write the code with our test vector first, before inserting it into the function:
+.big-code[
+```{r}
+n <- length(`x`)
+sum(`x`) / n
+```
+]
+
+---
+class:big-code
+# New mean: function body
+Our code seems to be doing what we want, so let's insert it. To be explicit, I've stored the answer (within the function) as `mean_val`, then returned that value.
+
+```{r}
+new_mean <- function(x) {
+  n <- length(x)
+  mean_val <- sum(x) / n
+  return(mean_val)
+}
+```
+
+---
+# Testing a function
+
+Let's plug in the vector that we created to test it:
+
+```{r}
+new_mean(x = `x`)
+```
+
+And then try another one we create on the spot:
+
+```{r, eval = FALSE}
+new_mean(x = `c(100, 200, 300)`)
+```
+```{r, echo = FALSE}
+new_mean(x = c(100, 200, 300))
+```
+
+#### Great!
+
+---
+class:big-code
+# Adding another argument
+
+Let's say we plan to be using our `new_mean()` function to calculate proportions (i.e., the mean of a binary variable). Sometimes we'll want to report them as percentages by multiplying the proportion by 100.
+
+Let's name our new function `prop()`. We'll use the same structure as we did with `new_mean()`.
+
+```{r}
+prop <- function(x) {
+  n <- length(x)
+  mean_val <- sum(x) / n
+  return(mean_val)
+}
+```
+
+---
+class:big-code
+# Testing the code
+
+Now we'll want to test on a vector of 1's and 0's.
+```{r}
+x <- c(0, 1, 1)
+```
+To calculate the proportion and turn it into a percentage, we'll just multiply the mean by 100.
+```{r}
+percent <- 100
+percent * sum(x) / length(x)
+```
+
+---
+
+class:big-code
+# Testing the code
+
+We want to give users the option to choose between a proportion and a percentage. So we'll add an argument `percent`. When we want to just return the proportion, we can just set `percent` to be 1.
+
+```{r}
+percent <- 1
+percent * sum(x) / length(x)
+```
+
+---
+class:big-code
+# Adding another argument
+If we add `percent` as an argument, we can refer to it in the function body.
+
+```{r}
+prop <- function(x, `percent`) {
+  n <- length(x)
+  mean_val <- `percent` * sum(x) / n
+  return(mean_val)
+}
+```
+
+---
+class:big-code
+# Adding another argument
+
+Now we can test:
+
+```{r}
+prop(x = c(1, 0, 1, 0), percent = 1)
+```
+
+```{r}
+prop(x = c(1, 0, 1, 0), percent = 100)
+```
+
+---
+# Making a default argument
+
+Since we don't want users to have to specify `percent = 1` every time they just want a proportion, we can set it as a **default**.
+
+```{r}
+prop <- function(x, `percent = 1`) {
+  n <- length(x)
+  mean_val <- `percent` * sum(x) / n
+  return(mean_val)
+}
+```
+
+```{r, echo = FALSE}
+prop <- function(x, percent = 1) {
+  n <- length(x)
+  mean_val <- percent * sum(x) / n
+  return(mean_val)
+}
+```
+Now we only need to specify that argument if we want a percentage.
+```{r}
+prop(x = c(0, 1, 1, 1))
+prop(x = c(0, 1, 1, 1), percent = 100)
+```
+
+---
+# Caveats
+
+- This is obviously not the best way to write this function!
+
+- For example, it will still work if `x = c(123, 593, -192)`.... but it certainly won't give you a proportion or a percentage!
+
+- We could also put `percent = ` *any number*, and we'll just be multiplying the answer by that number -- this is essentially meaningless.
+
+- We also haven't done any checking to see whether the user is even entering numbers! We could put in better error messages so users don't just get an R default error message if they do something wrong.
+
+```{r, error = TRUE}
+prop(x = c("blah", "blah", "blah"))
+```
+
+---
+class:inverse
+# Exercises 1
+.center[
+<iframe src="https://giphy.com/embed/2WUkAVDzuQbUA" width="220" height="220" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/line-cube-shapes-2WUkAVDzuQbUA"></a></p>
+]
+
+1. You're tired of writing `x^2` when you want to square `x`. Make a function to square a number. You can call it `square()`.
+2. You don't just want to square numbers, you want to raise them to higher powers too. Make a function that uses two arguments, `x` for a number, and `power` for the power. Call it `raise()`.
+3. Change your `raise()` function to default to squaring `x` when the user doesn't enter a value for `power`.
+4. Use your function to square and cube 524 with `raise(524)` and `raise(524, power = 3)`.
+
+---
+
+# When to make a function
+
+There's a rule somewhere that says that if you are copying and pasting something 3 times in your code, you should just make a function to do it instead. 
+
+For example, when we were calculating quantiles:
+```{r}
+nlsy %>% summarize(q.1 = quantile(age_bir, probs = 0.1),
+                   q.2 = quantile(age_bir, probs = 0.2),
+                   q.3 = quantile(age_bir, probs = 0.3),
+                   q.4 = quantile(age_bir, probs = 0.4),
+                   q.5 = quantile(age_bir, probs = 0.5))
+```
+#### We could make a function to do this instead!
+
+---
+class:big-code
+# Age at first birth quantile function
+
+What will our argument(s) be? How about just the quantile of interest, to start out, which we can refer to as `q`.
+
+What will the name of our function be? Since we're looking at quantiles of age at first birth, let's call it `age_bir_q()`:
+
+```{r}
+age_bir_q <- function(q) {
+  
+}
+```
+
+---
+# Prepare the code
+
+First let's choose a value to help us write the code for the body of our function:
+```{r}
+q <- .5
+```
+Then we can write the code with reference to the variable `q`.
+.big-code[
+```{r}
+nlsy %>% summarize(
+  q_var = quantile(age_bir, probs = `q`)
+  )
+```
+]
+
+---
+# Copy and paste just once
+
+```{r}
+age_bir_q <- function(q) {
+  quant <- nlsy %>% 
+    summarize(q_var = quantile(age_bir, probs = q))
+  return(quant)
+}
+```
+
+It's always good to check your function, if possible, with some other way to get the same result. Here we can double check using the median:
+
+```{r}
+age_bir_q(q = 0.5)
+median(nlsy$age_bir)
+```
+
+---
+# What if we want to change the variable
+
+This is where things get a little tricky. It's hard to use an unquoted variable name as an argument to a function. Since it's not an object in the environment, R will complain if we try to do something like this:
+```{r, eval = FALSE}
+var_q <- function(q, `var`) {
+  quant <- nlsy %>%
+    summarize(q_var = quantile(`var`, probs = q))
+  return(quant)
+}
+var_q(q = 0.5, `var = income`)
+```
+
+```{r, error = TRUE, echo = FALSE}
+var_q <- function(q, var) {
+  quant <- nlsy %>%
+    summarize(q_var = quantile(var, probs = q))
+  return(quant)
+}
+var_q(q = 0.5, var = income)
+```
+We might think it would help if we put `income` in quotes, but alas!
+```{r, eval = FALSE}
+var_q(q = 0.5, `var = "income"`)
+```
+```{r, error = TRUE, echo = FALSE}
+var_q(q = 0.5, var = "income")
+```
+
+---
+# What if we want to change the variable
+
+There are more "official" ways to deal with this that are beyond the scope of this class, but there's usually a workaround to be able to write your variable name as a character string instead.
+
+Consider that we can rename a variable using the `rename()` function, which can take variable names in quotes:
+```{r}
+nlsy %>%
+  rename(eyeglasses = "glasses")
+```
+
+---
+# What if we want to change the variable
+Let's just rename the variable we want to `new_var`, then we can pass the variable `new_var` to any function we want:
+```{r}
+var_q <- function(q, var) {
+  quant <- nlsy %>%
+    rename(new_var = var) %>% #<<
+    summarise(q_var = quantile(new_var, probs = q))
+  return(quant)
+}
+var_q(q = 0.5, var = "income")
+```
+
+---
+class:big-code
+# Use our function on any combination of `var` and `q`
+```{r}
+var_q(q = 0.25, var = "sleep_wkdy")
+```
+
+---
+count:false
+class:big-code
+# Use our function on any combination of `var` and `q`
+```{r}
+var_q(q = 0.95, var = "nsibs")
+```
+
+---
+# Changing a grouping variable
+
+We might run into the same problem with wanting to change a variable, if, say, we want to calculate the mean for a number of different variables:
+```{r}
+nlsy %>% group_by(sex) %>% summarise(mean_inc = mean(income))
+nlsy %>% group_by(race_eth) %>% summarise(mean_inc = mean(income))
+```
+It will be your job in the exercises to write a function to do this!
+---
+class:inverse
+# Exercises 2
+.center[
+<iframe src="https://giphy.com/embed/l3vR4Fp4U1DhW8bhS" width="384" height="222" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/l3vR4Fp4U1DhW8bhS"></a></p>
+]
+1. Write a function to calculate the stratified mean income for grouping variable `var`. In other words, write a function such that `mean_group_inc(var = "sex")` produces the same results as the first line on the previous slide, `mean_group_inc(var = "race_eth")` the second.
+2. Rewrite your function to accept two arguments: `group_var` to determine what the grouping variable is, and `mean_var` to determine what variable you want to take the mean of (e.g., `mean_group(group_var = "sex", mean_var = "income")` should give you the same results as above).
+
+
+---
+class:big-code
+# Repeating functions
+
+Often we want to repeat functions, or some procedure, over and over again.
+
+One option which you may be familiar with from other programming languages is a **for loop**:
+
+```{r}
+for (i in 1:3) {
+  print(i)
+}
+```
+
+---
+class:big-code
+# Structure of a for loop
+```{r, eval = FALSE}
+for (i in vals) {
+  something(i) # do things here!
+}
+```
+
+---
+# If we want to print our results to the console, we have to use the `print()` function
+```{r}
+qs <- c(0.1, 0.5, 0.9)
+for (i in qs) {
+  `print`(var_q(q = i, var = "income"))
+}
+
+```
+
+---
+class:big-code
+# If we want to save our results, we should set up an empty object to do so
+```{r}
+results <- rep(NA, 3)
+for (i in 1:3) {
+  results[[i]] <- i * 1.5
+}
+results
+```
+
+---
+class:big-code
+# What just happened?
+```{r}
+results <- rep(NA, 3)
+results # empty vector of NAs
+for (i in 1:3) {
+  # fill the i'th entry with 
+  # the value i times 1.5
+  results[[i]] <- i * 1.5 
+}
+```
+
+---
+# Quick detour back to our function
+
+Let's return just the `q_var` column, not the whole tibble that was created (since this function is really just calculating one number)
+
+```{r}
+var_q_new <- function(q, var) {
+  quant <- nlsy %>%
+    rename(new_var = var) %>%
+    summarise(q_var = quantile(new_var, probs = q)) %>%
+    `pull`(q_var)
+  return(quant)
+}
+var_q_new(q = 0.5, var = "income")
+```
+
+---
+class:big-code
+# If we want to calculate all the deciles of income
+```{r}
+# use seq to generate values from
+# 0.1 to 0.9, skipping along by 0.1
+qs <- `seq`(0.1, 0.9, by = 0.1)
+qs
+# use length() to get the right number of
+# empty values without even thinking!
+deciles <- rep(NA, `length`(qs))
+```
+
+---
+class:big-code
+# What values do we want to cycle through?
+The `seq_along` function is the best way to go from 1 to the length of your vector:
+```{r}
+seq_along(qs)
+```
+We can extract the value from `qs` that we want with whatever value `i` is at:
+```{r}
+i <- 4 # (for example)
+qs[[i]]
+```
+
+---
+class:big-code
+# Putting it all together
+```{r}
+for (i in seq_along(qs)) {
+  deciles[[i]] <- var_q_new(q = qs[[i]], 
+                        var = "income")
+}
+deciles
+```
+
+---
+# Notes on for loops
+
+- The `i` is arbitrary... you can cycle through whatever variable you want, you don't have to call it `i`!
+
+- People may try to tell you that for loops in R are slow. This is generally only true if you don't make an empty vector or matrix to hold your results ahead of time.
+
+- That said, there's often a more concise and readable equivalent to a for loop in R. The `apply()` family of functions is one option (brief guide [here](https://petewerner.blogspot.com/2012/12/using-apply-sapply-lapply-in-r.html)), but I have started exclusively using the `purrr` package and its `map()` family. The ["iteration" chapter](https://r4ds.had.co.nz/iteration.html) in the R for Data Science book is highly recommended.
+
+---
+class:inverse
+# Exercises 3
+
+.center[
+<iframe src="https://giphy.com/embed/EmMWgjxt6HqXC" width="384" height="257" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/loop-cat-EmMWgjxt6HqXC"></a></p>
+]
+1. Change the last for loop in the slides to loop over different variables instead of different quantiles. That is, calculate the 0.25 quantile for each of `c("income", "age_bir", "nsibs")` in a for loop.
+2. You can nest for loops inside each other, as long as you use different iteration variables. Write a nested for loop to iterate over variables (with `i`) and quantiles (with `j`). You'll need to start with an empty matrix instead of a vector, with rows indexed by `i` and columns by `j`. Calculate each of the deciles for each of the above variables.
+
+---
+# Other options
+
+This class introduced you to the basics... but there are usually easier/more efficient ways to do everything. I'll show you some examples of a helpful set of functions that you can look more into on your own.
+
+---
+# Summarize multiple variables with multiple functions
+.big-code[
+```{r, eval = FALSE}
+nlsy %>%
+  summarise_at(vars(contains("sleep")), 
+            list(med = median, sd = sd))
+```
+]
+```{r, echo = FALSE}
+nlsy %>%
+  summarise_at(vars(contains("sleep")), 
+               list(med = median, sd = sd))
+```
+
+---
+# Summarize all numeric variables with multiple functions
+
+.big-code[
+```{r, eval = FALSE}
+nlsy %>%
+  summarise_if(is.numeric, mean)
+```
+]
+```{r, echo = FALSE}
+nlsy %>%
+  summarise_if(is.numeric, mean)
+```
+
+---
+# Make multiple variables factors
+.big-code[
+```{r, eval = FALSE}
+nlsy %>%
+  mutate_at(vars(eyesight, 
+                 race_eth, sex),
+            factor) %>%
+  select(eyesight, race_eth, sex)
+```
+]
+```{r, echo = FALSE}
+nlsy %>%
+  mutate_at(vars(eyesight, race_eth, sex),
+            factor) %>%
+  select(eyesight, race_eth, sex)
+```
+
+---
+# Rename all your variables
+.big-code[
+```{r, eval = FALSE}
+nlsy %>%
+  rename_all(toupper)
+```
+]
+
+```{r, echo = FALSE}
+nlsy %>%
+  rename_all(toupper)
+```
+
+---
+# Resources
+
+- Blog post focusing on these "scoped" variants: http://www.rebeccabarter.com/blog/2019-01-23_scoped-verbs/
+- Series of blog posts that help with manipulating data: https://suzan.rbind.io/categories/tutorial/
+- Two videos about some more advanced topics that allow us to pass variable names to functions: https://www.youtube.com/watch?v=nERXS3ssntw and https://www.youtube.com/watch?v=2-gknoyjL3A
+- Blog post on the `apply()` family of functions: https://petewerner.blogspot.com/2012/12/using-apply-sapply-lapply-in-r.html
+- Video tutorial on the `map()` family of functions: https://resources.rstudio.com/wistia-rstudio-conf-2017/happy-r-users-purrr-tutorial-charlotte-wickham
+
+---
+class:inverse
+# Challenge
+
+Create a function that calculates the stratified proportion of people with different levels of `eyesight` by any categorical variable. Then use any technique (besides copying and pasting) to calculate the proportions stratified by `sex`, `race_eth`, and `region`. You should end up with something like this:
+
+---
+```{r, echo = FALSE}
+eye_func <- function(var) {
+  nlsy %>%
+  rename(var_level = var) %>%
+  group_by(var_level, eyesight) %>%
+  summarize(n = n()) %>%
+  mutate(prop = n / sum(n),
+         var = var) %>%
+  ungroup() %>%
+    select(var, everything())
+}
+print(map_dfr(c("sex", "race_eth", "region"), eye_func), n = 45)
+```
