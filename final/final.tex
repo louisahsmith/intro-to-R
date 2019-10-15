@@ -1,0 +1,344 @@
+\documentclass[11pt]{scrartcl}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Final challenge},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+
+\setlength{\parindent}{0mm}
+\setlength{\parskip}{3mm}
+
+\linespread{1}
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+\makeatletter
+\@ifpackageloaded{subfig}{}{\usepackage{subfig}}
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\captionsetup[subfloat]{margin=0.5em}
+\AtBeginDocument{%
+\renewcommand*\figurename{Figure}
+\renewcommand*\tablename{Table}
+}
+\AtBeginDocument{%
+\renewcommand*\listfigurename{List of Figures}
+\renewcommand*\listtablename{List of Tables}
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Listing}
+\newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
+\makeatother
+
+% \setlength{\parskip}{1.5em}
+\usepackage [autostyle, english = american]{csquotes}
+\MakeOuterQuote{"}
+\renewcommand{\thesection}{\Roman{section}}
+\renewcommand{\thesubsection}{\alph{subsection}}
+\usepackage[table]{xcolor}
+\usepackage{textcomp}
+\usepackage{booktabs}
+\usepackage[margin=1in, footskip=.5in]{geometry}
+\usepackage{float}
+\usepackage{lipsum}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+% \usepackage{underscore}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage{pgf,tikz}
+\usepackage{tkz-tab}
+% \usepackage[labelformat=simple]{subcaption}
+\usepackage[linewidth = .5pt]{mdframed}
+\usepackage{multirow}
+\usepackage{nicefrac}
+\usepackage[nocompress]{cite}
+\usepackage{amssymb}
+\usepackage{amsbsy}
+\usepackage{bm}
+\usepackage{array}
+\usepackage{anyfontsize}
+\usepackage{bold-extra}
+\usepackage{bibentry}
+\usepackage{longtable}
+\usepackage{pdflscape}
+\usepackage[labelfont=bf]{caption}
+\usepackage{ragged2e}
+% \usepackage{color, colortbl}
+\usepackage{pgf,tikz}
+\usetikzlibrary{positioning, calc, shapes.geometric, shapes.multipart,
+  shapes, arrows.meta, arrows,
+  decorations.markings, external, trees}
+\usepackage{tkz-tab}
+\tikzstyle{observed} = [circle, thick, text centered, draw, minimum height=1in, minimum width=1in, text width=9em, text height = 16pt]
+\tikzstyle{end_text} = [thick, text centered]
+
+\renewcommand{\rmdefault}{\sfdefault}
+
+\setkomafont{title}{\normalfont\upshape\bfseries}
+% \setkomafont{section}{\normalfont\large\upshape\bfseries}
+% \setkomafont{subsection}{\normalfont\upshape\bfseries}
+\allowdisplaybreaks
+\usepackage[all]{nowidow}
+
+% \setlength{\parskip}{0.1mm}
+\setlist[enumerate]{leftmargin=*}
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes}
+\usetikzlibrary{arrows.meta}
+
+
+\setlist[itemize]{leftmargin=*}
+
+\renewcommand\thesubfigure{(\alph{subfigure})}
+\makeatletter
+\renewcommand*\env@matrix[1][\arraystretch]{%
+  \edef\arraystretch{#1}%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{*\c@MaxMatrixCols c}}
+\makeatother
+
+\newcommand*\xtb{\mathbf{X}_i^T\bm{\beta}}
+
+
+\newcommand*{\notindep}{\not\!\perp\!\!\!\perp}
+
+\newcommand{\E}{{\operatorname E}}
+\newcommand{\Var}{{\operatorname {Var}}}
+\newcommand{\Cov}{{\operatorname {Cov}}}
+\newcommand{\Cor}{{\operatorname {Cor}}}
+
+\newcommand*{\independent}{\!\perp\!\!\!\perp}
+
+\newcommand*\pr{\text{Pr}}
+
+\newcommand*{\TitleFont}{%
+      % \usefont{\encodingdefault}{\rmdefault}{b}{n}%
+      \fontsize{17}{10}%
+      \selectfont}
+\newcommand*{\AuthFont}{%
+      % \usefont{\encodingdefault}{\rmdefault}{}{n}%
+      \fontsize{13}{12}%
+      \selectfont}
+
+
+\begin{document}
+
+\begin{flushleft}
+  \TitleFont{\textbf{Final challenge}}
+    \AuthFont{October 18, 2019}
+  
+  \end{flushleft}
+\vspace{-4.5ex}
+\par\noindent\rule{.35\textwidth}{0.6pt}
+
+\hypertarget{prepare-your-project}{%
+\section{Prepare your project}\label{prepare-your-project}}
+
+\begin{itemize}
+\tightlist
+\item
+  File -\textgreater{} New Project -\textgreater{} New Directory
+  -\textgreater{} New Project
+\item
+  Name it something like NLSY and put it in an appropriate folder on
+  your computer
+\item
+  Within that folder, make new folders as follows:
+\end{itemize}
+
+\begin{verbatim}
+NLSY/
+ ├── NLSY.Rproj
+ ├── data/
+ │    ├── raw/
+ │    └── processed/
+ ├── code/
+ └── results/
+      ├── tables/
+      └── figures/
+\end{verbatim}
+
+\hypertarget{move-files-around}{%
+\section{Prepare the data}\label{move-files-around}}
+
+\begin{itemize}
+\tightlist
+\item
+  Copy and paste \texttt{nlsy.csv} into \texttt{data/raw}.
+\item
+  Create a new file and save it as \texttt{clean\_data.R}.
+\item
+  In that file, read in the NLSY data and load any packages you need.
+  Make sure you replace any missing values with \texttt{NA}. Hint: there
+  are extra missing values in the \texttt{age\_bir} variable. Also, the
+  variable names might be useful:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{colnames_nlsy <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}
+  \StringTok{"glasses"}\NormalTok{, }\StringTok{"eyesight"}\NormalTok{, }\StringTok{"sleep_wkdy"}\NormalTok{, }\StringTok{"sleep_wknd"}\NormalTok{,}
+  \StringTok{"id"}\NormalTok{, }\StringTok{"nsibs"}\NormalTok{, }\StringTok{"samp"}\NormalTok{, }\StringTok{"race_eth"}\NormalTok{, }\StringTok{"sex"}\NormalTok{, }\StringTok{"region"}\NormalTok{,}
+  \StringTok{"income"}\NormalTok{, }\StringTok{"res_1980"}\NormalTok{, }\StringTok{"res_2002"}\NormalTok{, }\StringTok{"age_bir"}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Add factor labels to \texttt{eyesight}, \texttt{sex},
+  \texttt{race\_eth}, \texttt{region}, as in earlier slides. Select
+  those variables plus \texttt{income}, \texttt{id}, \texttt{nsibs},
+  \texttt{age\_bir}, and the sleep variables. Then restrict to complete
+  cases and people with incomes \textless{} \$30,000. Make a variable
+  for the log of income (replace with \texttt{NA} if income \textless{}=
+  0).
+\item
+  Also in that file, save your new dataset as a \texttt{.rds} file to
+  the \texttt{data/processed} folder.
+\end{itemize}
+
+\hypertarget{do-some-analysis}{%
+\section{Do some exploratory analysis}\label{do-some-analysis}}
+
+\begin{itemize}
+\tightlist
+\item
+  Create a file called \texttt{create\_figure.R}. In this file, read in
+  the cleaned dataset. Load any packages you need. Then make a
+  \texttt{ggplot} figure of your choosing to show something about the
+  distribution of the data. Save it to the \texttt{results/figures}
+  folder as a \texttt{.png} file using the \texttt{ggsave()} function.
+\item
+  Create a file called \texttt{table\_1.R}. In this file, read in the
+  cleaned dataset and use the \texttt{tableone} package to create a
+  table 1 with the variables of your choosing. Modify the following code
+  to save it as a \texttt{.csv} file. Open it in Excel/Numbers/Google
+  Sheets/etc. to make sure it worked.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tab1 <-}\StringTok{ }\KeywordTok{CreateTableOne}\NormalTok{(...) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{print}\NormalTok{() }\OperatorTok{%>%}\StringTok{ }\KeywordTok{as_tibble}\NormalTok{(}\DataTypeTok{rownames =} \StringTok{"id"}\NormalTok{)}
+\KeywordTok{write_csv}\NormalTok{(tab1, ...)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{do-some-more-analysis}{%
+\section{Do some regression analysis}\label{do-some-more-analysis}}
+
+\begin{itemize}
+\tightlist
+\item
+  In another file called \texttt{lin\_reg.R}, read in the data and run
+  the following linear regression:
+  \texttt{lm(log\_inc\ \textasciitilde{}\ age\_bir\ +\ sex\ +\ race\_eth\ +\ nsibs,\ data\ =\ nlsy)}.
+  Modify the CI function to produce a table of results for a
+  \emph{linear} regression. Add an argument \texttt{digits\ =}, with a
+  default of 2, to allow you to choose the number of digits you'd like.
+  Save it in a separate file called \texttt{functions.R}. Use
+  \texttt{source()} to read in the function at the beginning of your
+  script.
+\item
+  Save a table of your results as a \texttt{.csv} file. Make the names
+  of the coefficients nice!
+\item
+  Using the results, use \texttt{ggplot} to make a figure. Use
+  \texttt{geom\_point()} for the point estimates and
+  \texttt{geom\_errorbar()} for the confidence intervals. It will look
+  something like this:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(data) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ , }\DataTypeTok{y =}\NormalTok{ )) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_errorbar}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ , }\DataTypeTok{ymin =}\NormalTok{ , }\DataTypeTok{ymax =}\NormalTok{ ))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Save that figure as a \texttt{.pdf} using \texttt{ggsave()}. You may
+  want to play around with the \texttt{height\ =} and \texttt{width\ =}
+  arguments to make it look like you want.
+\end{itemize}
+
+
+\end{document}
