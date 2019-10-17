@@ -119,3 +119,8 @@ Beyond the themes that come pre-installed with RStudio, there are a variety of o
 You can also make your own theme! There's more information in [this article](https://support.rstudio.com/hc/en-us/articles/115011846747-Using-RStudio-Themes).
 
 If you use certain headers like `# ----` in your code, your code sections will be automatically labeled and you can use the outline viewer (the rightmost button direct above your script) or the section selector (bottom left of the script section). Read more [here](https://support.rstudio.com/hc/en-us/articles/200484568-Code-Folding-and-Sections).
+
+<br/>
+
+
+<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"> Introduction to R</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="http://louisahsmith.com" property="cc:attributionName" rel="cc:attributionURL">Louisa H. Smith</a> (including all of the materials on this site) is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a></a>.
