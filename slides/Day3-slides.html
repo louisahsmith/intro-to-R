@@ -110,7 +110,14 @@ ul {
   margin-top: 0;
 }
 
+.big-code .remark-code {
+  font-size: 1.5em !important;
+  margin: 0;
+  width: 100%;
+}
+
 &lt;/style&gt;
+
 
 
 # Agenda
@@ -438,7 +445,7 @@ only_kids &lt;- `nlsy` %&gt;%
 ]
 
 ---
-count:false
+count:true
 # Pipes replace the first argument of the next function
 
 .pull-left[
@@ -463,7 +470,7 @@ only_kids &lt;- `nlsy %&gt;%`
 ]
 
 ---
-count:false
+count:true
 # Pipes replace the first argument of the next function
 
 .pull-left[
@@ -492,7 +499,7 @@ only_kids &lt;- `nlsy %&gt;%`
 ---
 # Instructions
 
-1. Create a variable called `slp_cat_wkday` categorizing how many hours of sleep people get per weekday.
+1. Create a variable called `slp_cat_wkday` categorizing weekday sleep.
 2. Subset the dataset to only include people with missing values.
 2. Remove non-sleep-related variables from the dataset.
 4. Call your finished dataset `missing_sleep`.

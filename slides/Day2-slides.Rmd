@@ -90,7 +90,7 @@ repeat_code <- function(name) {
 
 h4 {
   color: #F97B64;
-  font-size: 22px;
+  font-size: 26px;
   text-align: center;
 }
 
@@ -125,14 +125,32 @@ h2 {
   padding-left: 40px;
   padding-right: 40px;
   padding-bottom: 10px;
+  font-size: 26px;
 }
 th, td {
  padding: 0;
 }
+
+pre, ol, p {
+  margin-bottom: .5rem;
+  margin-top: 0.5rem;
+}
+
+ul {
+  margin-bottom: .5rem;
+  margin-top: 0;
+}
+
+.big-code .remark-code {
+  font-size: 1.5em !important;
+  margin: 0;
+  width: 100%;
+}
+
 ```
 ```{r xaringan-themer, include=FALSE}
 library(xaringanthemer)
-duo_accent(text_font_size = 25,
+duo_accent(code_font_size = "1.3rem",
   primary_color = "#1F4257",
   secondary_color = "#F97B64",
   header_font_google = google_font("Lexend Deca"),
@@ -305,7 +323,7 @@ nlsy$age_bir_cent <- nlsy$age_bir - mean(nlsy$age_bir)
 nlsy$dataset <- "NLSY"
 ```
 ```{r, echo = FALSE}
-nlsy[,c("region", "region_factor", "age_bir", "age_bir_cent", "dataset")]
+nlsy[,c("region", "region_factor", "age_bir", "age_bir_cent", "dataset")] %>% print(n = 8)
 ```
 
 ---
@@ -404,9 +422,9 @@ nlsy <- mutate(nlsy, total_sleep = case_when(
 
 ---
 class: inverse
-# Exercises `1`
+# Exercises 1
 
-.center[<iframe src="https://giphy.com/embed/3oEdv4bP4Ahh3mj4s0" width="360" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/matthewjocelyn-weird-mutant-mutate-3oEdv4bP4Ahh3mj4s0"></a></p>
+.center[<iframe src="https://giphy.com/embed/3oEdv4bP4Ahh3mj4s0" width="360" height="260" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/matthewjocelyn-weird-mutant-mutate-3oEdv4bP4Ahh3mj4s0"></a></p>
 ]
 
 1. Using the NLSY data and `mutate()`, make a standardized (centered at the mean, and divided by the standard deviation) version of income.
@@ -532,9 +550,7 @@ nlsy <- mutate(nlsy, region_fact = factor(region),
                                                  "Northeast" = "1",
                                                  "North Central" = "2",
                                                  "South" = "3",
-                                                 "West" = "4"
-                                                )
-               )
+                                                 "West" = "4"))
 table(nlsy$region)
 ```
 ```{r, code=repeat_code("fct-recode"), echo = FALSE}
@@ -567,7 +583,8 @@ summary(nlsy$region_fact)
 Recall that we made it so that the sleep variable had missing values, perhaps because we thought they were outliers:
 
 ```{r fct-na, eval = FALSE}
-nlsy <- mutate(nlsy, slp_cat_wkdy_out = `fct_explicit_na`(slp_cat_wkdy, na_level = "outlier"))
+nlsy <- mutate(nlsy, slp_cat_wkdy_out = 
+                 `fct_explicit_na`(slp_cat_wkdy, na_level = "outlier"))
 summary(nlsy$slp_cat_wkdy_out)
 ```
 ```{r, code=repeat_code("fct-na"), echo = FALSE}
@@ -576,9 +593,7 @@ Or maybe we want to combine some levels that don't have a lot of observations in
 ```{r fct-collapse, eval = FALSE}
 nlsy <- mutate(nlsy, slp_cat_wkdy_comb = `fct_collapse`(slp_cat_wkdy, 
                                                          "less" = c("little", "some"),
-                                                         "more" = c("ideal", "lots")
-                                                       )
-              )
+                                                         "more" = c("ideal", "lots")))
 summary(nlsy$slp_cat_wkdy_comb)
 ```
 ```{r, code=repeat_code("fct-collapse"), echo = FALSE}
@@ -600,7 +615,7 @@ summary(nlsy$slp_cat_wkdy_lump)
 
 ---
 class:inverse
-# Exercises `2`
+# Exercises 2
 
 .center[
 <iframe src="https://giphy.com/embed/ExMGjbktr4phe" width="360" height="212" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/aww-edition-ExMGjbktr4phe"></a></p>
@@ -631,11 +646,14 @@ You don't want to keep them all. You'll get confused, and when you go to summari
 
 Luckily there's an easy way to select the variables you want: `select()`!
 
-```{r}
+```{r, eval = FALSE}
 nlsy_subs <- `select`(nlsy, id, income, eyesight, sex, region)
 nlsy_subs
 ```
-
+```{r, echo = FALSE}
+nlsy_subs <- select(nlsy, id, income, eyesight, sex, region)
+print(nlsy_subs, n = 6)
+```
 ---
 
 # `select()` syntax
@@ -648,7 +666,8 @@ nlsy_subs
 ```{r neg-sel, eval = FALSE}
 select(nlsy_subs, `-`id, `-`region)
 ```
-```{r, code=repeat_code("neg-sel"), echo = FALSE}
+```{r echo = FALSE}
+select(nlsy_subs, -id, -region) %>% print(n = 9)
 ```
 
 ---
@@ -658,9 +677,13 @@ Notice that the variable names we used in `select()` weren't in quotation marks.
 
 Let's say you have a list of column names that you want. Then you can use `one_of()` to choose them.
 
-```{r}
+```{r, eval = FALSE}
 cols_I_want <- c("age_bir", "nsibs", "region")
 select(nlsy, `one_of`(cols_I_want))
+```
+```{r echo = FALSE}
+cols_I_want <- c("age_bir", "nsibs", "region")
+select(nlsy, `one_of`(cols_I_want)) %>% print(n = 9)
 ```
 
 ---
@@ -671,8 +694,11 @@ Do you have a lot of variables that are alike in some way? And you want to find 
 - `contains()`
 - `ends_with()`
 
-```{r}
+```{r, eval = FALSE}
 select(nlsy, `starts_with`("slp"))
+```
+```{r, echo = FALSE}
+select(nlsy, starts_with("slp")) %>% print(n = 7)
 ```
 
 ---
@@ -685,15 +711,16 @@ Let's move `id` to be the first column:
 ```{r everything, eval = FALSE}
 select(nlsy, id, `everything()`)
 ```
-```{r, code=repeat_code("everything"), echo = FALSE}
+```{r, echo = FALSE}
+select(nlsy, id, everything()) %>% print(n = 6)
 ```
 
 ---
 class:inverse
-# Exercises `3`
+# Exercises 3
 
 .center[
-<iframe src="https://giphy.com/embed/QgyIXWzyQZPuo" width="247" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/now-come-tong-QgyIXWzyQZPuo"></a></p>
+<iframe src="https://giphy.com/embed/QgyIXWzyQZPuo" width="247" height="260" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/now-come-tong-QgyIXWzyQZPuo"></a></p>
 ]
 
 1. Create mean-centered versions of "age_bir", "nsibs", "income", and the two sleep variables. Use the same ending (e.g., "_cent") for all of them. Then make a new dataset of just the centered variables using `select()` and a helper.
@@ -836,10 +863,10 @@ summary(select(oth_dat, age_bir_cent, sex, nsibs, slp_cat_wkdy))
 
 ---
 class:inverse
-# Exercises `4`
+# Exercises 4
 
 .center[
-<iframe src="https://giphy.com/embed/3o85xmXTiPM4OCilcQ" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/dccomics-batman-dc-comics-3o85xmXTiPM4OCilcQ"></a></p>
+<iframe src="https://giphy.com/embed/3o85xmXTiPM4OCilcQ" width="480" height="260" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/dccomics-batman-dc-comics-3o85xmXTiPM4OCilcQ"></a></p>
 ]
 
 1. Create a dataset with all the observations that get over 7 hours of sleep on both weekends and weekdays *or* who have an income greater than/equal to 20,000 and less than/equal to 50,000.

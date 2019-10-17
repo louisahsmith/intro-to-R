@@ -149,9 +149,8 @@ ul {
 .big-code .remark-code {
   font-size: 1.5em !important;
   margin: 0;
-  width: 85%;
+  width: 100%;
 }
-
 
 ```
 ```{r xaringan-themer, include=FALSE}
@@ -165,6 +164,7 @@ duo_accent(code_font_size = "1.3rem",
   header_h2_font_size = 40
 )
 ```
+
 
 # Agenda
 
@@ -180,7 +180,7 @@ duo_accent(code_font_size = "1.3rem",
 
 
 ---
-count: false
+count:true
 # Agenda
 
 ### Day 1: Figures ✅
@@ -218,7 +218,7 @@ print(analysis_dat, n = 7)
 ]
 
 ---
-count: false
+count:true
 # Agenda
 
 ### Day 1: Figures ✅
@@ -256,7 +256,7 @@ stats
 ]
 
 ---
-count: false
+count:true
 # Agenda
 
 ### Day 1: Figures ✅
@@ -282,7 +282,7 @@ ggplot(stats) +
 
 ]
 ---
-count: false
+count:true
 # Agenda
 
 ### Day 1: Figures ✅
@@ -379,7 +379,7 @@ You can give them default values to use if the user doesn't specify others
 ]
 
 ---
-count: false
+count:true
 # Structure of a function
 .pull-left[
 ```{r, eval = FALSE}
@@ -740,11 +740,15 @@ var_q(q = 0.5, var = "income")
 There are more "official" ways to deal with this that are beyond the scope of this class, but there's usually a workaround to be able to write your variable name as a character string instead.
 
 Consider that we can rename a variable using the `rename()` function, which can take variable names in quotes:
-```{r}
+```{r, eval = FALSE}
 nlsy %>%
   rename(eyeglasses = "glasses")
 ```
-
+```{r, echo = FALSE}
+nlsy %>%
+  rename(eyeglasses = "glasses") %>% 
+  select(eyeglasses:region) %>% print(n = 7)
+```
 ---
 # What if we want to change the variable
 Let's just rename the variable we want to `new_var`, then we can pass the variable `new_var` to any function we want:
@@ -766,7 +770,7 @@ var_q(q = 0.25, var = "sleep_wkdy")
 ```
 
 ---
-count:false
+count:true
 class:big-code
 # Use our function on any combination of `var` and `q`
 ```{r}
@@ -931,7 +935,7 @@ This class introduced you to the basics... but there are usually easier/more eff
 .big-code[
 ```{r, eval = FALSE}
 nlsy %>%
-  summarise_at(vars(contains("sleep")), 
+  `summarise_at`(vars(contains("sleep")), 
             list(med = median, sd = sd))
 ```
 ]
@@ -947,7 +951,7 @@ nlsy %>%
 .big-code[
 ```{r, eval = FALSE}
 nlsy %>%
-  summarise_if(is.numeric, mean)
+  `summarise_if`(is.numeric, mean)
 ```
 ]
 ```{r, echo = FALSE}
@@ -960,7 +964,7 @@ nlsy %>%
 .big-code[
 ```{r, eval = FALSE}
 nlsy %>%
-  mutate_at(vars(eyesight, 
+  `mutate_at`(vars(eyesight, 
                  race_eth, sex),
             factor) %>%
   select(eyesight, race_eth, sex)
@@ -970,7 +974,7 @@ nlsy %>%
 nlsy %>%
   mutate_at(vars(eyesight, race_eth, sex),
             factor) %>%
-  select(eyesight, race_eth, sex)
+  select(eyesight, race_eth, sex) %>% print(n = 6)
 ```
 
 ---
@@ -978,7 +982,7 @@ nlsy %>%
 .big-code[
 ```{r, eval = FALSE}
 nlsy %>%
-  rename_all(toupper)
+  `rename_all`(toupper)
 ```
 ]
 

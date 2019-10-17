@@ -1,5 +1,5 @@
 ---
-title: "<br>Introduction to R"
+title: "Introduction to R"
 subtitle: "Day 1: Intro & making figures"  
 author: "September 6, 2019"
 date: ""
@@ -52,10 +52,6 @@ rm(nlsy)
 ```
 ```{css, echo=FALSE}
 /* custom.css */
-.title-slide {
-  background-image: url("img/camp.svg");
-  background-size: cover;
-}
 
 .left-code {
   #color: #777;
@@ -96,12 +92,19 @@ rm(nlsy)
 
 h4 {
   color: #F97B64;
-  font-size: 22px;
+  font-size: 26px;
   text-align: center;
 }
 
 h1, h2, h3, h4 {
-  margin-top:3;
+  margin-top:2 !important;
+}
+
+h1 {
+  font-size:45px !important;
+}
+h2 {
+  font-size:40px !important;
 }
 
 .inverse h1, .inverse h2, .inverse h3 {
@@ -111,21 +114,51 @@ h1, h2, h3, h4 {
   background-color: white;
 }
 .title-slide, .title-slide h1, .title-slide h2, .title-slide h3 {
-color: #1F4257;
+  color: #1F4257;
+    background-color:rgba(236, 236, 236, .75)
 }
+    
 .title-slide {
   background-image: url("img/paper.jpg");
   background-size: cover;
+}
+.remark-slide-content {
+  padding-top: 0;
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-bottom: 10px;
+  font-size: 26px;
+}
+th, td {
+ padding: 0;
+}
+
+pre, ol, p {
+  margin-bottom: .5rem;
+  margin-top: 0.5rem;
+}
+
+ul {
+  margin-bottom: .5rem;
+  margin-top: 0;
+}
+
+.big-code .remark-code {
+  font-size: 1.5em !important;
+  margin: 0;
+  width: 100%;
 }
 
 ```
 ```{r xaringan-themer, include=FALSE}
 library(xaringanthemer)
-duo_accent(
+duo_accent(code_font_size = "1.3rem",
   primary_color = "#1F4257",
   secondary_color = "#F97B64",
   header_font_google = google_font("Lexend Deca"),
-  text_font_google = google_font("Noto Sans")
+  text_font_google = google_font("Noto Sans"),
+  header_h1_font_size = 45,
+  header_h2_font_size = 40
 )
 ```
 
@@ -374,15 +407,15 @@ dat2
 ## tibbles are basically just pretty dataframes
 .pull-left[
 ```{r, comment = NA}
-as_tibble(gss_cat)[, 1:5]
+as_tibble(gss_cat)[, 1:4]
 ```
 ]
 .pull-right[
 ```{r, comment = NA, eval = FALSE}
-as.data.frame(gss_cat)[, 1:5]
+as.data.frame(gss_cat)[, 1:4]
 ```
 ```{r, comment = NA, echo = FALSE}
-as.data.frame(gss_cat)[1:20, 1:5]
+as.data.frame(gss_cat)[1:20, 1:4]
 ```
 ]
 
@@ -416,14 +449,14 @@ glimpse(nlsy)
 ```
 
 ---
-count:false
+count:true
 # Explore your data
 ```{r}
 summary(nlsy)
 ```
 
 ---
-count:false
+count:true
 # Explore your data
 ```{r}
 summary(nlsy$glasses)
@@ -449,11 +482,11 @@ mean(nlsy$age_bir)
 class: inverse
 # Exercises 2
 .center[
-<iframe src="https://giphy.com/embed/TvVck7lO4LDJS" width="320" height="240" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/TvVck7lO4LDJS"></a></p>
+<iframe src="https://giphy.com/embed/TvVck7lO4LDJS" width="288" height="216" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/TvVck7lO4LDJS"></a></p>
 ]
 
 1. How many people are in the NLSY? How many variables are in this dataset? What are two ways you can answer these questions?
-2. Can you find an R function(s) we haven't discussed that answers question 2? (Hint: Google)
+2. Can you find an R function(s) we haven't discussed that answers q2? (Hint: Google)
 3. What's the Spearman correlation between hours of sleep on weekends and weekdays in this data?
 4. I've also provided you with the same dataset as an Excel document, but it's not on the first sheet, and there's an annoying header. Load the `readxl` package (you already installed with with `tidyverse`, but it doesn't load automatically). Figure out how to read in the data. This may help: https://readxl.tidyverse.org.
 
@@ -463,24 +496,24 @@ class: inverse
 ```{r goals-plot-1, echo = FALSE, warning = FALSE, out.width="500px", out.height = "500px", fig.align = "center"}
 ggplot(data = nlsy) +
   geom_bar(aes(x = eyesight, 
-               fill = factor(eyesight))) +
+          fill = factor(eyesight))) +
   facet_grid(
     cols = vars(glasses),
     labeller = labeller(glasses = c(
       "0" = "Doesn't wear glasses",
       "1" = "Wears glasses/contacts"))) +
-  scale_fill_brewer(palette = "Spectral", 
+  scale_fill_brewer(palette = "Spectral",
                     direction = -1) +
   scale_x_continuous(
-    labels = c("Excellent", "Very Good", 
+    labels = c("Excellent", "Very Good",
                "Good", "Fair", "Poor"),
     breaks = c(1, 2, 3, 4, 5)) +
   theme_minimal() +
   theme(legend.position = "none",
-        axis.text.x = element_text(angle = 45, 
-                                   vjust = 1, 
-                                   hjust = 1)) +
-  labs(title = "Eyesight quality in NLSY",
+        axis.text.x = element_text(
+      angle = 45, vjust = 1, hjust = 1)
+    ) +
+  labs(title = "Eyesight in NLSY",
        x = "Eyesight quality",
        y = NULL) +
   coord_cartesian(expand = FALSE)
@@ -489,22 +522,23 @@ ggplot(data = nlsy) +
 .pull-right[
 
 ```{r goals-plot-2, echo = FALSE, warning = FALSE, out.width="500px", out.height = "500px", fig.align = "center"}
-ggplot(data = nlsy,
-  aes(income, age_bir, col = factor(sex))
+ggplot(data = nlsy, aes(x = income, 
+    y = age_bir, col = factor(sex))
 ) +
   geom_point(alpha = 0.1) +
   scale_color_brewer(palette = "Set1",
     name = "Sex",
     labels = c("Male", "Female")) +
-  scale_x_log10(labels = scales::dollar) +
+  scale_x_log10(labels = 
+                  scales::dollar) +
   geom_smooth(aes(
     group = factor(sex)), 
     method = "lm") +
   facet_grid(rows = vars(race_eth),
     labeller = labeller(race_eth = c(
-      "1" = "Hispanic",
-      "2" = "Black",
-      "3" = "Non-Black, Non-Hispanic"))) +
+    "1" = "Hispanic",
+    "2" = "Black",
+    "3" = "Non-Black, Non-Hispanic"))) +
   theme_minimal() +
   theme(legend.position = "top") +
   labs(title = "Relationship between income and age at first birth",
@@ -873,6 +907,17 @@ count: false
 ]
 
 ---
+count: false
+
+.left-code[
+```{r goals-plot-2j, fig.show="hide", code=reveal("goals-plot-2", 9)}
+```
+]
+.right-plot[
+![](`r knitr::fig_chunk("goals-plot-2j", "png")`)
+]
+
+---
 
 # Basic example
 
@@ -884,7 +929,7 @@ ggplot(data = {data}) +
 ```
 
 ---
-count:false
+count:true
 # Basic example
 
 ```
@@ -896,7 +941,7 @@ ggplot(data = `nlsy`) +
 ### The `data = ` argument must be a dataframe (or tibble)
 
 ---
-count:false
+count:true
 # Basic example
 
 ```
@@ -914,7 +959,7 @@ Other helpful "geoms" include `geom_line()`, `geom_bar()`, `geom_histogram()`, `
 
 
 ---
-count:false
+count:true
 
 # Basic example
 
@@ -933,7 +978,7 @@ Other geoms require other arguments
 - For example, `geom_histogram()` only requires an `x = ` variable
 
 ---
-count:false
+count:true
 
 # Basic example
 
@@ -953,7 +998,7 @@ This will be helpful when we want multiple geoms (say, points and a line)
 
 ```{r point-ex1, fig.show = "hide"}
 ggplot(data = nlsy) +
-  geom_point(aes(x = income, y = age_bir))
+geom_point(aes(x = income, y = age_bir))
 ```
 
 #### What if we want to change the color of the points?
@@ -963,12 +1008,12 @@ ggplot(data = nlsy) +
 ]
 
 ---
-count:false
+count:true
 .left-code[
 
 ```{r point-ex2, fig.show = "hide"}
 ggplot(data = nlsy) +
-  geom_point(aes(x = income, y = age_bir),
+geom_point(aes(x = income, y = age_bir),
              color = "blue") #<<
 ```
 #### When we put `color = ` *outside* the `aes()`, it means we're giving it a specific color value that applies to all the points
@@ -979,12 +1024,12 @@ ggplot(data = nlsy) +
 ]
 
 ---
-count:false
+count:true
 .left-code[
 
 ```{r point-ex3, fig.show = "hide"}
 ggplot(data = nlsy) +
-  geom_point(aes(x = income, y = age_bir),
+geom_point(aes(x = income, y = age_bir),
              color = "#3d93c8") #<<
 ```
 #### One of my favorite color resources: https://www.color-hex.com
@@ -994,20 +1039,20 @@ ggplot(data = nlsy) +
 ]
 
 ---
-count:false
+count:true
 .left-code[
 
 ```{r point-ex6, fig.show = "hide"}
 ggplot(data = nlsy) +
-  geom_point(aes(x = income, y = age_bir,
+geom_point(aes(x = income, y = age_bir,
                  color = eyesight)) #<<
 ```
 
 #### When we put `color = ` *inside* the `aes()` -- with no quotation marks -- it means we're telling it how it should assign colors
 
-Here we're plotting the values according to eyesight, where 1 is excellent and 5 is poor
+Here we're plotting the values according to eyesight, where 1 is excellent and 5 is poor.
 
-But they're kind of hard to distinguish!
+- But they're kind of hard to distinguish!
 
 ]
 .right-plot[
@@ -1015,19 +1060,21 @@ But they're kind of hard to distinguish!
 ]
 
 ---
-count:false
+count:true
 .left-code[
 
 ```{r point-ex7, fig.show = "hide"}
 ggplot(data = nlsy) +
-  geom_point(aes(x = income, y = age_bir,
-                 color = eyesight)) +
-  scale_color_gradient(low = "green", #<<
-                       high = "purple") #<<
+geom_point(aes(x = income, y = age_bir,
+               color = eyesight)) +
+scale_color_gradient(low = "green", #<<
+                    high = "purple") #<<
 ```
 #### We can map the values of `eyesight` to a different continuous scale using `scale_color_gradient()`
 
-You can read lots more about this function here, so you don't have to have such ugly color scales! https://ggplot2.tidyverse.org/reference/scale_gradient.html
+You can read lots more about this function [here](https://ggplot2.tidyverse.org/reference/scale_gradient.html), so you don't have to have such ugly color scales! 
+
+<br><br>https://ggplot2.tidyverse.org/reference/scale_gradient.html
 
 ]
 .right-plot[
@@ -1035,13 +1082,13 @@ You can read lots more about this function here, so you don't have to have such 
 ]
 
 ---
-count:false
+count:true
 .left-code[
 
 ```{r point-ex8, fig.show = "hide"}
 ggplot(data = nlsy) +
-  geom_point(aes(x = income, y = age_bir,
-                 color = eyesight))
+geom_point(aes(x = income, y = age_bir,
+            color = eyesight))
 ```
 #### Returning to the nice blues, we think: But wait! The variable `eyesight` isn't really continuous: it has 5 discrete values
 
@@ -1051,37 +1098,37 @@ ggplot(data = nlsy) +
 ]
 
 ---
-count:false
+count:true
 .left-code[
 ```{r, fig.show = "hide", eval = FALSE}
 ggplot(data = nlsy) +
-  geom_point(aes(x = income, y = age_bir,
-                 color = `factor(eyesight)`))
+geom_point(aes(x = income, y = age_bir,
+            color = `factor(eyesight)`))
 ```
 ```{r point-ex9, fig.show = "hide", echo = FALSE}
 ggplot(data = nlsy) +
-  geom_point(aes(x = income, y = age_bir,
-                 color = factor(eyesight)))
+geom_point(aes(x = income, y = age_bir,
+            color = factor(eyesight)))
 ```
 #### Returning to the nice blues, we think: But wait! The variable `eyesight` isn't really continuous: it has 4 discrete values
 
 We can make R treat it as a "factor", or categorical variable, with the `factor()` function
 
-We'll see lots more on factors later!
+- We'll see lots more on factors later!
 ]
 .right-plot[
 ![](`r knitr::fig_chunk("point-ex9", "png")`)
 ]
 
 ---
-count:false
+count:true
 .left-code[
 
 ```{r point-ex10, fig.show = "hide"}
 ggplot(data = nlsy) +
-  geom_point(aes(x = income, y = age_bir,
-                 color = factor(eyesight))) +
-  scale_color_manual( #<<
+geom_point(aes(x = income, y = age_bir,
+            color = factor(eyesight))) +
+scale_color_manual( #<<
     values = c("blue", "purple", "red",  #<<
                "green", "yellow"))  #<<
 ```
@@ -1094,20 +1141,20 @@ ggplot(data = nlsy) +
 ]
 
 ---
-count:false
+count:true
 .left-code[
 
 ```{r point-ex11, fig.show = "hide"}
 ggplot(data = nlsy) +
-  geom_point(aes(x = income, y = age_bir,
-                 color = factor(eyesight))) +
-  scale_color_brewer(palette = "Set1")  #<<
+geom_point(aes(x = income, y = age_bir,
+            color = factor(eyesight))) +
+scale_color_brewer(palette = "Set1")  #<<
 ```
 #### There are tons of different options in R for color palettes
 
 You can play around with those in the `RColorBrewer` package here: http://colorbrewer2.org
 
-(You can access the scales in that package with `scale_color_brewer()`, or see them all after installing the package with `RColorBrewer::display.brewer.all()`)
+- (You can access the scales in that package with `scale_color_brewer()`, or see them all after installing the package with `RColorBrewer::display.brewer.all()`)
 
 ]
 .right-plot[
@@ -1115,20 +1162,20 @@ You can play around with those in the `RColorBrewer` package here: http://colorb
 ]
 
 ---
-count:false
+count:true
 .left-code[
 
 ```{r point-ex12, fig.show = "hide"}
 ggplot(data = nlsy) +
-  geom_point(aes(x = income, y = age_bir,
-                 color = factor(eyesight))) +
-  scale_color_brewer(palette = "Set1", 
-                     name = "Eyesight",  #<<
-                     labels = c("Excellent", #<<
-                                "Very Good", #<<
-                                "Good", #<<
-                                "Fair", #<<
-                                "Poor")) #<<
+geom_point(aes(x = income, y = age_bir,
+            color = factor(eyesight))) +
+scale_color_brewer(palette = "Set1", 
+            name = "Eyesight",  #<<
+            labels = c("Excellent", #<<
+                       "Very Good", #<<
+                       "Good", #<<
+                       "Fair", #<<
+                       "Poor")) #<<
 ```
 #### Each of the `scale_color_()` functions has a lot of the same arguments
 
@@ -1148,7 +1195,7 @@ class: inverse
 
 1. Using the NLSY data, make a scatter plot of the relationship between hours of sleep on weekends and weekdays. Color it according to region (where 1 = northeast, 2 = north central, 3 = south, and 4 = west).
 2. Replace `geom_point()` with `geom_jitter()`. What does this do? Why might this be a good choice for this graph? Play with the `width = ` and `height = ` options. This site may help: https://ggplot2.tidyverse.org/reference/geom_jitter.html
-3. Use the `shape = ` argument to map the sex variable to different shapes. Change the shapes to squares and diamonds. (Hint: how did we manually change colors to certain values? This page might also help: https://ggplot2.tidyverse.org/articles/ggplot2-specs.html)
+3. Use the `shape = ` argument to map the sex variable to different shapes. Change the shapes to squares and diamonds. (Hint: how did we manually change colors to certain values? This might help: https://ggplot2.tidyverse.org/articles/ggplot2-specs.html)
 
 ---
 # Facets
@@ -1176,7 +1223,7 @@ ggplot(data = nlsy) +
 ```
 #### We'll introduce bar graphs at the same time!
 
-Notice how we only need an `x = `argument -- the y-axis is automatically the count with this geom.
+Notice how we only need an `x = ` argument - the y-axis is automatically the count with this geom.
 
 ]
 .right-plot[
@@ -1184,7 +1231,7 @@ Notice how we only need an `x = `argument -- the y-axis is automatically the cou
 ]
 
 ---
-count:false
+count:true
 .left-code[
 
 ```{r bar-ex1, fig.show = "hide"}
@@ -1202,7 +1249,7 @@ Here we've split it by region into columns
 ]
 
 ---
-count:false
+count:true
 .left-code[
 
 ```{r bar-ex2, fig.show = "hide", echo = FALSE}
@@ -1225,7 +1272,7 @@ ggplot(data = nlsy) +
 ]
 
 ---
-count:false
+count:true
 .left-code[
 
 ```{r bar-ex3, fig.show = "hide", echo = FALSE}
@@ -1250,7 +1297,7 @@ ggplot(data = nlsy) +
 ]
 
 ---
-count:false
+count:true
 .left-code[
 
 ```{r bar-ex4, fig.show = "hide", echo = FALSE}
@@ -1279,7 +1326,7 @@ Other options are "free_x" if we want to allow the x-axis scale to vary, or just
 ]
 
 ---
-count:false
+count:true
 .left-code[
 
 ```{r bar-ex5, fig.show = "hide"}
@@ -1297,7 +1344,7 @@ ggplot(data = nlsy) +
 ]
 
 ---
-count:false
+count:true
 .left-code[
 
 ```{r bar-ex6, fig.show = "hide"}
@@ -1319,7 +1366,7 @@ ggplot(data = nlsy) +
 # Wait, these look like histograms!
 
 When we have a variable with a lot of possible values, we may want to bin them with a histogram
-```{r, out.width = "40%"}
+```{r, out.width = "38%"}
 ggplot(nlsy) +
   geom_histogram(aes(x = income))
 ```
@@ -1353,7 +1400,7 @@ ggplot(data = nlsy) +
 ]
 
 ---
-count:false
+count:true
 .left-code[
 
 ```{r bar-hist2, fig.show = "hide"}
@@ -1370,7 +1417,7 @@ ggplot(data = nlsy) +
 ]
 
 ---
-count:false
+count:true
 .left-code[
 
 ```{r bar-hist3, fig.show = "hide"}
@@ -1387,7 +1434,7 @@ ggplot(data = nlsy) +
 ]
 
 ---
-count:false
+count:true
 .left-code[
 
 ```{r bar-hist4, fig.show = "hide"}
@@ -1410,7 +1457,7 @@ There are a lot of `scale_x_()` and `scale_y_()` functions for you to explore!
 class: inverse
 # Exercises 4
 .center[
-<iframe src="https://giphy.com/embed/xT9IgFQsNYi1zBUiyc" width="250" height="250" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/pixel-sweet-drink-xT9IgFQsNYi1zBUiyc"></a></p>
+<iframe src="https://giphy.com/embed/xT9IgFQsNYi1zBUiyc" width="200" height="200" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/pixel-sweet-drink-xT9IgFQsNYi1zBUiyc"></a></p>
 ]
 1. When we're comparing distributions with very different numbers of observations, instead of scaling the y-axis like we did with the `facet_grid()` function, we might want to make density histograms. Use google to figure out how to make a density histogram of income. Facet it by region.
 2. Make each of the regions in your histogram from part 1 a different color. (Hint: compare what `col = ` and `fill = ` do to histograms).
@@ -1446,9 +1493,10 @@ ggplot(data = nlsy) +
 
 ```{r theme, fig.show = "hide"}
 ggplot(data = nlsy) +
-  geom_boxplot(aes(x = factor(sleep_wknd), 
-                   y = sleep_wkdy,
-                   fill = factor(sleep_wknd))) +
+  geom_boxplot(aes(
+    x = factor(sleep_wknd), 
+    y = sleep_wkdy,
+    fill = factor(sleep_wknd))) +
   scale_fill_discrete(guide = FALSE) +
   labs(x = "hours slept on weekends",
        y = "hours slept on weekends",
@@ -1462,19 +1510,19 @@ ggplot(data = nlsy) +
 ]
 
 ---
-count:false
+count:true
 .left-code[
 
 ```{r theme2, fig.show = "hide"}
 ggplot(data = nlsy) +
-  geom_boxplot(aes(x = factor(sleep_wknd), 
-                   y = sleep_wkdy,
-                   fill = factor(sleep_wknd))) +
+  geom_boxplot(aes(
+    x = factor(sleep_wknd), 
+    y = sleep_wkdy,
+    fill = factor(sleep_wknd))) +
   scale_fill_discrete(guide = FALSE) +
   labs(x = "hours slept on weekends",
        y = "hours slept on weekends",
-       title = "The more people sleep on weekends, 
-the more they sleep on weekdays",
+       title = "The more people sleep on weekends, the more they\n sleep on weekdays",
        subtitle = "According to NLSY data") +
   theme_minimal() #<<
 ```
@@ -1485,19 +1533,19 @@ the more they sleep on weekdays",
 ]
 
 ---
-count:false
+count:true
 .left-code[
 
 ```{r theme3, fig.show = "hide"}
 ggplot(data = nlsy) +
-  geom_boxplot(aes(x = factor(sleep_wknd), 
-                   y = sleep_wkdy,
-                   fill = factor(sleep_wknd))) +
+  geom_boxplot(aes(
+    x = factor(sleep_wknd), 
+    y = sleep_wkdy,
+    fill = factor(sleep_wknd))) +
   scale_fill_discrete(guide = FALSE) +
   labs(x = "hours slept on weekends",
        y = "hours slept on weekends",
-       title = "The more people sleep on weekends, 
-the more they sleep on weekdays",
+       title = "The more people sleep on weekends, the more they\n sleep on weekdays",
        subtitle = "According to NLSY data") +
   theme_dark() #<<
 ```
@@ -1507,19 +1555,19 @@ the more they sleep on weekdays",
 ]
 
 ---
-count:false
+count:true
 .left-code[
 
 ```{r theme4, fig.show = "hide"}
 ggplot(data = nlsy) +
-  geom_boxplot(aes(x = factor(sleep_wknd), 
-                   y = sleep_wkdy,
-                   fill = factor(sleep_wknd))) +
+  geom_boxplot(aes(
+    x = factor(sleep_wknd), 
+    y = sleep_wkdy,
+    fill = factor(sleep_wknd))) +
   scale_fill_discrete(guide = FALSE) +
   labs(x = "hours slept on weekends",
        y = "hours slept on weekends",
-       title = "The more people sleep on weekends, 
-the more they sleep on weekdays",
+       title = "The more people sleep on weekends, the more they\n sleep on weekdays",
        subtitle = "According to NLSY data") +
   theme_classic() #<<
 ```
@@ -1529,19 +1577,19 @@ the more they sleep on weekdays",
 ]
 
 ---
-count:false
+count:true
 .left-code[
 
 ```{r theme5, fig.show = "hide"}
 ggplot(data = nlsy) +
-  geom_boxplot(aes(x = factor(sleep_wknd), 
-                   y = sleep_wkdy,
-                   fill = factor(sleep_wknd))) +
+  geom_boxplot(aes(
+    x = factor(sleep_wknd), 
+    y = sleep_wkdy,
+    fill = factor(sleep_wknd))) +
   scale_fill_discrete(guide = FALSE) +
   labs(x = "hours slept on weekends",
        y = "hours slept on weekends",
-       title = "The more people sleep on weekends, 
-the more they sleep on weekdays",
+       title = "The more people sleep on weekends, the more they\n sleep on weekdays",
        subtitle = "According to NLSY data") +
   theme_void() #<<
 ```
@@ -1552,19 +1600,19 @@ the more they sleep on weekdays",
 
 
 ---
-count:false
+count:true
 .left-code[
 
-```{r theme6, fig.show = "hide"}
+```{r theme6, fig.show = "hide", eval = FALSE}
 ggplot(data = nlsy) +
-  geom_boxplot(aes(x = factor(sleep_wknd), 
-                   y = sleep_wkdy,
-                   fill = factor(sleep_wknd))) +
+  geom_boxplot(aes(
+    x = factor(sleep_wknd), 
+    y = sleep_wkdy,
+    fill = factor(sleep_wknd))) +
   scale_fill_discrete(guide = FALSE) +
   labs(x = "hours slept on weekends",
        y = "hours slept on weekends",
-       title = "The more people sleep on weekends, 
-the more they sleep on weekdays",
+       title = "The more people sleep on weekends, the more they\n sleep on weekdays",
        subtitle = "According to NLSY data") +
   louisahstuff::my_theme() #<<
 ```
@@ -1576,6 +1624,7 @@ Here is a good list of themes and instructions to make your own: https://www.dat
 ]
 
 ---
+class:big-code
 # Finally, save it!
 
 If your data changes, you can easily run the whole script again

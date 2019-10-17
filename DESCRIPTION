@@ -8,7 +8,7 @@ Authors@R:
            role = c("aut", "cre"),
            email = "louisa_h_smith@g.harvard.edu")
 Description: R course materials for HSPH class in Fall 2019
-License: MIT + file LICENSE
+License: Creative Commons Attribution-NonCommercial 4.0 International License
 Depends: 
     tidyverse
 Encoding: UTF-8

@@ -59,7 +59,7 @@ class: center, middle, inverse, title-slide
 
 h4 {
   color: #F97B64;
-  font-size: 22px;
+  font-size: 26px;
   text-align: center;
 }
 
@@ -94,10 +94,28 @@ h2 {
   padding-left: 40px;
   padding-right: 40px;
   padding-bottom: 10px;
+  font-size: 26px;
 }
 th, td {
  padding: 0;
 }
+
+pre, ol, p {
+  margin-bottom: .5rem;
+  margin-top: 0.5rem;
+}
+
+ul {
+  margin-bottom: .5rem;
+  margin-top: 0;
+}
+
+.big-code .remark-code {
+  font-size: 1.5em !important;
+  margin: 0;
+  width: 100%;
+}
+
 &lt;/style&gt;
 
 
@@ -279,19 +297,17 @@ nlsy$dataset &lt;- "NLSY"
 
 ```
 ## # A tibble: 1,205 x 5
-##    region region_factor age_bir age_bir_cent dataset
-##     &lt;dbl&gt; &lt;fct&gt;           &lt;dbl&gt;        &lt;dbl&gt; &lt;chr&gt;  
-##  1      1 1                  19       -4.45  NLSY   
-##  2      1 1                  30        6.55  NLSY   
-##  3      1 1                  17       -6.45  NLSY   
-##  4      1 1                  31        7.55  NLSY   
-##  5      3 3                  19       -4.45  NLSY   
-##  6      1 1                  30        6.55  NLSY   
-##  7      1 1                  27        3.55  NLSY   
-##  8      1 1                  24        0.552 NLSY   
-##  9      1 1                  21       -2.45  NLSY   
-## 10      1 1                  36       12.6   NLSY   
-## # … with 1,195 more rows
+##   region region_factor age_bir age_bir_cent dataset
+##    &lt;dbl&gt; &lt;fct&gt;           &lt;dbl&gt;        &lt;dbl&gt; &lt;chr&gt;  
+## 1      1 1                  19       -4.45  NLSY   
+## 2      1 1                  30        6.55  NLSY   
+## 3      1 1                  17       -6.45  NLSY   
+## 4      1 1                  31        7.55  NLSY   
+## 5      3 3                  19       -4.45  NLSY   
+## 6      1 1                  30        6.55  NLSY   
+## 7      1 1                  27        3.55  NLSY   
+## 8      1 1                  24        0.552 NLSY   
+## # … with 1,197 more rows
 ```
 
 ---
@@ -402,9 +418,9 @@ nlsy &lt;- mutate(nlsy, total_sleep = case_when(
 
 ---
 class: inverse
-# Exercises `1`
+# Exercises 1
 
-.center[&lt;iframe src="https://giphy.com/embed/3oEdv4bP4Ahh3mj4s0" width="360" height="270" frameBorder="0" class="giphy-embed" allowFullScreen&gt;&lt;/iframe&gt;&lt;p&gt;&lt;a href="https://giphy.com/gifs/matthewjocelyn-weird-mutant-mutate-3oEdv4bP4Ahh3mj4s0"&gt;&lt;/a&gt;&lt;/p&gt;
+.center[&lt;iframe src="https://giphy.com/embed/3oEdv4bP4Ahh3mj4s0" width="360" height="260" frameBorder="0" class="giphy-embed" allowFullScreen&gt;&lt;/iframe&gt;&lt;p&gt;&lt;a href="https://giphy.com/gifs/matthewjocelyn-weird-mutant-mutate-3oEdv4bP4Ahh3mj4s0"&gt;&lt;/a&gt;&lt;/p&gt;
 ]
 
 1. Using the NLSY data and `mutate()`, make a standardized (centered at the mean, and divided by the standard deviation) version of income.
@@ -554,9 +570,7 @@ nlsy &lt;- mutate(nlsy, region_fact = factor(region),
                                                  "Northeast" = "1",
                                                  "North Central" = "2",
                                                  "South" = "3",
-                                                 "West" = "4"
-                                                )
-               )
+                                                 "West" = "4"))
 table(nlsy$region)
 ```
 
@@ -608,7 +622,8 @@ Recall that we made it so that the sleep variable had missing values, perhaps be
 
 
 ```r
-nlsy &lt;- mutate(nlsy, slp_cat_wkdy_out = `fct_explicit_na`(slp_cat_wkdy, na_level = "outlier"))
+nlsy &lt;- mutate(nlsy, slp_cat_wkdy_out = 
+                 `fct_explicit_na`(slp_cat_wkdy, na_level = "outlier"))
 summary(nlsy$slp_cat_wkdy_out)
 ```
 
@@ -621,9 +636,7 @@ Or maybe we want to combine some levels that don't have a lot of observations in
 ```r
 nlsy &lt;- mutate(nlsy, slp_cat_wkdy_comb = `fct_collapse`(slp_cat_wkdy, 
                                                          "less" = c("little", "some"),
-                                                         "more" = c("ideal", "lots")
-                                                       )
-              )
+                                                         "more" = c("ideal", "lots")))
 summary(nlsy$slp_cat_wkdy_comb)
 ```
 
@@ -652,7 +665,7 @@ summary(nlsy$slp_cat_wkdy_lump)
 
 ---
 class:inverse
-# Exercises `2`
+# Exercises 2
 
 .center[
 &lt;iframe src="https://giphy.com/embed/ExMGjbktr4phe" width="360" height="212" frameBorder="0" class="giphy-embed" allowFullScreen&gt;&lt;/iframe&gt;&lt;p&gt;&lt;a href="https://giphy.com/gifs/aww-edition-ExMGjbktr4phe"&gt;&lt;/a&gt;&lt;/p&gt;
@@ -682,21 +695,16 @@ nlsy_subs
 
 ```
 ## # A tibble: 1,205 x 5
-##       id income eyesight   sex region
-##    &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
-##  1     3  22390        1     2      1
-##  2     6  35000        2     1      1
-##  3     8   7227        2     2      1
-##  4    16  48000        3     2      1
-##  5    18   4510        3     1      3
-##  6    20  50000        2     2      1
-##  7    27  20000        1     2      1
-##  8    49  23900        1     2      1
-##  9    57  23289        2     2      1
-## 10    67  35000        1     1      1
-## # … with 1,195 more rows
+##      id income eyesight   sex region
+##   &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+## 1     3  22390        1     2      1
+## 2     6  35000        2     1      1
+## 3     8   7227        2     2      1
+## 4    16  48000        3     2      1
+## 5    18   4510        3     1      3
+## 6    20  50000        2     2      1
+## # … with 1,199 more rows
 ```
-
 ---
 
 # `select()` syntax
@@ -713,19 +721,18 @@ select(nlsy_subs, `-`id, `-`region)
 
 ```
 ## # A tibble: 1,205 x 3
-##    income eyesight   sex
-##     &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;
-##  1  22390        1     2
-##  2  35000        2     1
-##  3   7227        2     2
-##  4  48000        3     2
-##  5   4510        3     1
-##  6  50000        2     2
-##  7  20000        1     2
-##  8  23900        1     2
-##  9  23289        2     2
-## 10  35000        1     1
-## # … with 1,195 more rows
+##   income eyesight   sex
+##    &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;
+## 1  22390        1     2
+## 2  35000        2     1
+## 3   7227        2     2
+## 4  48000        3     2
+## 5   4510        3     1
+## 6  50000        2     2
+## 7  20000        1     2
+## 8  23900        1     2
+## 9  23289        2     2
+## # … with 1,196 more rows
 ```
 
 ---
@@ -743,19 +750,18 @@ select(nlsy, `one_of`(cols_I_want))
 
 ```
 ## # A tibble: 1,205 x 3
-##    age_bir nsibs region
-##      &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
-##  1      19     3      1
-##  2      30     1      1
-##  3      17     7      1
-##  4      31     3      1
-##  5      19     2      3
-##  6      30     2      1
-##  7      27     1      1
-##  8      24     6      1
-##  9      21     1      1
-## 10      36     1      1
-## # … with 1,195 more rows
+##   age_bir nsibs region
+##     &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+## 1      19     3      1
+## 2      30     1      1
+## 3      17     7      1
+## 4      31     3      1
+## 5      19     2      3
+## 6      30     2      1
+## 7      27     1      1
+## 8      24     6      1
+## 9      21     1      1
+## # … with 1,196 more rows
 ```
 
 ---
@@ -773,19 +779,16 @@ select(nlsy, `starts_with`("slp"))
 
 ```
 ## # A tibble: 1,205 x 6
-##    slp_cat_wkdy slp_cat_wkdy_ord slp_cat_wkdy_or… slp_cat_wkdy_out slp_cat_wkdy_co…
-##    &lt;fct&gt;        &lt;fct&gt;            &lt;fct&gt;            &lt;fct&gt;            &lt;fct&gt;           
-##  1 some         some             some             some             less            
-##  2 some         some             some             some             less            
-##  3 ideal        ideal            ideal            ideal            more            
-##  4 some         some             some             some             less            
-##  5 lots         lots             lots             lots             more            
-##  6 ideal        ideal            ideal            ideal            more            
-##  7 ideal        ideal            ideal            ideal            more            
-##  8 ideal        ideal            ideal            ideal            more            
-##  9 ideal        ideal            ideal            ideal            more            
-## 10 ideal        ideal            ideal            ideal            more            
-## # … with 1,195 more rows, and 1 more variable: slp_cat_wkdy_lump &lt;fct&gt;
+##   slp_cat_wkdy slp_cat_wkdy_ord slp_cat_wkdy_or… slp_cat_wkdy_out slp_cat_wkdy_co…
+##   &lt;fct&gt;        &lt;fct&gt;            &lt;fct&gt;            &lt;fct&gt;            &lt;fct&gt;           
+## 1 some         some             some             some             less            
+## 2 some         some             some             some             less            
+## 3 ideal        ideal            ideal            ideal            more            
+## 4 some         some             some             some             less            
+## 5 lots         lots             lots             lots             more            
+## 6 ideal        ideal            ideal            ideal            more            
+## 7 ideal        ideal            ideal            ideal            more            
+## # … with 1,198 more rows, and 1 more variable: slp_cat_wkdy_lump &lt;fct&gt;
 ```
 
 ---
@@ -802,19 +805,15 @@ select(nlsy, id, `everything()`)
 
 ```
 ## # A tibble: 1,205 x 25
-##       id glasses eyesight sleep_wkdy sleep_wknd nsibs  samp race_eth   sex region income
-##    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
-##  1     3       0        1          5          7     3     5        3     2      1  22390
-##  2     6       1        2          6          7     1     1        3     1      1  35000
-##  3     8       0        2          7          9     7     6        3     2      1   7227
-##  4    16       1        3          6          7     3     5        3     2      1  48000
-##  5    18       0        3         10         10     2     1        3     1      3   4510
-##  6    20       1        2          7          8     2     5        3     2      1  50000
-##  7    27       0        1          8          8     1     5        3     2      1  20000
-##  8    49       1        1          8          8     6     5        3     2      1  23900
-##  9    57       1        2          7          8     1     5        3     2      1  23289
-## 10    67       0        1          8          8     1     1        3     1      1  35000
-## # … with 1,195 more rows, and 14 more variables: res_1980 &lt;dbl&gt;, res_2002 &lt;dbl&gt;,
+##      id glasses eyesight sleep_wkdy sleep_wknd nsibs  samp race_eth   sex region income
+##   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+## 1     3       0        1          5          7     3     5        3     2      1  22390
+## 2     6       1        2          6          7     1     1        3     1      1  35000
+## 3     8       0        2          7          9     7     6        3     2      1   7227
+## 4    16       1        3          6          7     3     5        3     2      1  48000
+## 5    18       0        3         10         10     2     1        3     1      3   4510
+## 6    20       1        2          7          8     2     5        3     2      1  50000
+## # … with 1,199 more rows, and 14 more variables: res_1980 &lt;dbl&gt;, res_2002 &lt;dbl&gt;,
 ## #   age_bir &lt;dbl&gt;, region_factor &lt;fct&gt;, age_bir_cent &lt;dbl&gt;, dataset &lt;chr&gt;,
 ## #   slp_cat_wkdy &lt;fct&gt;, total_sleep &lt;dbl&gt;, slp_cat_wkdy_ord &lt;fct&gt;, slp_cat_wkdy_ord2 &lt;fct&gt;,
 ## #   region_fact &lt;fct&gt;, slp_cat_wkdy_out &lt;fct&gt;, slp_cat_wkdy_comb &lt;fct&gt;,
@@ -823,10 +822,10 @@ select(nlsy, id, `everything()`)
 
 ---
 class:inverse
-# Exercises `3`
+# Exercises 3
 
 .center[
-&lt;iframe src="https://giphy.com/embed/QgyIXWzyQZPuo" width="247" height="270" frameBorder="0" class="giphy-embed" allowFullScreen&gt;&lt;/iframe&gt;&lt;p&gt;&lt;a href="https://giphy.com/gifs/now-come-tong-QgyIXWzyQZPuo"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;iframe src="https://giphy.com/embed/QgyIXWzyQZPuo" width="247" height="260" frameBorder="0" class="giphy-embed" allowFullScreen&gt;&lt;/iframe&gt;&lt;p&gt;&lt;a href="https://giphy.com/gifs/now-come-tong-QgyIXWzyQZPuo"&gt;&lt;/a&gt;&lt;/p&gt;
 ]
 
 1. Create mean-centered versions of "age_bir", "nsibs", "income", and the two sleep variables. Use the same ending (e.g., "_cent") for all of them. Then make a new dataset of just the centered variables using `select()` and a helper.
@@ -1067,10 +1066,10 @@ summary(select(oth_dat, age_bir_cent, sex, nsibs, slp_cat_wkdy))
 
 ---
 class:inverse
-# Exercises `4`
+# Exercises 4
 
 .center[
-&lt;iframe src="https://giphy.com/embed/3o85xmXTiPM4OCilcQ" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen&gt;&lt;/iframe&gt;&lt;p&gt;&lt;a href="https://giphy.com/gifs/dccomics-batman-dc-comics-3o85xmXTiPM4OCilcQ"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;iframe src="https://giphy.com/embed/3o85xmXTiPM4OCilcQ" width="480" height="260" frameBorder="0" class="giphy-embed" allowFullScreen&gt;&lt;/iframe&gt;&lt;p&gt;&lt;a href="https://giphy.com/gifs/dccomics-batman-dc-comics-3o85xmXTiPM4OCilcQ"&gt;&lt;/a&gt;&lt;/p&gt;
 ]
 
 1. Create a dataset with all the observations that get over 7 hours of sleep on both weekends and weekdays *or* who have an income greater than/equal to 20,000 and less than/equal to 50,000.
