@@ -9,6 +9,12 @@ output:
     highlight: kate
 ---
 
+## Class is over!
+Thank you for participating. The course materials will remain online indefinitely. 
+
+Whether you came to class or just used the materials online, please complete this anonymous course evaluation: https://harvard.az1.qualtrics.com/jfe/form/SV_et82pbFCKIwpxl3.
+
+
 ## [Syllabus](syllabus.html)
 All sessions will take place in FXB G-12 from 2-3:30 pm.
 
@@ -109,6 +115,8 @@ Resources (other packages I like but didn't mention):
 - `shiny`: Make interactive apps. I made http://selection-bias.louisahsmith.com in shiny. (http://shiny.rstudio.com)
 - `drake`: Pipeline for analysis. (https://docs.ropensci.org/drake)
 - `rvest`: Scrape data from websites. (https://rvest.tidyverse.org)
+
+You can watch a video of class [here](https://harvard.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=92060b55-bdda-4565-92eb-aabe00fd2ad3). 
 
 ## RStudio tips and tricks
 
