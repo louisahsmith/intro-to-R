@@ -10,9 +10,7 @@ output:
 ---
 
 ## Class is over!
-Thank you for participating. The course materials will remain online indefinitely. 
-
-Whether you came to class or just used the materials online, please complete this anonymous course evaluation: https://harvard.az1.qualtrics.com/jfe/form/SV_et82pbFCKIwpxl3.
+Thank you for participating. The course materials will remain online indefinitely.
 
 
 ## [Syllabus](syllabus.html)

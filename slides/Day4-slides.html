@@ -84,7 +84,7 @@ h2 {
   color: #1F4257;
     background-color:rgba(236, 236, 236, .75)
 }
-    
+
 .title-slide {
   background-image: url("img/assembly.jpg");
   background-size: cover;
@@ -152,7 +152,7 @@ analysis_dat &lt;- nlsy %&gt;%
     TRUE ~ 0
   )) %&gt;%
   filter(ineligible == 0) %&gt;%
-  select(id, sex, race_eth, 
+  select(id, sex, race_eth,
          glasses, eyesight)
 analysis_dat
 ```
@@ -187,10 +187,10 @@ count:true
 
 ```r
 stats &lt;- analysis_dat %&gt;%
-  mutate(sex = factor(sex, labels = 
+  mutate(sex = factor(sex, labels =
               c("male", "female")),
-         race_eth = factor(race_eth, 
-              labels = c("Hispanic", 
+         race_eth = factor(race_eth,
+              labels = c("Hispanic",
                "Black", "Other"))) %&gt;%
   group_by(race_eth, sex) %&gt;%
   summarise(prop_glass = mean(glasses),
@@ -206,9 +206,9 @@ stats
 ##   race_eth sex    prop_glass sd_eyesight
 ##   &lt;fct&gt;    &lt;fct&gt;       &lt;dbl&gt;       &lt;dbl&gt;
 ## 1 Hispanic male        0.403       0.894
-## 2 Hispanic female      0.566       1.10 
+## 2 Hispanic female      0.566       1.10
 ## 3 Black    male        0.318       0.971
-## 4 Black    female      0.488       1.11 
+## 4 Black    female      0.488       1.11
 ## 5 Other    male        0.490       0.941
 ## 6 Other    female      0.602       0.972
 ```
@@ -233,7 +233,7 @@ ggplot(stats) +
   scale_fill_brewer(palette = "Set1",
                     guide = "none") +
   theme_minimal() +
-  labs(x = NULL, 
+  labs(x = NULL,
     y = "proportion wearing glasses")
 ```
 ]
@@ -256,11 +256,11 @@ count:true
 ```r
 tab1 &lt;- CreateTableOne(
   data = analysis_dat, strata = "sex",
-  vars = c("race_eth", "glasses", 
+  vars = c("race_eth", "glasses",
            "eyesight"),
   factorVars = c("race_eth", "glasses")
 )
-print(tab1, test = FALSE, 
+print(tab1, test = FALSE,
       catDigits = 0, contDigits = 0)
 ```
 ]
@@ -268,13 +268,13 @@ print(tab1, test = FALSE,
 
 ```
 ##                       Stratified by sex
-##                        1         2        
-##   n                    453       675      
-##   race_eth (%)                            
-##      1                  77 (17)  129 (19) 
-##      2                 129 (28)  164 (24) 
-##      3                 247 (55)  382 (57) 
-##   glasses = 1 (%)      193 (43)  383 (57) 
+##                        1         2
+##   n                    453       675
+##   race_eth (%)
+##      1                  77 (17)  129 (19)
+##      2                 129 (28)  164 (24)
+##      3                 247 (55)  382 (57)
+##   glasses = 1 (%)      193 (43)  383 (57)
 ##   eyesight (mean (SD))   2 (1)     2 (1)
 ```
 ]
@@ -315,12 +315,12 @@ CreateTableOne
 ```
 
 ```
-## function (vars, strata, data, factorVars, includeNA = FALSE, 
-##     test = TRUE, testApprox = chisq.test, argsApprox = list(correct = TRUE), 
-##     testExact = fisher.test, argsExact = list(workspace = 2 * 
-##         10^5), testNormal = oneway.test, argsNormal = list(var.equal = TRUE), 
-##     testNonNormal = kruskal.test, argsNonNormal = list(NULL), 
-##     smd = TRUE) 
+## function (vars, strata, data, factorVars, includeNA = FALSE,
+##     test = TRUE, testApprox = chisq.test, argsApprox = list(correct = TRUE),
+##     testExact = fisher.test, argsExact = list(workspace = 2 *
+##         10^5), testNormal = oneway.test, argsNormal = list(var.equal = TRUE),
+##     testNonNormal = kruskal.test, argsNonNormal = list(NULL),
+##     smd = TRUE)
 ## {
 ##     ModuleStopIfNotDataFrame(data)
 ##     if (missing(vars)) {
@@ -338,7 +338,7 @@ CreateTableOne
 ##     percentMissing &lt;- ModulePercentMissing(data[vars])
 ##     varClasses &lt;- lapply(data[vars], class)
 ##     varFactors &lt;- sapply(varClasses, function(VEC) {
-##         any(VEC %in% c("factor", "ordered", "logical", "character", 
+##         any(VEC %in% c("factor", "ordered", "logical", "character",
 ##             "labelled"))
 ##     })
 ##     varFactors &lt;- names(varFactors)[varFactors]
@@ -348,16 +348,16 @@ CreateTableOne
 ##     varNumerics &lt;- names(varNumerics)[varNumerics]
 ##     varDrop &lt;- setdiff(vars, c(varFactors, varNumerics))
 ##     if (length(varDrop) &gt; 0) {
-##         warning("Dropping variable(s) ", paste0(varDrop, sep = " "), 
+##         warning("Dropping variable(s) ", paste0(varDrop, sep = " "),
 ##             " due to unsupported class.\n")
 ##         vars &lt;- setdiff(vars, varDrop)
 ##     }
 ##     logiFactors &lt;- vars %in% varFactors
-##     argsCreateContTable &lt;- list(data = data, test = test, testNormal = testNormal, 
-##         argsNormal = argsNormal, testNonNormal = testNonNormal, 
+##     argsCreateContTable &lt;- list(data = data, test = test, testNormal = testNormal,
+##         argsNormal = argsNormal, testNonNormal = testNonNormal,
 ##         argsNonNormal = argsNonNormal, smd = smd)
-##     argsCreateCatTable &lt;- list(data = data, includeNA = includeNA, 
-##         test = test, testApprox = testApprox, argsApprox = argsApprox, 
+##     argsCreateCatTable &lt;- list(data = data, includeNA = includeNA,
+##         test = test, testApprox = testApprox, argsApprox = argsApprox,
 ##         testExact = testExact, argsExact = argsExact, smd = smd)
 ##     if (!missing(strata)) {
 ##         dfStrata &lt;- ModuleReturnStrata(strata, data)
@@ -367,27 +367,27 @@ CreateTableOne
 ##     }
 ##     if (length(varNumerics) == 0) {
 ##         ContTable &lt;- NULL
-##         CatTable &lt;- do.call(CreateCatTable, args = c(list(vars = varFactors), 
+##         CatTable &lt;- do.call(CreateCatTable, args = c(list(vars = varFactors),
 ##             argsCreateCatTable))
 ##     }
 ##     else if (length(varFactors) == 0) {
-##         ContTable &lt;- do.call(CreateContTable, args = c(list(vars = varNumerics), 
+##         ContTable &lt;- do.call(CreateContTable, args = c(list(vars = varNumerics),
 ##             argsCreateContTable))
 ##         CatTable &lt;- NULL
 ##     }
-##     else if ((length(varFactors) &gt; 0) &amp; (length(varNumerics) &gt; 
+##     else if ((length(varFactors) &gt; 0) &amp; (length(varNumerics) &gt;
 ##         0)) {
-##         ContTable &lt;- do.call(CreateContTable, args = c(list(vars = varNumerics), 
+##         ContTable &lt;- do.call(CreateContTable, args = c(list(vars = varNumerics),
 ##             argsCreateContTable))
-##         CatTable &lt;- do.call(CreateCatTable, args = c(list(vars = varFactors), 
+##         CatTable &lt;- do.call(CreateCatTable, args = c(list(vars = varFactors),
 ##             argsCreateCatTable))
 ##     }
 ##     else {
 ##         warning("No variables left to analyzed in vars.")
 ##     }
-##     TableOneObject &lt;- list(ContTable = ContTable, CatTable = CatTable, 
-##         MetaData = list(vars = vars, logiFactors = logiFactors, 
-##             varFactors = varFactors, varNumerics = varNumerics, 
+##     TableOneObject &lt;- list(ContTable = ContTable, CatTable = CatTable,
+##         MetaData = list(vars = vars, logiFactors = logiFactors,
+##             varFactors = varFactors, varNumerics = varNumerics,
 ##             percentMissing = percentMissing, varLabels = varLabels))
 ##     class(TableOneObject) &lt;- "TableOne"
 ##     return(TableOneObject)
@@ -416,7 +416,7 @@ Just avoid names of existing functions
 .pull-left[
 
 ```r
-func &lt;- function(`arg1`, 
+func &lt;- function(`arg1`,
                  `arg2` = default_val)
 }
 ```
@@ -432,10 +432,10 @@ count:true
 .pull-left[
 
 ```r
-func &lt;- function(arg1, 
+func &lt;- function(arg1,
                  arg2 = default_val) `{`
 
-*} 
+*}
 ```
 ]
 .pull-right[
@@ -448,10 +448,10 @@ Code in here will essentially look like any other R code, using any inputs to yo
 .pull-left[
 
 ```r
-func &lt;- function(arg1, 
+func &lt;- function(arg1,
                  arg2 = default_val) {
 * new_val &lt;- # do something with the args
-} 
+}
 ```
 ]
 .pull-right[
@@ -468,11 +468,11 @@ You can think of them as being stored in a temporary environment within the func
 .pull-left[
 
 ```r
-func &lt;- function(arg1, 
+func &lt;- function(arg1,
                  arg2 = default_val) {
   new_val &lt;- # do something with the args
   `return`(new_val)
-} 
+}
 ```
 ]
 .pull-right[
@@ -747,7 +747,7 @@ class:inverse
 
 # When to make a function
 
-There's a rule somewhere that says that if you are copying and pasting something 3 times in your code, you should just make a function to do it instead. 
+There's a rule somewhere that says that if you are copying and pasting something 3 times in your code, you should just make a function to do it instead.
 
 For example, when we were calculating quantiles:
 
@@ -778,7 +778,7 @@ What will the name of our function be? Since we're looking at quantiles of age a
 
 ```r
 age_bir_q &lt;- function(q) {
-  
+
 }
 ```
 
@@ -813,7 +813,7 @@ nlsy %&gt;% summarize(
 
 ```r
 age_bir_q &lt;- function(q) {
-  quant &lt;- nlsy %&gt;% 
+  quant &lt;- nlsy %&gt;%
     summarize(q_var = quantile(age_bir, probs = q))
   return(quant)
 }
@@ -1073,9 +1073,9 @@ results # empty vector of NAs
 
 ```r
 for (i in 1:3) {
-  # fill the i'th entry with 
+  # fill the i'th entry with
   # the value i times 1.5
-  results[[i]] &lt;- i * 1.5 
+  results[[i]] &lt;- i * 1.5
 }
 ```
 
@@ -1097,7 +1097,7 @@ var_q_new(q = 0.5, var = "income")
 ```
 
 ```
-##   50% 
+##   50%
 ## 11155
 ```
 
@@ -1151,7 +1151,7 @@ class:big-code
 
 ```r
 for (i in seq_along(qs)) {
-  deciles[[i]] &lt;- var_q_new(q = qs[[i]], 
+  deciles[[i]] &lt;- var_q_new(q = qs[[i]],
                         var = "income")
 }
 deciles
@@ -1191,7 +1191,7 @@ This class introduced you to the basics... but there are usually easier/more eff
 
 ```r
 nlsy %&gt;%
-  `summarise_at`(vars(contains("sleep")), 
+  `summarise_at`(vars(contains("sleep")),
             list(med = median, sd = sd))
 ```
 ]
@@ -1228,7 +1228,7 @@ nlsy %&gt;%
 
 ```r
 nlsy %&gt;%
-  `mutate_at`(vars(eyesight, 
+  `mutate_at`(vars(eyesight,
                  race_eth, sex),
             factor) %&gt;%
   select(eyesight, race_eth, sex)
@@ -1237,14 +1237,14 @@ nlsy %&gt;%
 
 ```
 ## # A tibble: 1,205 x 3
-##   eyesight race_eth sex  
+##   eyesight race_eth sex
 ##   &lt;fct&gt;    &lt;fct&gt;    &lt;fct&gt;
-## 1 1        3        2    
-## 2 2        3        1    
-## 3 2        3        2    
-## 4 3        3        2    
-## 5 3        3        1    
-## 6 2        3        2    
+## 1 1        3        2
+## 2 2        3        1
+## 3 2        3        2
+## 4 3        3        2
+## 5 3        3        1
+## 6 2        3        2
 ## # … with 1,199 more rows
 ```
 
@@ -1298,55 +1298,55 @@ Create a function that calculates the stratified proportion of people with diffe
 ## # A tibble: 45 x 5
 ##    var      var_level eyesight     n    prop
 ##    &lt;chr&gt;        &lt;dbl&gt;    &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt;
-##  1 sex              1        1   228 0.455  
-##  2 sex              1        2   162 0.323  
-##  3 sex              1        3    85 0.170  
-##  4 sex              1        4    21 0.0419 
+##  1 sex              1        1   228 0.455
+##  2 sex              1        2   162 0.323
+##  3 sex              1        3    85 0.170
+##  4 sex              1        4    21 0.0419
 ##  5 sex              1        5     5 0.00998
-##  6 sex              2        1   246 0.349  
-##  7 sex              2        2   223 0.317  
-##  8 sex              2        3   164 0.233  
-##  9 sex              2        4    57 0.0810 
-## 10 sex              2        5    14 0.0199 
-## 11 race_eth         1        1    90 0.427  
-## 12 race_eth         1        2    54 0.256  
-## 13 race_eth         1        3    50 0.237  
-## 14 race_eth         1        4    14 0.0664 
-## 15 race_eth         1        5     3 0.0142 
-## 16 race_eth         2        1   102 0.332  
-## 17 race_eth         2        2    96 0.313  
-## 18 race_eth         2        3    73 0.238  
-## 19 race_eth         2        4    29 0.0945 
-## 20 race_eth         2        5     7 0.0228 
-## 21 race_eth         3        1   282 0.410  
-## 22 race_eth         3        2   235 0.342  
-## 23 race_eth         3        3   126 0.183  
-## 24 race_eth         3        4    35 0.0509 
-## 25 race_eth         3        5     9 0.0131 
-## 26 region           1        1    85 0.413  
-## 27 region           1        2    68 0.330  
-## 28 region           1        3    38 0.184  
-## 29 region           1        4    12 0.0583 
-## 30 region           1        5     3 0.0146 
-## 31 region           2        1   130 0.390  
-## 32 region           2        2   118 0.354  
-## 33 region           2        3    63 0.189  
-## 34 region           2        4    18 0.0541 
-## 35 region           2        5     4 0.0120 
-## 36 region           3        1   154 0.375  
-## 37 region           3        2   119 0.290  
-## 38 region           3        3    97 0.236  
-## 39 region           3        4    33 0.0803 
-## 40 region           3        5     8 0.0195 
-## 41 region           4        1   105 0.412  
-## 42 region           4        2    80 0.314  
-## 43 region           4        3    51 0.2    
-## 44 region           4        4    15 0.0588 
+##  6 sex              2        1   246 0.349
+##  7 sex              2        2   223 0.317
+##  8 sex              2        3   164 0.233
+##  9 sex              2        4    57 0.0810
+## 10 sex              2        5    14 0.0199
+## 11 race_eth         1        1    90 0.427
+## 12 race_eth         1        2    54 0.256
+## 13 race_eth         1        3    50 0.237
+## 14 race_eth         1        4    14 0.0664
+## 15 race_eth         1        5     3 0.0142
+## 16 race_eth         2        1   102 0.332
+## 17 race_eth         2        2    96 0.313
+## 18 race_eth         2        3    73 0.238
+## 19 race_eth         2        4    29 0.0945
+## 20 race_eth         2        5     7 0.0228
+## 21 race_eth         3        1   282 0.410
+## 22 race_eth         3        2   235 0.342
+## 23 race_eth         3        3   126 0.183
+## 24 race_eth         3        4    35 0.0509
+## 25 race_eth         3        5     9 0.0131
+## 26 region           1        1    85 0.413
+## 27 region           1        2    68 0.330
+## 28 region           1        3    38 0.184
+## 29 region           1        4    12 0.0583
+## 30 region           1        5     3 0.0146
+## 31 region           2        1   130 0.390
+## 32 region           2        2   118 0.354
+## 33 region           2        3    63 0.189
+## 34 region           2        4    18 0.0541
+## 35 region           2        5     4 0.0120
+## 36 region           3        1   154 0.375
+## 37 region           3        2   119 0.290
+## 38 region           3        3    97 0.236
+## 39 region           3        4    33 0.0803
+## 40 region           3        5     8 0.0195
+## 41 region           4        1   105 0.412
+## 42 region           4        2    80 0.314
+## 43 region           4        3    51 0.2
+## 44 region           4        4    15 0.0588
 ## 45 region           4        5     4 0.0157
 ```
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
-<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="https://remarkjs.com/downloads/remark-0.14.0.min.js"></script>
 <script src="macros.js"></script>
 <script>var slideshow = remark.create({
 "ratio": "16:9",

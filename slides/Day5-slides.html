@@ -84,7 +84,7 @@ h2 {
   color: #1F4257;
     background-color:rgba(236, 236, 236, .75)
 }
-    
+
 .title-slide {
   background-image: url("img/action.jpg");
   background-size: cover;
@@ -188,7 +188,7 @@ dat &lt;- read_csv(here::here(
 
 p &lt;- ggplot(dat) + geom_point(aes(x, y))
 
-ggsave(plot = p, 
+ggsave(plot = p,
        filename = here::here(
        "results", "figures", "fig.pdf"))
 ```
@@ -200,7 +200,7 @@ ggsave(plot = p,
 
 - `here::here("data", "raw", "data.csv")` for me, here, becomes `"/Users/louisahsmith/Google Drive/Teaching/R course/materials/data/raw/data.csv"`
 
-- But if I send you this file, it will become whatever file path *you* need it to be. 
+- But if I send you this file, it will become whatever file path *you* need it to be.
 ]
 
 ---
@@ -373,7 +373,7 @@ nlsy[1, c("id", "glasses", "age_bir")]
 ```
 
 ```r
-nlsy_na &lt;- nlsy %&gt;% `na_if`(-1) %&gt;% `na_if`(-2) %&gt;% 
+nlsy_na &lt;- nlsy %&gt;% `na_if`(-1) %&gt;% `na_if`(-2) %&gt;%
   `na_if`(-3) %&gt;% `na_if`(-4) %&gt;% `na_if`(-5)
 nlsy_na[1, c("id", "glasses", "age_bir")]
 ```
@@ -397,7 +397,7 @@ The `na_if()` strategy is generally the most useful if you're determining NA's o
 
 
 ```r
-nlsy_bad &lt;- nlsy %&gt;% 
+nlsy_bad &lt;- nlsy %&gt;%
   mutate(id = na_if(id, 1))
 nlsy_bad[1:2, c("id", "glasses", "age_bir")]
 ```
@@ -418,7 +418,7 @@ Or, if you know a priori which values indicate missingness (e.g., "."), you can 
 
 
 ```r
-nlsy &lt;- read_csv(here::here("day5", "nlsy.csv"), 
+nlsy &lt;- read_csv(here::here("day5", "nlsy.csv"),
           col_names = colnames_nlsy, skip = 1,
 *         na = c("-1", "-2", "-3", "-4", "-5"))
 ```
@@ -487,10 +487,10 @@ Model formulas will automatically make indicator variables for factors, with the
 
 ```r
 # linear regression (OLS)
-mod_lin1 &lt;- `lm`(log_inc ~ age_bir + sex + race_eth, 
+mod_lin1 &lt;- `lm`(log_inc ~ age_bir + sex + race_eth,
                  data = nlsy_clean)
 # another way to do linear regression (GLM)
-mod_lin2 &lt;- `glm`(log_inc ~ age_bir + sex + race_eth, 
+mod_lin2 &lt;- `glm`(log_inc ~ age_bir + sex + race_eth,
                 `family = gaussian(link = "identity")`,
                 data = nlsy_clean)
 # logistic regression
@@ -531,35 +531,35 @@ summary(mod_log)
 ```
 
 ```
-## 
+##
 ## Call:
-## glm(formula = glasses ~ eyesight + sex + race_eth, family = binomial(link = "logit"), 
+## glm(formula = glasses ~ eyesight + sex + race_eth, family = binomial(link = "logit"),
 ##     data = nlsy_clean)
-## 
-## Deviance Residuals: 
-##     Min       1Q   Median       3Q      Max  
-## -1.4275  -1.0825  -0.8343   1.2221   1.6261  
-## 
+##
+## Deviance Residuals:
+##     Min       1Q   Median       3Q      Max
+## -1.4275  -1.0825  -0.8343   1.2221   1.6261
+##
 ## Coefficients:
-##                                 Estimate Std. Error z value Pr(&gt;|z|)    
+##                                 Estimate Std. Error z value Pr(&gt;|z|)
 ## (Intercept)                     -0.51260    0.06317  -8.114 4.89e-16 ***
-## eyesightVery Good               -0.07920    0.05359  -1.478   0.1394    
-## eyesightGood                    -0.07146    0.06188  -1.155   0.2481    
-## eyesightFair                    -0.21488    0.09105  -2.360   0.0183 *  
-## eyesightPoor                     0.10558    0.18152   0.582   0.5608    
+## eyesightVery Good               -0.07920    0.05359  -1.478   0.1394
+## eyesightGood                    -0.07146    0.06188  -1.155   0.2481
+## eyesightFair                    -0.21488    0.09105  -2.360   0.0183 *
+## eyesightPoor                     0.10558    0.18152   0.582   0.5608
 ## sexFemale                        0.69281    0.04493  15.420  &lt; 2e-16 ***
 ## race_ethNon-Hispanic Black      -0.28460    0.06493  -4.383 1.17e-05 ***
 ## race_ethNon-Black, Non-Hispanic  0.28528    0.05945   4.799 1.60e-06 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
+##
 ## (Dispersion parameter for binomial family taken to be 1)
-## 
+##
 ##     Null deviance: 11655  on 8443  degrees of freedom
 ## Residual deviance: 11281  on 8436  degrees of freedom
 ##   (4242 observations deleted due to missingness)
 ## AIC: 11297
-## 
+##
 ## Number of Fisher Scoring iterations: 4
 ```
 
@@ -596,13 +596,13 @@ coef(mod_log)
 ```
 
 ```
-##                     (Intercept)               eyesightVery Good 
-##                     -0.51260479                     -0.07920222 
-##                    eyesightGood                    eyesightFair 
-##                     -0.07145996                     -0.21487546 
-##                    eyesightPoor                       sexFemale 
-##                      0.10557518                      0.69280825 
-##      race_ethNon-Hispanic Black race_ethNon-Black, Non-Hispanic 
+##                     (Intercept)               eyesightVery Good
+##                     -0.51260479                     -0.07920222
+##                    eyesightGood                    eyesightFair
+##                     -0.07145996                     -0.21487546
+##                    eyesightPoor                       sexFemale
+##                      0.10557518                      0.69280825
+##      race_ethNon-Hispanic Black race_ethNon-Black, Non-Hispanic
 ##                     -0.28460369                      0.28527712
 ```
 
@@ -611,7 +611,7 @@ coef(mod_log)[6]
 ```
 
 ```
-## sexFemale 
+## sexFemale
 ## 0.6928082
 ```
 
@@ -629,7 +629,7 @@ tidy(mod_log) %&gt;% slice(6) %&gt;% pull(estimate)
 But you can create new values in this dataframe!
 
 ```r
-res_mod_log &lt;- mod_log %&gt;% tidy() %&gt;% 
+res_mod_log &lt;- mod_log %&gt;% tidy() %&gt;%
   mutate(lci = estimate - 1.96 * std.error,
          uci = estimate + 1.96 * std.error)
 res_mod_log
@@ -639,13 +639,13 @@ res_mod_log
 ## # A tibble: 8 x 7
 ##   term                            estimate std.error statistic  p.value    lci     uci
 ##   &lt;chr&gt;                              &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
-## 1 (Intercept)                      -0.513     0.0632    -8.11  4.89e-16 -0.636 -0.389 
+## 1 (Intercept)                      -0.513     0.0632    -8.11  4.89e-16 -0.636 -0.389
 ## 2 eyesightVery Good                -0.0792    0.0536    -1.48  1.39e- 1 -0.184  0.0258
 ## 3 eyesightGood                     -0.0715    0.0619    -1.15  2.48e- 1 -0.193  0.0498
 ## 4 eyesightFair                     -0.215     0.0911    -2.36  1.83e- 2 -0.393 -0.0364
-## 5 eyesightPoor                      0.106     0.182      0.582 5.61e- 1 -0.250  0.461 
-## 6 sexFemale                         0.693     0.0449    15.4   1.21e-53  0.605  0.781 
-## 7 race_ethNon-Hispanic Black       -0.285     0.0649    -4.38  1.17e- 5 -0.412 -0.157 
+## 5 eyesightPoor                      0.106     0.182      0.582 5.61e- 1 -0.250  0.461
+## 6 sexFemale                         0.693     0.0449    15.4   1.21e-53  0.605  0.781
+## 7 race_ethNon-Hispanic Black       -0.285     0.0649    -4.38  1.17e- 5 -0.412 -0.157
 ## 8 race_ethNon-Black, Non-Hispanic   0.285     0.0594     4.80  1.60e- 6  0.169  0.402
 ```
 We could also clean up the `term` variable, perhaps with `fct_recode()`.
@@ -667,11 +667,11 @@ res_mod_log
 ## # A tibble: 7 x 4
 ##   term                            estimate   lci   uci
 ##   &lt;chr&gt;                              &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1 eyesightVery Good                  0.924 0.832 1.03 
-## 2 eyesightGood                       0.931 0.825 1.05 
+## 1 eyesightVery Good                  0.924 0.832 1.03
+## 2 eyesightGood                       0.931 0.825 1.05
 ## 3 eyesightFair                       0.807 0.675 0.964
-## 4 eyesightPoor                       1.11  0.779 1.59 
-## 5 sexFemale                          2.00  1.83  2.18 
+## 4 eyesightPoor                       1.11  0.779 1.59
+## 5 sexFemale                          2.00  1.83  2.18
 ## 6 race_ethNon-Hispanic Black         0.752 0.662 0.854
 ## 7 race_ethNon-Black, Non-Hispanic    1.33  1.18  1.49
 ```
@@ -690,13 +690,13 @@ res_mod_log %&gt;% select(term, estimate, lci, uci) %&gt;%
 
 ```
 ## # A tibble: 7 x 5
-##   term                            estimate   lci   uci ci                                    
-##   &lt;chr&gt;                              &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;glue&gt;                                
-## 1 eyesightVery Good                  0.924 0.832 1.03  (0.831734362089001, 1.02617441582346) 
-## 2 eyesightGood                       0.931 0.825 1.05  (0.824698936937584, 1.05107868439189) 
-## 3 eyesightFair                       0.807 0.675 0.964 (0.674797666860532, 0.96424628337116) 
-## 4 eyesightPoor                       1.11  0.779 1.59  (0.778639992096712, 1.58622477434497) 
-## 5 sexFemale                          2.00  1.83  2.18  (1.8307856398006, 2.18337382956281)   
+##   term                            estimate   lci   uci ci
+##   &lt;chr&gt;                              &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;glue&gt;
+## 1 eyesightVery Good                  0.924 0.832 1.03  (0.831734362089001, 1.02617441582346)
+## 2 eyesightGood                       0.931 0.825 1.05  (0.824698936937584, 1.05107868439189)
+## 3 eyesightFair                       0.807 0.675 0.964 (0.674797666860532, 0.96424628337116)
+## 4 eyesightPoor                       1.11  0.779 1.59  (0.778639992096712, 1.58622477434497)
+## 5 sexFemale                          2.00  1.83  2.18  (1.8307856398006, 2.18337382956281)
 ## 6 race_ethNon-Hispanic Black         0.752 0.662 0.854 (0.662416384318316, 0.854408001346314)
 ## 7 race_ethNon-Black, Non-Hispanic    1.33  1.18  1.49  (1.18383962963298, 1.49449918933821)
 ```
@@ -782,15 +782,15 @@ new_mod %&gt;% tidy() %&gt;%
 ```
 ## # A tibble: 9 x 3
 ##   term                        OR                       p.value
-##   &lt;chr&gt;                       &lt;glue&gt;                   &lt;chr&gt;  
-## 1 eyesightVery Good           1.07 (95% CI 0.92, 1.23) 0.392  
-## 2 eyesightGood                0.97 (95% CI 0.81, 1.15) 0.702  
-## 3 eyesightFair                0.73 (95% CI 0.55, 0.97) 0.029  
-## 4 eyesightPoor                1.23 (95% CI 0.68, 2.2)  0.497  
-## 5 sexFemale                   2.37 (95% CI 2.04, 2.75) &lt;0.001 
-## 6 eyesightVery Good:sexFemale 0.71 (95% CI 0.57, 0.87) 0.001  
-## 7 eyesightGood:sexFemale      0.83 (95% CI 0.65, 1.05) 0.121  
-## 8 eyesightFair:sexFemale      0.97 (95% CI 0.67, 1.39) 0.867  
+##   &lt;chr&gt;                       &lt;glue&gt;                   &lt;chr&gt;
+## 1 eyesightVery Good           1.07 (95% CI 0.92, 1.23) 0.392
+## 2 eyesightGood                0.97 (95% CI 0.81, 1.15) 0.702
+## 3 eyesightFair                0.73 (95% CI 0.55, 0.97) 0.029
+## 4 eyesightPoor                1.23 (95% CI 0.68, 2.2)  0.497
+## 5 sexFemale                   2.37 (95% CI 2.04, 2.75) &lt;0.001
+## 6 eyesightVery Good:sexFemale 0.71 (95% CI 0.57, 0.87) 0.001
+## 7 eyesightGood:sexFemale      0.83 (95% CI 0.65, 1.05) 0.121
+## 8 eyesightFair:sexFemale      0.97 (95% CI 0.67, 1.39) 0.867
 ## 9 eyesightPoor:sexFemale      0.71 (95% CI 0.34, 1.47) 0.353
 ```
 So, the `tidy()` function could have actually done the exponentiating and confidence interval calculating for us. See `help(tidy.glm)` for more details. But much better to do it ourselves 😉
@@ -830,7 +830,7 @@ NLSY/
 
 - Copy and paste `nlsy.csv` into `data/raw`.
 - Create a new file and save it as `clean_data.R`.
-- In that file, read in the NLSY data and load any packages you need. Make sure you replace any missing values with NA. Hint: there are extra missnig values in the `age_bir` variable. Also, the variable names might be useful: 
+- In that file, read in the NLSY data and load any packages you need. Make sure you replace any missing values with NA. Hint: there are extra missnig values in the `age_bir` variable. Also, the variable names might be useful:
 
 
 ```r
@@ -842,7 +842,7 @@ colnames_nlsy &lt;- c(
 ```
 - Add factor labels to `eyesight`, `sex`, `race_eth`, `region`, as in earlier slides. Select those variables plus `income`, `id`, `nsibs`, `age_bir`, and the sleep variables. Then restrict to complete cases and people with incomes &lt; $30,000. Make a variable for the log of income (replace with NA if income &lt;= 0).
 - Also in that file, save your new dataset as a `.rds` file to the `data/processed` folder.
-  
+
 ---
 # Do some exploratory analysis
 
@@ -862,8 +862,8 @@ write_csv(tab1, ...)
 - Using the results, use `ggplot` to make a figure. Use `geom_point()` for the point estimates and `geom_errorbar()` for the confidence intervals. It will look something like this:
 
 ```r
-ggplot(data) + 
-  geom_point(aes(x = , y = )) + 
+ggplot(data) +
+  geom_point(aes(x = , y = )) +
   geom_errorbar(aes(x = , ymin = , ymax = ))
 ```
 - Save that figure as a `.pdf` using `ggsave()`. You may want to play around with the `height = ` and `width = ` arguments to make it look like you want.
@@ -880,7 +880,7 @@ ggplot(data) +
 - `rvest`: Scrape data from websites. (https://rvest.tidyverse.org)
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
-<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="https://remarkjs.com/downloads/remark-0.14.0.min.js"></script>
 <script src="macros.js"></script>
 <script>var slideshow = remark.create({
 "ratio": "16:9",

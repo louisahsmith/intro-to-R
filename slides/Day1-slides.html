@@ -84,7 +84,7 @@ h2 {
   color: #1F4257;
     background-color:rgba(236, 236, 236, .75)
 }
-    
+
 .title-slide {
   background-image: url("img/paper.jpg");
   background-size: cover;
@@ -308,7 +308,7 @@ class: inverse
 2. Extract `"rhino"` from `chars` using square brackets
 3. You saw how to extract the second row of `mat`. Figure out how to extract the second column.
 4. Extract `183` from `mat` using square brackets
-5. Figure out how to get the following errors: 
+5. Figure out how to get the following errors:
 
 
 ```
@@ -424,9 +424,9 @@ dat2
 ```
 ## # A tibble: 3 x 3
 ##       n food   animal
-##   &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt; 
+##   &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;
 ## 1    39 banana monkey
-## 2    21 milk   cat   
+## 2    21 milk   cat
 ## 3    18 bone   dog
 ```
 ]
@@ -441,7 +441,7 @@ as_tibble(gss_cat)[, 1:4]
 
 ```
 # A tibble: 21,483 x 4
-    year marital         age race 
+    year marital         age race
    &lt;int&gt; &lt;fct&gt;         &lt;int&gt; &lt;fct&gt;
  1  2000 Never married    26 White
  2  2000 Divorced         48 White
@@ -522,7 +522,7 @@ colnames(nlsy)
 
 ```r
 colnames(nlsy) &lt;- c("glasses", "eyesight", "sleep_wkdy", "sleep_wknd",
-                    "id", "nsibs", "samp", "race_eth", "sex", "region", 
+                    "id", "nsibs", "samp", "race_eth", "sex", "region",
                     "income", "res_1980", "res_2002", "age_bir")
 ```
 
@@ -561,26 +561,26 @@ summary(nlsy)
 ```
 
 ```
-##     glasses          eyesight      sleep_wkdy       sleep_wknd           id       
-##  Min.   :0.0000   Min.   :1.00   Min.   : 0.000   Min.   : 0.000   Min.   :    3  
-##  1st Qu.:0.0000   1st Qu.:1.00   1st Qu.: 6.000   1st Qu.: 6.000   1st Qu.: 2317  
-##  Median :1.0000   Median :2.00   Median : 7.000   Median : 7.000   Median : 4744  
-##  Mean   :0.5178   Mean   :1.99   Mean   : 6.643   Mean   : 7.267   Mean   : 5229  
-##  3rd Qu.:1.0000   3rd Qu.:3.00   3rd Qu.: 8.000   3rd Qu.: 8.000   3rd Qu.: 7937  
-##  Max.   :1.0000   Max.   :5.00   Max.   :13.000   Max.   :14.000   Max.   :12667  
-##      nsibs             samp           race_eth          sex            region     
-##  Min.   : 0.000   Min.   : 1.000   Min.   :1.000   Min.   :1.000   Min.   :1.000  
-##  1st Qu.: 2.000   1st Qu.: 4.000   1st Qu.:2.000   1st Qu.:1.000   1st Qu.:2.000  
-##  Median : 3.000   Median : 5.000   Median :3.000   Median :2.000   Median :3.000  
-##  Mean   : 3.937   Mean   : 7.002   Mean   :2.395   Mean   :1.584   Mean   :2.593  
-##  3rd Qu.: 5.000   3rd Qu.:11.000   3rd Qu.:3.000   3rd Qu.:2.000   3rd Qu.:3.000  
-##  Max.   :16.000   Max.   :20.000   Max.   :3.000   Max.   :2.000   Max.   :4.000  
-##      income         res_1980        res_2002        age_bir     
-##  Min.   :    0   Min.   : 1.00   Min.   : 5.00   Min.   :13.00  
-##  1st Qu.: 6000   1st Qu.:11.00   1st Qu.:11.00   1st Qu.:19.00  
-##  Median :11155   Median :11.00   Median :11.00   Median :22.00  
-##  Mean   :15289   Mean   : 9.14   Mean   :11.05   Mean   :23.45  
-##  3rd Qu.:20000   3rd Qu.:11.00   3rd Qu.:11.00   3rd Qu.:27.00  
+##     glasses          eyesight      sleep_wkdy       sleep_wknd           id
+##  Min.   :0.0000   Min.   :1.00   Min.   : 0.000   Min.   : 0.000   Min.   :    3
+##  1st Qu.:0.0000   1st Qu.:1.00   1st Qu.: 6.000   1st Qu.: 6.000   1st Qu.: 2317
+##  Median :1.0000   Median :2.00   Median : 7.000   Median : 7.000   Median : 4744
+##  Mean   :0.5178   Mean   :1.99   Mean   : 6.643   Mean   : 7.267   Mean   : 5229
+##  3rd Qu.:1.0000   3rd Qu.:3.00   3rd Qu.: 8.000   3rd Qu.: 8.000   3rd Qu.: 7937
+##  Max.   :1.0000   Max.   :5.00   Max.   :13.000   Max.   :14.000   Max.   :12667
+##      nsibs             samp           race_eth          sex            region
+##  Min.   : 0.000   Min.   : 1.000   Min.   :1.000   Min.   :1.000   Min.   :1.000
+##  1st Qu.: 2.000   1st Qu.: 4.000   1st Qu.:2.000   1st Qu.:1.000   1st Qu.:2.000
+##  Median : 3.000   Median : 5.000   Median :3.000   Median :2.000   Median :3.000
+##  Mean   : 3.937   Mean   : 7.002   Mean   :2.395   Mean   :1.584   Mean   :2.593
+##  3rd Qu.: 5.000   3rd Qu.:11.000   3rd Qu.:3.000   3rd Qu.:2.000   3rd Qu.:3.000
+##  Max.   :16.000   Max.   :20.000   Max.   :3.000   Max.   :2.000   Max.   :4.000
+##      income         res_1980        res_2002        age_bir
+##  Min.   :    0   Min.   : 1.00   Min.   : 5.00   Min.   :13.00
+##  1st Qu.: 6000   1st Qu.:11.00   1st Qu.:11.00   1st Qu.:19.00
+##  Median :11155   Median :11.00   Median :11.00   Median :22.00
+##  Mean   :15289   Mean   : 9.14   Mean   :11.05   Mean   :23.45
+##  3rd Qu.:20000   3rd Qu.:11.00   3rd Qu.:11.00   3rd Qu.:27.00
 ##  Max.   :75001   Max.   :16.00   Max.   :19.00   Max.   :52.00
 ```
 
@@ -593,7 +593,7 @@ summary(nlsy$glasses)
 ```
 
 ```
-##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.
 ##  0.0000  0.0000  1.0000  0.5178  1.0000  1.0000
 ```
 
@@ -768,7 +768,7 @@ count: false
 
 ```r
 ggplot(data = nlsy) +
-  geom_bar(aes(x = eyesight, 
+  geom_bar(aes(x = eyesight,
           fill = factor(eyesight))) +
 * facet_grid(
 *   cols = vars(glasses),
@@ -788,7 +788,7 @@ count: false
 
 ```r
 ggplot(data = nlsy) +
-  geom_bar(aes(x = eyesight, 
+  geom_bar(aes(x = eyesight,
           fill = factor(eyesight))) +
   facet_grid(
     cols = vars(glasses),
@@ -810,7 +810,7 @@ count: false
 
 ```r
 ggplot(data = nlsy) +
-  geom_bar(aes(x = eyesight, 
+  geom_bar(aes(x = eyesight,
           fill = factor(eyesight))) +
   facet_grid(
     cols = vars(glasses),
@@ -836,7 +836,7 @@ count: false
 
 ```r
 ggplot(data = nlsy) +
-  geom_bar(aes(x = eyesight, 
+  geom_bar(aes(x = eyesight,
           fill = factor(eyesight))) +
   facet_grid(
     cols = vars(glasses),
@@ -863,7 +863,7 @@ count: false
 
 ```r
 ggplot(data = nlsy) +
-  geom_bar(aes(x = eyesight, 
+  geom_bar(aes(x = eyesight,
           fill = factor(eyesight))) +
   facet_grid(
     cols = vars(glasses),
@@ -894,7 +894,7 @@ count: false
 
 ```r
 ggplot(data = nlsy) +
-  geom_bar(aes(x = eyesight, 
+  geom_bar(aes(x = eyesight,
           fill = factor(eyesight))) +
   facet_grid(
     cols = vars(glasses),
@@ -928,7 +928,7 @@ count: false
 
 ```r
 ggplot(data = nlsy) +
-  geom_bar(aes(x = eyesight, 
+  geom_bar(aes(x = eyesight,
           fill = factor(eyesight))) +
   facet_grid(
     cols = vars(glasses),
@@ -963,7 +963,7 @@ count: false
 ```r
 *ggplot(data = nlsy, aes(x = income,
 *   y = age_bir, col = factor(sex))
-*) 
+*)
 ```
 ]
 .right-plot[
@@ -976,7 +976,7 @@ count: false
 .left-code[
 
 ```r
-ggplot(data = nlsy, aes(x = income, 
+ggplot(data = nlsy, aes(x = income,
     y = age_bir, col = factor(sex))
 ) +
 * geom_point(alpha = 0.1)
@@ -992,7 +992,7 @@ count: false
 .left-code[
 
 ```r
-ggplot(data = nlsy, aes(x = income, 
+ggplot(data = nlsy, aes(x = income,
     y = age_bir, col = factor(sex))
 ) +
   geom_point(alpha = 0.1) +
@@ -1011,7 +1011,7 @@ count: false
 .left-code[
 
 ```r
-ggplot(data = nlsy, aes(x = income, 
+ggplot(data = nlsy, aes(x = income,
     y = age_bir, col = factor(sex))
 ) +
   geom_point(alpha = 0.1) +
@@ -1032,14 +1032,14 @@ count: false
 .left-code[
 
 ```r
-ggplot(data = nlsy, aes(x = income, 
+ggplot(data = nlsy, aes(x = income,
     y = age_bir, col = factor(sex))
 ) +
   geom_point(alpha = 0.1) +
   scale_color_brewer(palette = "Set1",
     name = "Sex",
     labels = c("Male", "Female")) +
-  scale_x_log10(labels = 
+  scale_x_log10(labels =
                   scales::dollar) +
 * geom_smooth(aes(
 *   group = factor(sex)),
@@ -1056,17 +1056,17 @@ count: false
 .left-code[
 
 ```r
-ggplot(data = nlsy, aes(x = income, 
+ggplot(data = nlsy, aes(x = income,
     y = age_bir, col = factor(sex))
 ) +
   geom_point(alpha = 0.1) +
   scale_color_brewer(palette = "Set1",
     name = "Sex",
     labels = c("Male", "Female")) +
-  scale_x_log10(labels = 
+  scale_x_log10(labels =
                   scales::dollar) +
   geom_smooth(aes(
-    group = factor(sex)), 
+    group = factor(sex)),
     method = "lm") +
 * facet_grid(rows = vars(race_eth),
 *   labeller = labeller(race_eth = c(
@@ -1085,17 +1085,17 @@ count: false
 .left-code[
 
 ```r
-ggplot(data = nlsy, aes(x = income, 
+ggplot(data = nlsy, aes(x = income,
     y = age_bir, col = factor(sex))
 ) +
   geom_point(alpha = 0.1) +
   scale_color_brewer(palette = "Set1",
     name = "Sex",
     labels = c("Male", "Female")) +
-  scale_x_log10(labels = 
+  scale_x_log10(labels =
                   scales::dollar) +
   geom_smooth(aes(
-    group = factor(sex)), 
+    group = factor(sex)),
     method = "lm") +
   facet_grid(rows = vars(race_eth),
     labeller = labeller(race_eth = c(
@@ -1115,17 +1115,17 @@ count: false
 .left-code[
 
 ```r
-ggplot(data = nlsy, aes(x = income, 
+ggplot(data = nlsy, aes(x = income,
     y = age_bir, col = factor(sex))
 ) +
   geom_point(alpha = 0.1) +
   scale_color_brewer(palette = "Set1",
     name = "Sex",
     labels = c("Male", "Female")) +
-  scale_x_log10(labels = 
+  scale_x_log10(labels =
                   scales::dollar) +
   geom_smooth(aes(
-    group = factor(sex)), 
+    group = factor(sex)),
     method = "lm") +
   facet_grid(rows = vars(race_eth),
     labeller = labeller(race_eth = c(
@@ -1146,17 +1146,17 @@ count: false
 .left-code[
 
 ```r
-ggplot(data = nlsy, aes(x = income, 
+ggplot(data = nlsy, aes(x = income,
     y = age_bir, col = factor(sex))
 ) +
   geom_point(alpha = 0.1) +
   scale_color_brewer(palette = "Set1",
     name = "Sex",
     labels = c("Male", "Female")) +
-  scale_x_log10(labels = 
+  scale_x_log10(labels =
                   scales::dollar) +
   geom_smooth(aes(
-    group = factor(sex)), 
+    group = factor(sex)),
     method = "lm") +
   facet_grid(rows = vars(race_eth),
     labeller = labeller(race_eth = c(
@@ -1335,7 +1335,7 @@ geom_point(aes(x = income, y = age_bir,
 ```
 #### We can map the values of `eyesight` to a different continuous scale using `scale_color_gradient()`
 
-You can read lots more about this function [here](https://ggplot2.tidyverse.org/reference/scale_gradient.html), so you don't have to have such ugly color scales! 
+You can read lots more about this function [here](https://ggplot2.tidyverse.org/reference/scale_gradient.html), so you don't have to have such ugly color scales!
 
 &lt;br&gt;&lt;br&gt;https://ggplot2.tidyverse.org/reference/scale_gradient.html
 
@@ -1433,7 +1433,7 @@ count:true
 ggplot(data = nlsy) +
 geom_point(aes(x = income, y = age_bir,
             color = factor(eyesight))) +
-scale_color_brewer(palette = "Set1", 
+scale_color_brewer(palette = "Set1",
 *           name = "Eyesight",
 *           labels = c("Excellent",
 *                      "Very Good",
@@ -1639,7 +1639,7 @@ This is one of the most common warning messages I get in R!
 
 ```r
 ggplot(data = nlsy) +
-  geom_histogram(aes(x = income), 
+  geom_histogram(aes(x = income),
 *                bins = 10)
 ```
 
@@ -1657,7 +1657,7 @@ count:true
 
 ```r
 ggplot(data = nlsy) +
-  geom_histogram(aes(x = income), 
+  geom_histogram(aes(x = income),
 *                bins = 100)
 ```
 
@@ -1675,7 +1675,7 @@ count:true
 
 ```r
 ggplot(data = nlsy) +
-  geom_histogram(aes(x = income), 
+  geom_histogram(aes(x = income),
 *                binwidth = 1000)
 ```
 
@@ -1738,7 +1738,7 @@ You probably recognize the ggplot theme. But did you know you can trick people i
 ```r
 ggplot(data = nlsy) +
   geom_boxplot(aes(
-    x = factor(sleep_wknd), 
+    x = factor(sleep_wknd),
     y = sleep_wkdy,
     fill = factor(sleep_wknd))) +
   scale_fill_discrete(guide = FALSE) +
@@ -1761,7 +1761,7 @@ count:true
 ```r
 ggplot(data = nlsy) +
   geom_boxplot(aes(
-    x = factor(sleep_wknd), 
+    x = factor(sleep_wknd),
     y = sleep_wkdy,
     fill = factor(sleep_wknd))) +
   scale_fill_discrete(guide = FALSE) +
@@ -1785,7 +1785,7 @@ count:true
 ```r
 ggplot(data = nlsy) +
   geom_boxplot(aes(
-    x = factor(sleep_wknd), 
+    x = factor(sleep_wknd),
     y = sleep_wkdy,
     fill = factor(sleep_wknd))) +
   scale_fill_discrete(guide = FALSE) +
@@ -1808,7 +1808,7 @@ count:true
 ```r
 ggplot(data = nlsy) +
   geom_boxplot(aes(
-    x = factor(sleep_wknd), 
+    x = factor(sleep_wknd),
     y = sleep_wkdy,
     fill = factor(sleep_wknd))) +
   scale_fill_discrete(guide = FALSE) +
@@ -1831,7 +1831,7 @@ count:true
 ```r
 ggplot(data = nlsy) +
   geom_boxplot(aes(
-    x = factor(sleep_wknd), 
+    x = factor(sleep_wknd),
     y = sleep_wkdy,
     fill = factor(sleep_wknd))) +
   scale_fill_discrete(guide = FALSE) +
@@ -1855,7 +1855,7 @@ count:true
 ```r
 ggplot(data = nlsy) +
   geom_boxplot(aes(
-    x = factor(sleep_wknd), 
+    x = factor(sleep_wknd),
     y = sleep_wkdy,
     fill = factor(sleep_wknd))) +
   scale_fill_discrete(guide = FALSE) +
@@ -1882,7 +1882,7 @@ If your data changes, you can easily run the whole script again
 ```r
 library(tidyverse)
 dataset &lt;- read_csv("dataset.csv")
-ggplot(dataset) + 
+ggplot(dataset) +
   geom_point(aes(x = xvar, y = yvar))
 ggsave(filename = "scatterplot.pdf")
 ```
@@ -1909,7 +1909,7 @@ class: inverse
 &lt;img src="Day1-slides_files/figure-html/unnamed-chunk-36-1.png" width="45%" style="display: block; margin: auto;" /&gt;
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
-<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="https://remarkjs.com/downloads/remark-0.14.0.min.js"></script>
 <script src="macros.js"></script>
 <script>var slideshow = remark.create({
 "ratio": "16:9",

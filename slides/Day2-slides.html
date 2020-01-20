@@ -84,7 +84,7 @@ h2 {
   color: #1F4257;
     background-color:rgba(236, 236, 236, .75)
 }
-    
+
 .title-slide {
   background-image: url("img/binders.jpg");
   background-size: cover;
@@ -161,7 +161,7 @@ ggplot(data = nlsy) +
   geom_histogram(aes(x = income, y = ..density.., fill = factor(region)),
                  bins = 40) +
   scale_x_sqrt(breaks = c(1000, 10000, 25000, 50000)) +
-  scale_fill_discrete(name = "Region", 
+  scale_fill_discrete(name = "Region",
                       labels = c("Northeast", "North Central", "South", "West")) +
   facet_grid(rows = vars(region)) +
   labs(x = "Income", title = "NLSY 1979 income by US region") +
@@ -189,7 +189,7 @@ ggplot(data = nlsy) +
 - ggplot is not easy to master but with it you can do almost anything you want!
 --
 
-- There are lots of resources and examples online! 
+- There are lots of resources and examples online!
 
 --
 
@@ -237,9 +237,9 @@ ggplot(data = nlsy) +
 
 ```r
 ... scale_fill_discrete(name = "Region",
-                        labels = c("Northeast", 
+                        labels = c("Northeast",
                                    "North Central",
-                                   "South", 
+                                   "South",
                                    "West"))
 ```
 
@@ -251,8 +251,8 @@ table(nlsy$region)
 ```
 
 ```
-## 
-##   1   2   3   4 
+##
+##   1   2   3   4
 ## 206 333 411 255
 ```
 
@@ -269,12 +269,12 @@ summary(`factor`(nlsy$region))
 ```
 
 ```
-##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.
 ##   1.000   2.000   3.000   2.593   3.000   4.000
 ```
 
 ```
-##   1   2   3   4 
+##   1   2   3   4
 ## 206 333 411 255
 ```
 #### We want to make the store `region` as a factor permanently (and, later, give it better names...)
@@ -298,15 +298,15 @@ nlsy$dataset &lt;- "NLSY"
 ```
 ## # A tibble: 1,205 x 5
 ##   region region_factor age_bir age_bir_cent dataset
-##    &lt;dbl&gt; &lt;fct&gt;           &lt;dbl&gt;        &lt;dbl&gt; &lt;chr&gt;  
-## 1      1 1                  19       -4.45  NLSY   
-## 2      1 1                  30        6.55  NLSY   
-## 3      1 1                  17       -6.45  NLSY   
-## 4      1 1                  31        7.55  NLSY   
-## 5      3 3                  19       -4.45  NLSY   
-## 6      1 1                  30        6.55  NLSY   
-## 7      1 1                  27        3.55  NLSY   
-## 8      1 1                  24        0.552 NLSY   
+##    &lt;dbl&gt; &lt;fct&gt;           &lt;dbl&gt;        &lt;dbl&gt; &lt;chr&gt;
+## 1      1 1                  19       -4.45  NLSY
+## 2      1 1                  30        6.55  NLSY
+## 3      1 1                  17       -6.45  NLSY
+## 4      1 1                  31        7.55  NLSY
+## 5      3 3                  19       -4.45  NLSY
+## 6      1 1                  30        6.55  NLSY
+## 7      1 1                  27        3.55  NLSY
+## 8      1 1                  24        0.552 NLSY
 ## # … with 1,197 more rows
 ```
 
@@ -377,7 +377,7 @@ table(nlsy$slp_cat_wkdy, nlsy$sleep_wkdy)
 ```
 
 ```
-##         
+##
 ##            0   2   3   4   5   6   7   8   9  10  11  12  13
 ##   ideal    0   0   0   0   0   0 357 269   0   0   0   0   0
 ##   little   1   4  14  48   0   0   0   0   0   0   0   0   0
@@ -411,8 +411,8 @@ nlsy &lt;- mutate(nlsy, total_sleep = case_when(
                )
 ```
 
-- Which value would someone with `sleep_wknd = 8` and `sleep_wkdy = 4` go? 
-- What about someone with  `sleep_wknd = 11` and `sleep_wkdy = 4`? 
+- Which value would someone with `sleep_wknd = 8` and `sleep_wkdy = 4` go?
+- What about someone with  `sleep_wknd = 11` and `sleep_wkdy = 4`?
 - What about someone with `sleep_wknd = 7` and `sleep_wkdy = 7`?
 
 
@@ -450,7 +450,7 @@ summary(nlsy$slp_cat_wkdy)
 ```
 
 ```
-##    Length     Class      Mode 
+##    Length     Class      Mode
 ##      1205 character character
 ```
 
@@ -461,14 +461,14 @@ Like the {1, 2, 3, 4} region variable, we want to turn this variable into a cate
 
 
 ```r
-# I'm just going to replace this variable, instead of making a new one, 
+# I'm just going to replace this variable, instead of making a new one,
 # by giving it the same name a before
 nlsy &lt;- mutate(nlsy, slp_cat_wkdy = `factor`(slp_cat_wkdy))
 summary(nlsy$slp_cat_wkdy)
 ```
 
 ```
-##  ideal little   lots   some   NA's 
+##  ideal little   lots   some   NA's
 ##    626     67     47    462      3
 ```
 #### Much better, but what's the deal with that order?
@@ -494,9 +494,9 @@ The `fct_relevel()` function allows us just to rewrite the names of the categori
 
 
 ```r
-nlsy &lt;- mutate(nlsy, slp_cat_wkdy_ord = `fct_relevel`(slp_cat_wkdy, "little", 
-                                                                    "some", 
-                                                                    "ideal", 
+nlsy &lt;- mutate(nlsy, slp_cat_wkdy_ord = `fct_relevel`(slp_cat_wkdy, "little",
+                                                                    "some",
+                                                                    "ideal",
                                                                     "lots"
                                                     )
                )
@@ -508,7 +508,7 @@ summary(nlsy$slp_cat_wkdy_ord)
 ```
 
 ```
-## little   some  ideal   lots   NA's 
+## little   some  ideal   lots   NA's
 ##     67    462    626     47      3
 ```
 
@@ -525,9 +525,9 @@ levels(nlsy$slp_cat_wkdy_ord)
 
 
 ```r
-nlsy &lt;- mutate(nlsy, slp_cat_wkdy_ord2 = fct_relevel(slp_cat_wkdy, "little", 
-                                                                  `"same"`, 
-                                                                   "ideal", 
+nlsy &lt;- mutate(nlsy, slp_cat_wkdy_ord2 = fct_relevel(slp_cat_wkdy, "little",
+                                                                  `"same"`,
+                                                                   "ideal",
                                                                    "lots"
                                                      )
                )
@@ -542,7 +542,7 @@ summary(nlsy$slp_cat_wkdy_ord2)
 ```
 
 ```
-## little  ideal   lots   some   NA's 
+## little  ideal   lots   some   NA's
 ##     67    626     47    462      3
 ```
 
@@ -575,8 +575,8 @@ table(nlsy$region)
 ```
 
 ```
-## 
-##   1   2   3   4 
+##
+##   1   2   3   4
 ## 206 333 411 255
 ```
 
@@ -585,7 +585,7 @@ summary(nlsy$region_fact) # since table() doesn't show NAs
 ```
 
 ```
-##     Northeast North Central         South          West 
+##     Northeast North Central         South          West
 ##           206           333           411           255
 ```
 
@@ -600,7 +600,7 @@ summary(nlsy$region_fact)
 ```
 
 ```
-##         South North Central          West     Northeast 
+##         South North Central          West     Northeast
 ##           411           333           255           206
 ```
 Or the reverse of that?
@@ -611,7 +611,7 @@ summary(nlsy$region_fact)
 ```
 
 ```
-##     Northeast          West North Central         South 
+##     Northeast          West North Central         South
 ##           206           255           333           411
 ```
 
@@ -622,26 +622,26 @@ Recall that we made it so that the sleep variable had missing values, perhaps be
 
 
 ```r
-nlsy &lt;- mutate(nlsy, slp_cat_wkdy_out = 
+nlsy &lt;- mutate(nlsy, slp_cat_wkdy_out =
                  `fct_explicit_na`(slp_cat_wkdy, na_level = "outlier"))
 summary(nlsy$slp_cat_wkdy_out)
 ```
 
 ```
-##   ideal  little    lots    some outlier 
+##   ideal  little    lots    some outlier
 ##     626      67      47     462       3
 ```
 Or maybe we want to combine some levels that don't have a lot of observations in them:
 
 ```r
-nlsy &lt;- mutate(nlsy, slp_cat_wkdy_comb = `fct_collapse`(slp_cat_wkdy, 
+nlsy &lt;- mutate(nlsy, slp_cat_wkdy_comb = `fct_collapse`(slp_cat_wkdy,
                                                          "less" = c("little", "some"),
                                                          "more" = c("ideal", "lots")))
 summary(nlsy$slp_cat_wkdy_comb)
 ```
 
 ```
-## more less NA's 
+## more less NA's
 ##  673  529    3
 ```
 
@@ -657,7 +657,7 @@ summary(nlsy$slp_cat_wkdy_lump)
 
 
 ```
-## ideal  some Other  NA's 
+## ideal  some Other  NA's
 ##   626   462   114     3
 ```
 
@@ -780,14 +780,14 @@ select(nlsy, `starts_with`("slp"))
 ```
 ## # A tibble: 1,205 x 6
 ##   slp_cat_wkdy slp_cat_wkdy_ord slp_cat_wkdy_or… slp_cat_wkdy_out slp_cat_wkdy_co…
-##   &lt;fct&gt;        &lt;fct&gt;            &lt;fct&gt;            &lt;fct&gt;            &lt;fct&gt;           
-## 1 some         some             some             some             less            
-## 2 some         some             some             some             less            
-## 3 ideal        ideal            ideal            ideal            more            
-## 4 some         some             some             some             less            
-## 5 lots         lots             lots             lots             more            
-## 6 ideal        ideal            ideal            ideal            more            
-## 7 ideal        ideal            ideal            ideal            more            
+##   &lt;fct&gt;        &lt;fct&gt;            &lt;fct&gt;            &lt;fct&gt;            &lt;fct&gt;
+## 1 some         some             some             some             less
+## 2 some         some             some             some             less
+## 3 ideal        ideal            ideal            ideal            more
+## 4 some         some             some             some             less
+## 5 lots         lots             lots             lots             more
+## 6 ideal        ideal            ideal            ideal            more
+## 7 ideal        ideal            ideal            ideal            more
 ## # … with 1,198 more rows, and 1 more variable: slp_cat_wkdy_lump &lt;fct&gt;
 ```
 
@@ -854,14 +854,14 @@ summary(wear_glasses$glasses)
 ```
 
 ```
-##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.
 ##       1       1       1       1       1       1
 ```
 
 ---
 # `filter()` syntax
 
-- Like the others, we give `filter()` the dataset first, then we give it a series of criteria that we want to subset our data on. 
+- Like the others, we give `filter()` the dataset first, then we give it a series of criteria that we want to subset our data on.
 - As with `case_when()`, these criteria should be questions with `TRUE`/`FALSE` answers. We'll keep all those rows for which the answer is `TRUE`.
 - If there are multiple criteria, we can connect them with `&amp;` or just by separating with commas, and we'll get back only the rows that answer `TRUE` to all of them.
 
@@ -912,8 +912,8 @@ table(extreme_eyes$eyesight)
 ```
 
 ```
-## 
-##   1   5 
+##
+##   1   5
 ## 474  19
 ```
 We could of course do the same thing with a factor variable:
@@ -925,8 +925,8 @@ table(some_regions$region_fact)
 ```
 
 ```
-## 
-##     Northeast          West North Central         South 
+##
+##     Northeast          West North Central         South
 ##           206             0             0           411
 ```
 
@@ -942,8 +942,8 @@ table(more_regions$region_fact)
 ```
 
 ```
-## 
-##     Northeast          West North Central         South 
+##
+##     Northeast          West North Central         South
 ##           206           255             0           411
 ```
 
@@ -1000,8 +1000,8 @@ table(northcentralers$region_fact)
 ```
 
 ```
-## 
-##     Northeast          West North Central         South 
+##
+##     Northeast          West North Central         South
 ##             0             0           333             0
 ```
 
@@ -1010,7 +1010,7 @@ table(northcentralers$region_fact)
 
 R offers a number of shortcuts to use when determining whether values meet certain criteria:
 
-- `is.na()`: is it a missing value? 
+- `is.na()`: is it a missing value?
 - `is.finite()` / `is.infinite()`: when you might have infinite values in your data
 - `is.factor()`: asks whether some variable is a factor
 
@@ -1022,7 +1022,7 @@ You can find lots of these if you tab-complete `is.` or `is_` (the latter are ti
 
 
 ```r
-my_data &lt;- filter(nlsy, 
+my_data &lt;- filter(nlsy,
                   age_bir_cent &lt; 1,
                   sex != 1,
                   nsibs %in% c(1, 2, 3),
@@ -1033,11 +1033,11 @@ summary(select(my_data, age_bir_cent, sex, nsibs, slp_cat_wkdy))
 
 ```
 ##   age_bir_cent          sex        nsibs       slp_cat_wkdy
-##  Min.   :-9.4481   Min.   :2   Min.   :1.000   ideal :109  
-##  1st Qu.:-5.4481   1st Qu.:2   1st Qu.:2.000   little: 14  
-##  Median :-4.4481   Median :2   Median :2.000   lots  :  6  
-##  Mean   :-3.8249   Mean   :2   Mean   :2.174   some  : 78  
-##  3rd Qu.:-1.4481   3rd Qu.:2   3rd Qu.:3.000               
+##  Min.   :-9.4481   Min.   :2   Min.   :1.000   ideal :109
+##  1st Qu.:-5.4481   1st Qu.:2   1st Qu.:2.000   little: 14
+##  Median :-4.4481   Median :2   Median :2.000   lots  :  6
+##  Mean   :-3.8249   Mean   :2   Mean   :2.174   some  : 78
+##  3rd Qu.:-1.4481   3rd Qu.:2   3rd Qu.:3.000
 ##  Max.   : 0.5519   Max.   :2   Max.   :3.000
 ```
 
@@ -1046,7 +1046,7 @@ summary(select(my_data, age_bir_cent, sex, nsibs, slp_cat_wkdy))
 
 
 ```r
-oth_dat &lt;- filter(nlsy, 
+oth_dat &lt;- filter(nlsy,
                   (age_bir_cent &lt; 1) &amp;
                   (sex != 1 | nsibs %in% c(1, 2, 3)) &amp;
                   !is.na(slp_cat_wkdy))
@@ -1056,11 +1056,11 @@ summary(select(oth_dat, age_bir_cent, sex, nsibs, slp_cat_wkdy))
 
 ```
 ##   age_bir_cent           sex            nsibs        slp_cat_wkdy
-##  Min.   :-10.4481   Min.   :1.000   Min.   : 0.000   ideal :306  
-##  1st Qu.: -6.4481   1st Qu.:2.000   1st Qu.: 2.000   little: 40  
-##  Median : -3.4481   Median :2.000   Median : 3.000   lots  : 26  
-##  Mean   : -3.8518   Mean   :1.817   Mean   : 3.982   some  :230  
-##  3rd Qu.: -1.4481   3rd Qu.:2.000   3rd Qu.: 5.000               
+##  Min.   :-10.4481   Min.   :1.000   Min.   : 0.000   ideal :306
+##  1st Qu.: -6.4481   1st Qu.:2.000   1st Qu.: 2.000   little: 40
+##  Median : -3.4481   Median :2.000   Median : 3.000   lots  : 26
+##  Mean   : -3.8518   Mean   :1.817   Mean   : 3.982   some  :230
+##  3rd Qu.: -1.4481   3rd Qu.:2.000   3rd Qu.: 5.000
 ##  Max.   :  0.5519   Max.   :2.000   Max.   :16.000
 ```
 
@@ -1088,13 +1088,13 @@ Sometimes when a study is conducted across many years, the questions and/or poss
 
 
 ```
-##                        res_1980                                   res_2002   
-##  OWN DWELLING UNIT         :3198   OWN DWELLING UNIT                  :7057  
-##  DORM, FRATERNITY, SORORITY: 493   RESPONDENT IN PARENT HOUSEHOLD     : 382  
-##  ABOARD SHIP, BARRACKS     : 432   JAIL                               : 110  
-##  BACHELOR, OFFICER QUARTERS: 113   OTHER TEMPORARY INDIVIDUAL QUARTERS:  91  
-##  ON-BASE MIL FAM HOUSING   :  70   OTHER INDIVIDUAL QUARTERS          :  57  
-##  (Other)                   : 194   (Other)                            :  27  
+##                        res_1980                                   res_2002
+##  OWN DWELLING UNIT         :3198   OWN DWELLING UNIT                  :7057
+##  DORM, FRATERNITY, SORORITY: 493   RESPONDENT IN PARENT HOUSEHOLD     : 382
+##  ABOARD SHIP, BARRACKS     : 432   JAIL                               : 110
+##  BACHELOR, OFFICER QUARTERS: 113   OTHER TEMPORARY INDIVIDUAL QUARTERS:  91
+##  ON-BASE MIL FAM HOUSING   :  70   OTHER INDIVIDUAL QUARTERS          :  57
+##  (Other)                   : 194   (Other)                            :  27
 ##  NA's                      :8186   NA's                               :4962
 ```
 
@@ -1108,9 +1108,9 @@ levels(nlsy_full$res_1980)
 
 ```
 ##  [1] "ABOARD SHIP, BARRACKS"      "BACHELOR, OFFICER QUARTERS" "DORM, FRATERNITY, SORORITY"
-##  [4] "HOSPITAL"                   "JAIL"                       "OTHER TEMPORARY QUARTERS"  
-##  [7] "OWN DWELLING UNIT"          "ON-BASE MIL FAM HOUSING"    "OFF-BASE MIL FAM HOUSING"  
-## [10] "ORPHANAGE"                  "RELIGIOUS INSTITUTION"      "OTHER INDIVIDUAL QUARTERS" 
+##  [4] "HOSPITAL"                   "JAIL"                       "OTHER TEMPORARY QUARTERS"
+##  [7] "OWN DWELLING UNIT"          "ON-BASE MIL FAM HOUSING"    "OFF-BASE MIL FAM HOUSING"
+## [10] "ORPHANAGE"                  "RELIGIOUS INSTITUTION"      "OTHER INDIVIDUAL QUARTERS"
 ## [13] "PARENTAL"                   "HHI CONDUCTED WITH PARENT"  "R IN PARENTAL HOUSEHOLD"
 ```
 
@@ -1119,17 +1119,17 @@ levels(nlsy_full$res_2002)
 ```
 
 ```
-##  [1] "OPEN BAY OR TROOP BARRACKS, ABOARD SHIP"      
-##  [2] "BACHELOR ENLISTED OR OFFICER QUARTERS"        
-##  [3] "DORMITORY, FRATERNITY OR SORORITY"            
-##  [4] "HOSPITAL"                                     
-##  [5] "JAIL"                                         
-##  [6] "OTHER TEMPORARY INDIVIDUAL QUARTERS"          
-##  [7] "OWN DWELLING UNIT"                            
-##  [8] "ON-BASE MILITARY FAMILY HOUSING"              
-##  [9] "OFF-BASE MILITARY FAMILY HOUSING"             
+##  [1] "OPEN BAY OR TROOP BARRACKS, ABOARD SHIP"
+##  [2] "BACHELOR ENLISTED OR OFFICER QUARTERS"
+##  [3] "DORMITORY, FRATERNITY OR SORORITY"
+##  [4] "HOSPITAL"
+##  [5] "JAIL"
+##  [6] "OTHER TEMPORARY INDIVIDUAL QUARTERS"
+##  [7] "OWN DWELLING UNIT"
+##  [8] "ON-BASE MILITARY FAMILY HOUSING"
+##  [9] "OFF-BASE MILITARY FAMILY HOUSING"
 ## [10] "CONVENT, MONASTERY, OTHER RELIGIOUS INSTITUTE"
-## [11] "OTHER INDIVIDUAL QUARTERS"                    
+## [11] "OTHER INDIVIDUAL QUARTERS"
 ## [12] "RESPONDENT IN PARENT HOUSEHOLD"
 ```
 
@@ -1183,7 +1183,7 @@ class:inverse
 .center[
 &lt;iframe src="https://giphy.com/embed/HIrYP4RI9DpLy" width="360" height="248" frameBorder="0" class="giphy-embed" allowFullScreen&gt;&lt;/iframe&gt;&lt;p&gt;&lt;a href="https://giphy.com/gifs/cleaning-clean-HIrYP4RI9DpLy"&gt;&lt;/a&gt;&lt;/p&gt;
 ]
- 
+
 We'll eventually want to be able to work with these two factor variables together, so we want them to have the same levels.
 
 Your job is to do your best to make each of them into a variable you would like to work with if you were analyzing this data. This may involve combining categories, changing names, etc.
@@ -1191,7 +1191,7 @@ Your job is to do your best to make each of them into a variable you would like 
 Then make a dataset with only your two better versions of these variables. Only include observations that have a non-missing observation in both years.
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
-<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="https://remarkjs.com/downloads/remark-0.14.0.min.js"></script>
 <script src="macros.js"></script>
 <script>var slideshow = remark.create({
 "ratio": "16:9",
